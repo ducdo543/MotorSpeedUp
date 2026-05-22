@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 22811816542854161}
   - component: {fileID: 2566080088882111138}
   m_Layer: 0
-  m_Name: MapPart
+  m_Name: OriginMapPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
