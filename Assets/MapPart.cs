@@ -88,6 +88,26 @@ public class MapPart : SplineUser
 
     }
 
+    public Material GetRoadMaterial()
+    {
+        Material roadMaterial = roadSplineMesh.GetComponent<MeshRenderer>()?.sharedMaterial;
+        if (roadMaterial == null)
+        {
+            Debug.LogWarning("Road material is not assigned.");
+        }
+        return roadMaterial;
+    }
+
+    public Material GetWallMaterial()
+    {
+        Material wallMaterial = wallSplineMesh.GetComponent<MeshRenderer>()?.sharedMaterial;
+        if (wallMaterial == null)
+        {
+            Debug.LogWarning("Wall material is not assigned.");
+        }
+        return wallMaterial;
+    }
+
     public Mesh LoadRoadMeshAsset()
     {
         if (string.IsNullOrEmpty(roadMeshAfterBakePath))
