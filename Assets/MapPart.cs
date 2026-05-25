@@ -33,12 +33,16 @@ public class MapPart : SplineUser
     private void TransferValues(SplineMesh splineMesh)
     {
         var splineUserType = typeof(SplineUser);
-        var fields = splineUserType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Instance);
+        var fields = splineUserType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
         foreach (var field in fields)
         {
-            var value = field.GetValue(this);
-            field.SetValue(splineMesh, value);
+            if (field.GetCustomAttribute<SerializeField>() != null || field.IsPublic)
+            {
+                var value = field.GetValue(this);
+                field.SetValue(splineMesh, value);
+            }
+
         }
 
         splineMesh.RebuildImmediate();
@@ -52,11 +56,11 @@ public class MapPart : SplineUser
         Mesh roadMesh = roadSplineMesh.GetComponent<MeshFilter>()?.sharedMesh;
         Mesh wallMesh = wallSplineMesh.GetComponent<MeshFilter>()?.sharedMesh;
 
-        
-        string meshFolderPath = $"{baseFolderPath}/Map_{mapID}/Meshes/Mesh_{meshID}";
+        // check if the mesh folder exists, if not, create it
+        string meshFolderPath = $"{baseFolderPath}/Map_{mapID}/Meshes";
         if (!AssetDatabase.IsValidFolder(meshFolderPath))
         {
-            AssetDatabase.CreateFolder($"{baseFolderPath}/Map_{mapID}/Meshes", $"Mesh_{meshID}");
+            AssetDatabase.CreateFolder($"{baseFolderPath}/Map_{mapID}", $"Meshes");
         }
 
         roadMeshAfterBakePath = $"{meshFolderPath}/RoadMesh_{meshID}.asset";
@@ -136,6 +140,12 @@ public class MapPart : SplineUser
             Debug.LogWarning($"Failed to load wall mesh from {wallMeshAfterBakePath}");
         }
         return wallMesh;
+    }
+
+    public void UnbakeSplineMeshes()
+    {
+        roadSplineMesh.Unbake();
+        wallSplineMesh.Unbake();
     }
 
 #endif
