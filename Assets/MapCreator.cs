@@ -91,17 +91,7 @@ namespace Map
             // save map prefab
             GameObject mapPrefab = CreatingMapPrefab(mapID);
 
-            // check if the prefab exists, if it does, making a new one without overwriting, if not, create it
-            string prefabPath = $"{prefabFolderPath}/Map_{mapID}.prefab";
-
-            int version = 1;
-            while (UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) != null)
-            {
-                prefabPath =
-                    $"{prefabFolderPath}/Map_{mapID}_v{version}.prefab";
-
-                version++;
-            }
+            string prefabPath = $"{prefabFolderPath}/Map_{mapID.ToString("D2")}.prefab";
 
             UnityEditor.PrefabUtility.SaveAsPrefabAsset(
                 mapPrefab,
@@ -126,17 +116,17 @@ namespace Map
 
         private GameObject CreatingMapPrefab(int mapID)
         {
-            GameObject mapParent = new GameObject($"Map_{mapID}");
+            GameObject mapParent = new GameObject($"Map_{mapID.ToString("D2")}");
 
             // creating map parts gameObjects without spline mesh components
             for (int i=0; i < mapPartsParent.childCount; i++)
             {
-                GameObject mapPartGenerated = new GameObject($"MapPart_{i}");
+                GameObject mapPartGenerated = new GameObject($"MapPart_{i.ToString("D2")}");
                 mapPartGenerated.AddComponent<MapPart>();
                 mapPartGenerated.transform.SetParent(mapParent.transform);
 
 
-                GameObject roadMesh = new GameObject($"RoadMesh_{i}");
+                GameObject roadMesh = new GameObject($"RoadMesh");
                 roadMesh.transform.SetParent(mapPartGenerated.transform);
 
                 Mesh roadMeshAsset = mapPartsParent.GetChild(i).GetComponent<MapPart>().LoadRoadMeshAsset();
@@ -149,7 +139,7 @@ namespace Map
 
 
 
-                GameObject wallMesh = new GameObject($"WallMesh_{i}");
+                GameObject wallMesh = new GameObject($"WallMesh");
                 wallMesh.transform.SetParent(mapPartGenerated.transform);
 
                 Mesh wallMeshAsset = mapPartsParent.GetChild(i).GetComponent<MapPart>().LoadWallMeshAsset();

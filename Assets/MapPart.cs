@@ -57,14 +57,14 @@ public class MapPart : SplineUser
         Mesh wallMesh = wallSplineMesh.GetComponent<MeshFilter>()?.sharedMesh;
 
         // check if the mesh folder exists, if not, create it
-        string meshFolderPath = $"{baseFolderPath}/Map_{mapID}/Meshes";
+        string meshFolderPath = $"{baseFolderPath}/Map_{mapID.ToString("D2")}/Meshes";
         if (!AssetDatabase.IsValidFolder(meshFolderPath))
         {
-            AssetDatabase.CreateFolder($"{baseFolderPath}/Map_{mapID}", $"Meshes");
+            AssetDatabase.CreateFolder($"{baseFolderPath}/Map_{mapID.ToString("D2")}", $"Meshes");
         }
 
-        roadMeshAfterBakePath = $"{meshFolderPath}/RoadMesh_{meshID}.asset";
-        wallMeshAfterBakePath = $"{meshFolderPath}/WallMesh_{meshID}.asset";
+        roadMeshAfterBakePath = $"{meshFolderPath}/RoadMesh_{meshID.ToString("D2")}.asset";
+        wallMeshAfterBakePath = $"{meshFolderPath}/WallMesh_{meshID.ToString("D2")}.asset";
 
         SaveMeshAsset(roadMesh, roadMeshAfterBakePath);
         SaveMeshAsset(wallMesh, wallMeshAfterBakePath);

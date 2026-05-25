@@ -27,16 +27,16 @@ namespace Map
             mapID = EditorGUILayout.IntField("Map ID", mapID);
             if (GUILayout.Button("Save Meshes and Prefab"))
             {
-                string prefabFolderPath = $"{mapCreator.baseFolderPath}/Map_{mapID}";
+                string prefabFolderPath = $"{mapCreator.baseFolderPath}/Map_{mapID.ToString("D2")}";
                 if (!AssetDatabase.IsValidFolder(prefabFolderPath))
                 {
-                    AssetDatabase.CreateFolder(mapCreator.baseFolderPath, $"Map_{mapID}");
+                    AssetDatabase.CreateFolder(mapCreator.baseFolderPath, $"Map_{mapID.ToString("D2")}");
                 }
 
-                string prefabPath = $"{mapCreator.baseFolderPath}/Map_{mapID}/Map_{mapID}.prefab";
+                string prefabPath = $"{mapCreator.baseFolderPath}/Map_{mapID.ToString("D2")}/Map_{mapID.ToString("D2")}.prefab";
                 if (AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath) != null)
                 {
-                    if (EditorUtility.DisplayDialog("Prefab already exists", $"A prefab with the name Map_{mapID} already exists. Do you want to create a new version of the prefab without overwriting the existing one?", "Yes", "No"))
+                    if (EditorUtility.DisplayDialog("Prefab already exists", $"A prefab with the name Map_{mapID.ToString("D2")} already exists. Do you want to overwrite the existing one?", "Yes", "No"))
                     {
                         mapCreator.SaveMeshAndMapPrefab(mapID, prefabFolderPath);
                     }
