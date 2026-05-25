@@ -148,5 +148,15 @@ public class MapPart : SplineUser
         wallSplineMesh.Unbake();
     }
 
+    public void SetClipRange(float start, float end)
+    {
+        roadSplineMesh.clipFrom = start;
+        roadSplineMesh.clipTo = end;
+        wallSplineMesh.clipFrom = start;
+        wallSplineMesh.clipTo = end;
+        roadSplineMesh.RebuildImmediate();
+        wallSplineMesh.RebuildImmediate();
+    }
+
 #endif
 }
