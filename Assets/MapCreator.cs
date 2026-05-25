@@ -25,6 +25,10 @@ namespace Map
         [Header("MapInfo")]
         public string baseFolderPath;
 
+        [Header("Track Points")]
+        [SerializeField] private int trackPointInterval;
+        private TrackPoint[] trackPoints;
+
 
         private void OnValidate()
         {
@@ -51,6 +55,27 @@ namespace Map
             else if (mapPartsParent.childCount > numberOfMapParts)
             {
                 numberOfMapParts = mapPartsParent.childCount;
+            }
+
+        }
+
+        // adjust map part clip range automatic according to the number of map parts
+        public void AutoAdjustClipRange()
+        {
+            float clipRange = splineComputer.CalculateLength() / numberOfMapParts;
+            float startClip = 0f;
+            float endClip = 0f;
+            for (int i = 0; i < mapPartsParent.childCount; i++)
+            {
+                MapPart mapPart = mapPartsParent.GetChild(i).GetComponent<MapPart>();
+                if (mapPart != null)
+                {
+                    endClip = startClip + clipRange;
+                    mapPart.SetClipRange(startClip, endClip);
+                    Debug.Log($"Map Part {i} Clip Range: {startClip} - {endClip}");
+                    startClip = endClip;
+                    
+                }
             }
         }
 
@@ -153,6 +178,11 @@ namespace Map
             }
 
             return mapParent;
+        }    
+
+        private void CreatingTrackPoint()
+        {
+
         }    
 
         [Serializable]

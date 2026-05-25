@@ -21,6 +21,13 @@ namespace Map
                 mapCreator.CreateSplinePoints();
             }
 
+            // add button to adjust clip range of map parts
+            GUILayout.Space(10);
+            if (GUILayout.Button("Auto Adjust Clip Range"))
+            {
+                mapCreator.AutoAdjustClipRange();
+            }
+
             // add save mesh and prefab button
             GUILayout.Space(10);
             EditorGUILayout.LabelField("Save Meshes", EditorStyles.boldLabel);
