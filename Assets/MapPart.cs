@@ -150,12 +150,12 @@ public class MapPart : SplineUser
 
     public void SetClipRange(float start, float end)
     {
-        roadSplineMesh.clipFrom = start;
-        roadSplineMesh.clipTo = end;
-        wallSplineMesh.clipFrom = start;
-        wallSplineMesh.clipTo = end;
-        roadSplineMesh.RebuildImmediate();
-        wallSplineMesh.RebuildImmediate();
+        start = Mathf.Clamp01(start);
+        end = Mathf.Clamp01(end);
+
+        clipFrom = start;
+        clipTo = end;
+        RebuildImmediate();
     }
 
 #endif

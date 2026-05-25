@@ -62,7 +62,10 @@ namespace Map
         // adjust map part clip range automatic according to the number of map parts
         public void AutoAdjustClipRange()
         {
-            float clipRange = splineComputer.CalculateLength() / numberOfMapParts;
+            float totalLength = splineComputer.CalculateLength();
+            float clipRange = totalLength / mapPartsParent.childCount;
+            float clipRangePercentage = clipRange / totalLength;
+
             float startClip = 0f;
             float endClip = 0f;
             for (int i = 0; i < mapPartsParent.childCount; i++)
@@ -70,9 +73,8 @@ namespace Map
                 MapPart mapPart = mapPartsParent.GetChild(i).GetComponent<MapPart>();
                 if (mapPart != null)
                 {
-                    endClip = startClip + clipRange;
+                    endClip = startClip + clipRangePercentage;
                     mapPart.SetClipRange(startClip, endClip);
-                    Debug.Log($"Map Part {i} Clip Range: {startClip} - {endClip}");
                     startClip = endClip;
                     
                 }
