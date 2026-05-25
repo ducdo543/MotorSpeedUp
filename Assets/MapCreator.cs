@@ -23,11 +23,13 @@ namespace Map
         [SerializeField] private Transform mapPartsParent;
 
         [Header("MapInfo")]
-        [SerializeField] private int mapID;
-        [SerializeField] private string baseFolderPath;
+        public string baseFolderPath;
+
 
         private void OnValidate()
         {
+
+            // if the number of map parts is changed in the inspector, we need to create or remove map parts accordingly
             if (lastUsedMapPartIndex != numberOfMapParts)
             {
                 lastUsedMapPartIndex = numberOfMapParts;
@@ -74,7 +76,7 @@ namespace Map
 
         }
 
-        public void SaveMeshAndMapPrefab()
+        public void SaveMeshAndMapPrefab(int mapID, string prefabFolderPath)
         {
             // save meshes
             for (int i = 0; i < mapPartsParent.childCount; i++)
@@ -87,10 +89,9 @@ namespace Map
             }
 
             // save map prefab
-            GameObject mapPrefab = CreatingMapPrefab();
-            string prefabFolderPath = $"{baseFolderPath}/Map_{mapID}";
+            GameObject mapPrefab = CreatingMapPrefab(mapID);
 
-            // check if the prefab exists, if it does, making a new one without overwritten, if not, create it
+            // check if the prefab exists, if it does, making a new one without overwriting, if not, create it
             string prefabPath = $"{prefabFolderPath}/Map_{mapID}.prefab";
 
             int version = 1;
@@ -107,13 +108,27 @@ namespace Map
                 prefabPath
             );
 
+            // after saving the prefab, we can destroy the generated map prefab in the scene
+            DestroyImmediate(mapPrefab);
+
+            // unbake the meshes to free up memory
+            for (int i = 0; i < mapPartsParent.childCount; i++)
+            {
+                MapPart mapPart = mapPartsParent.GetChild(i).GetComponent<MapPart>();
+                if (mapPart != null)
+                {
+                    mapPart.UnbakeSplineMeshes();
+                }
+            }
 
 
         }
 
-        private GameObject CreatingMapPrefab()
+        private GameObject CreatingMapPrefab(int mapID)
         {
             GameObject mapParent = new GameObject($"Map_{mapID}");
+
+            // creating map parts gameObjects without spline mesh components
             for (int i=0; i < mapPartsParent.childCount; i++)
             {
                 GameObject mapPartGenerated = new GameObject($"MapPart_{i}");
