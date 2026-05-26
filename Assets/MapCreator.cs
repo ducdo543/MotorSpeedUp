@@ -138,12 +138,16 @@ namespace Map
                 }
             }
 
-            AutoCreateTrackPoints();
+            
         }
 
         private GameObject CreatingMapPrefab(int mapID)
         {
+            AutoCreateTrackPoints();
+
             GameObject mapParent = new GameObject($"Map_{mapID.ToString("D2")}");
+            MapController mapParentController = mapParent.AddComponent<MapController>();
+            mapParentController.InitializeMap(mapID, trackPoints);
 
             // creating map parts gameObjects without spline mesh components
             for (int i=0; i < mapPartsParent.childCount; i++)
@@ -178,6 +182,18 @@ namespace Map
                 wallMesh.GetComponent<MeshCollider>().sharedMesh = wallMeshAsset;
 
             }
+
+            // creating goal gameObject
+            GameObject goalPoint = new GameObject("GoalPoint");
+            goalPoint.transform.SetParent(mapParent.transform);
+
+            float length = splineComputer.CalculateLength();
+            SplineSample goalPointSample = splineComputer.Evaluate((length - 100f) / length); // set the goal point at the end of the track, with an offset of 100 units
+            
+            goalPoint.transform.position = goalPointSample.position;
+            goalPoint.transform.rotation = goalPointSample.rotation;
+
+
 
             return mapParent;
         }    

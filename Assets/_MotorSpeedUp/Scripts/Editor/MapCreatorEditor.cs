@@ -28,12 +28,6 @@ namespace Map
                 mapCreator.AutoAdjustClipRange();
             }
 
-            // add button to auto create track points
-            GUILayout.Space(10);
-            if (GUILayout.Button("Auto Create Track Points"))
-            {
-                mapCreator.AutoCreateTrackPoints();
-            }
 
             // add save mesh and prefab button
             GUILayout.Space(10);
