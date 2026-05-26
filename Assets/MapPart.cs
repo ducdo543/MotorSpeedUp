@@ -158,5 +158,11 @@ public class MapPart : SplineUser
         RebuildImmediate();
     }
 
+    public void GetClipRange(out double start, out double end)
+    {
+        start = clipFrom;
+        end = clipTo;
+    }
+
 #endif
 }
