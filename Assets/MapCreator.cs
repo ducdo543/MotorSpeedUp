@@ -27,7 +27,7 @@ namespace Map
 
         [Header("Track Points")]
         [SerializeField] private int trackPointInterval;
-        private TrackPoint[] trackPoints;
+        [SerializeField] private List<TrackPoint> trackPoints;
 
 
         private void OnValidate()
@@ -83,7 +83,7 @@ namespace Map
 
 
         // create spline points 
-        public void CreateSplinePoints()
+        public void AutoCreateSplinePoints()
         {
             var points = mapSplineProperties.GenerateRandomPoints();
 
@@ -138,7 +138,7 @@ namespace Map
                 }
             }
 
-
+            AutoCreateTrackPoints();
         }
 
         private GameObject CreatingMapPrefab(int mapID)
@@ -182,8 +182,51 @@ namespace Map
             return mapParent;
         }    
 
-        private void CreatingTrackPoint()
+        public void AutoCreateTrackPoints()
         {
+            trackPoints = new List<TrackPoint>();
+            float totalLength = splineComputer.CalculateLength();
+            int numberOfTrackPoints = Mathf.FloorToInt(totalLength / trackPointInterval);
+
+            int mapPartIndex = -1;
+            double startClip = 0f;
+            double endClip = 0f;
+
+            for (int i = 0; i <= numberOfTrackPoints; i++)
+            {
+                SplineSample sample = splineComputer.Evaluate((float)i / numberOfTrackPoints);
+                // see whether the track point is in the abyss, if the track point is out of clip range of all map parts, then it is in the abyss
+                bool isInAbyss = false;
+
+
+                while (mapPartIndex < mapPartsParent.childCount)
+                {
+                  
+                    if (sample.percent >= startClip && sample.percent <= endClip)
+                    {
+                        break;
+                    }
+                    else if (sample.percent < startClip)
+                    {
+                        isInAbyss = true;
+                        break;
+                    }
+                    else if (sample.percent > endClip)
+                    {
+                        mapPartIndex++;
+                        MapPart mapPart = mapPartsParent.GetChild(mapPartIndex).GetComponent<MapPart>();
+                        mapPart.GetClipRange(out startClip, out endClip);
+                    }
+
+                    
+                }
+
+
+                TrackPoint trackPoint = new TrackPoint(i, sample.position, (float)i / numberOfTrackPoints, sample.rotation, isInAbyss);
+                trackPoints.Add(trackPoint);
+                Debug.Log($"Track Point {i}: Position: {trackPoint.position}, IsInAbyss: {trackPoint.isAbyss}");
+            }
+
 
         }    
 

@@ -16,9 +16,9 @@ namespace Map
 
             GUILayout.Space(10);
 
-            if (GUILayout.Button("Create Spline Points"))
+            if (GUILayout.Button("Auto Create Spline Points"))
             {
-                mapCreator.CreateSplinePoints();
+                mapCreator.AutoCreateSplinePoints();
             }
 
             // add button to adjust clip range of map parts
@@ -26,6 +26,13 @@ namespace Map
             if (GUILayout.Button("Auto Adjust Clip Range"))
             {
                 mapCreator.AutoAdjustClipRange();
+            }
+
+            // add button to auto create track points
+            GUILayout.Space(10);
+            if (GUILayout.Button("Auto Create Track Points"))
+            {
+                mapCreator.AutoCreateTrackPoints();
             }
 
             // add save mesh and prefab button
