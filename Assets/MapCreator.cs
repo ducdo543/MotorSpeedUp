@@ -29,6 +29,9 @@ namespace Map
         [SerializeField] private int trackPointInterval;
         [SerializeField] private List<TrackPoint> trackPoints;
 
+        [Header("Goal Point")]
+        [SerializeField] private GameObject goalPointPrefab;
+
 
         private void OnValidate()
         {
@@ -184,8 +187,7 @@ namespace Map
             }
 
             // creating goal gameObject
-            GameObject goalPoint = new GameObject("GoalPoint");
-            goalPoint.transform.SetParent(mapParent.transform);
+            GameObject goalPoint = Instantiate(goalPointPrefab, mapParent.transform);
 
             float length = splineComputer.CalculateLength();
             SplineSample goalPointSample = splineComputer.Evaluate((length - 100f) / length); // set the goal point at the end of the track, with an offset of 100 units
