@@ -27,7 +27,7 @@ namespace Map
 
         [Header("Track Points")]
         [SerializeField] private int trackPointInterval;
-        [SerializeField] private List<TrackPoint> trackPoints;
+        private List<TrackPoint> trackPoints;
 
         [Header("Goal Point")]
         [SerializeField] private GameObject goalPointPrefab;
@@ -151,6 +151,7 @@ namespace Map
             GameObject mapParent = new GameObject($"Map_{mapID.ToString("D2")}");
             MapController mapParentController = mapParent.AddComponent<MapController>();
             mapParentController.InitializeMap(mapID, trackPoints);
+            List<TrackPoint> mapParentTrackPoints = mapParentController.GetTrackPoints();
 
             // creating map parts gameObjects without spline mesh components
             for (int i=0; i < mapPartsParent.childCount; i++)
@@ -196,9 +197,36 @@ namespace Map
             goalPoint.transform.rotation = goalPointSample.rotation;
 
 
+            // creating respawn points
+            CreatingRespawnPoints(mapParent, mapParentTrackPoints);
 
             return mapParent;
         }    
+
+        private void CreatingRespawnPoints(GameObject mapParent, List<TrackPoint> mapParentTrackPoints)
+        {
+            GameObject respawnPointsContainer = new GameObject("RespawnPoints");
+            respawnPointsContainer.transform.SetParent(mapParent.transform);
+
+            // respawn point interval is 9 track points, but if trackPoint is in the abyss, we need to check the next track point
+            int index = 0;
+            while (index < mapParentTrackPoints.Count)
+            {
+                TrackPoint trackPoint = mapParentTrackPoints[index];
+                if (!trackPoint.isAbyss)
+                {
+                    GameObject respawnPoint = new GameObject($"RespawnPoint_{index.ToString("D2")}");
+                    respawnPoint.transform.SetParent(respawnPointsContainer.transform);
+                    respawnPoint.transform.position = trackPoint.position;
+                    respawnPoint.transform.rotation = trackPoint.rotation;
+                    index += 9;
+                }
+                else
+                {
+                    index++;
+                }
+            }
+        }
 
         public void AutoCreateTrackPoints()
         {
