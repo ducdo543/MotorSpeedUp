@@ -154,7 +154,7 @@ namespace Map
             GameObject mapParent = new GameObject($"Map_{mapID.ToString("D2")}");
             MapController mapParentController = mapParent.AddComponent<MapController>();
             mapParentController.InitializeMap(mapID, trackPoints);
-            List<TrackPoint> mapParentTrackPoints = mapParentController.GetTrackPoints();
+            List<TrackPoint> mapParentTrackPoints = mapParentController.TrackPoints;
 
             // creating map parts gameObjects without spline mesh components
             for (int i=0; i < mapPartsParent.childCount; i++)
@@ -269,15 +269,16 @@ namespace Map
             int index = 0;
             while (index < mapParentTrackPoints.Count)
             {
-                TrackPoint trackPoint = mapParentTrackPoints[index];
+                
                 if (!abyssTrackPointIndexes.Contains(index))
                 {
+
                     GameObject respawnPoint = new GameObject($"RespawnPoint_{index.ToString("D2")}");
                     respawnPoint.transform.SetParent(respawnPointsContainer.transform);
-                    respawnPoint.transform.position = trackPoint.position;
-                    respawnPoint.transform.rotation = trackPoint.rotation;
+
                     RespawnPointController respawnPointController = respawnPoint.AddComponent<RespawnPointController>();
                     respawnPointController.trackPointIndexCorrespondingTo = index;
+                    respawnPointController.ChangeTransformBasedOnTrackPoint(mapController);
 
                     // Around the respawn point, the index itself and the two indexes before and those of after are not allowed to generate hazard, we set a flag for them
                     for (int i = Mathf.Max(0, index - 2); i <= Mathf.Min(mapParentTrackPoints.Count - 1, index + 2); i++)
@@ -289,6 +290,24 @@ namespace Map
                 }
                 else
                 {
+                    
+                        // if there is a respawn point before this abyss index in the range of 4 indexes, we need to delete it because the respawn point is too close to the abyss
+                        // just need to see the latest respawn point: index - 9
+
+
+
+                        //for (int i = Mathf.Max(0, index - 4); i < index; i++)
+                        //{
+                        //    // delete the respawn point gameobject
+                        //    Transform respawnPointToDelete = respawnPointsContainer.transform.Find($"RespawnPoint_{i.ToString("D2")}");
+                        //    if (respawnPointToDelete != null)
+                        //    {
+                        //        DestroyImmediate(respawnPointToDelete.gameObject);
+                        //    }
+                        //    nearRespawnPointTrackPointIndexes.Remove(i);
+                        //}
+
+
                     index++;
                 }
             }
