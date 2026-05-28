@@ -28,14 +28,12 @@ public struct TrackPoint
     public Vector3 position;
     public float percentage;
     public Quaternion rotation;
-    public bool isAbyss;
 
-    public TrackPoint(int index, Vector3 position, float percentage, Quaternion rotation, bool isAbyss = false)
+    public TrackPoint(int index, Vector3 position, float percentage, Quaternion rotation)
     {
             this.index = index;
             this.position = position;
             this.percentage = percentage;
             this.rotation = rotation;
-            this.isAbyss = isAbyss;
     }
 }

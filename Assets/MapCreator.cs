@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Random = UnityEngine.Random;
-using UnityEngine;
 using Dreamteck.Splines;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
 namespace Map
@@ -28,6 +29,8 @@ namespace Map
         [Header("Track Points")]
         [SerializeField] private int trackPointInterval;
         private List<TrackPoint> trackPoints;
+        private HashSet<int> abyssTrackPointIndexes = new HashSet<int>();
+        private HashSet<int> nearRespawnPointTrackPointIndexes = new HashSet<int>();
 
         [Header("Goal Point")]
         [SerializeField] private GameObject goalPointPrefab;
@@ -203,31 +206,6 @@ namespace Map
             return mapParent;
         }    
 
-        private void CreatingRespawnPoints(GameObject mapParent, List<TrackPoint> mapParentTrackPoints)
-        {
-            GameObject respawnPointsContainer = new GameObject("RespawnPoints");
-            respawnPointsContainer.transform.SetParent(mapParent.transform);
-
-            // respawn point interval is 9 track points, but if trackPoint is in the abyss, we need to check the next track point
-            int index = 0;
-            while (index < mapParentTrackPoints.Count)
-            {
-                TrackPoint trackPoint = mapParentTrackPoints[index];
-                if (!trackPoint.isAbyss)
-                {
-                    GameObject respawnPoint = new GameObject($"RespawnPoint_{index.ToString("D2")}");
-                    respawnPoint.transform.SetParent(respawnPointsContainer.transform);
-                    respawnPoint.transform.position = trackPoint.position;
-                    respawnPoint.transform.rotation = trackPoint.rotation;
-                    index += 9;
-                }
-                else
-                {
-                    index++;
-                }
-            }
-        }
-
         public void AutoCreateTrackPoints()
         {
             trackPoints = new List<TrackPoint>();
@@ -267,14 +245,54 @@ namespace Map
                     
                 }
 
+                if (isInAbyss)
+                {
+                    abyssTrackPointIndexes.Add(i);
+                }
 
-                TrackPoint trackPoint = new TrackPoint(i, sample.position, (float)i / numberOfTrackPoints, sample.rotation, isInAbyss);
+                TrackPoint trackPoint = new TrackPoint(i, sample.position, (float)i / numberOfTrackPoints, sample.rotation);
                 trackPoints.Add(trackPoint);
-                Debug.Log($"Track Point {i}: Position: {trackPoint.position}, IsInAbyss: {trackPoint.isAbyss}");
+
             }
 
 
-        }    
+        }
+
+        private void CreatingRespawnPoints(GameObject mapParent, List<TrackPoint> mapParentTrackPoints)
+        {
+            MapController mapController = mapParent.GetComponent<MapController>();
+
+            GameObject respawnPointsContainer = new GameObject("RespawnPoints");
+            respawnPointsContainer.transform.SetParent(mapParent.transform);
+
+            // respawn point interval is 9 track points, but if trackPoint is in the abyss, we need to check the next track point
+            int index = 0;
+            while (index < mapParentTrackPoints.Count)
+            {
+                TrackPoint trackPoint = mapParentTrackPoints[index];
+                if (!abyssTrackPointIndexes.Contains(index))
+                {
+                    GameObject respawnPoint = new GameObject($"RespawnPoint_{index.ToString("D2")}");
+                    respawnPoint.transform.SetParent(respawnPointsContainer.transform);
+                    respawnPoint.transform.position = trackPoint.position;
+                    respawnPoint.transform.rotation = trackPoint.rotation;
+                    RespawnPointController respawnPointController = respawnPoint.AddComponent<RespawnPointController>();
+                    respawnPointController.trackPointIndexCorrespondingTo = index;
+
+                    // Around the respawn point, the index itself and the two indexes before and those of after are not allowed to generate hazard, we set a flag for them
+                    for (int i = Mathf.Max(0, index - 2); i <= Mathf.Min(mapParentTrackPoints.Count - 1, index + 2); i++)
+                    {
+                        nearRespawnPointTrackPointIndexes.Add(i);
+                    }
+
+                    index += 9;
+                }
+                else
+                {
+                    index++;
+                }
+            }
+        }
 
         [Serializable]
         private struct MapSplineProperties
