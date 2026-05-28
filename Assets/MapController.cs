@@ -5,6 +5,7 @@ using System;
 
 public class MapController : MonoBehaviour
 {
+    [ReadOnly]
     [SerializeField] private List<TrackPoint> trackPoints = new List<TrackPoint>();
     private int mapID;
 
@@ -12,6 +13,11 @@ public class MapController : MonoBehaviour
     {
         this.mapID = mapID;
         this.trackPoints = trackPoints;
+    }
+
+    public List<TrackPoint> GetTrackPoints()
+    {
+        return trackPoints;
     }
 }
 
