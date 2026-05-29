@@ -271,6 +271,14 @@ namespace Map
                 
                 if (!abyssTrackPointIndexes.Contains(index))
                 {
+                    // if behind the respawn point there is an abyss in the range of 4 indexes, we can't create respawn point
+                    for (int i = index + 1; i <= Mathf.Min(mapParentTrackPoints.Count - 1, index + 4); i++)
+                    {
+                        if (abyssTrackPointIndexes.Contains(i))
+                        {
+                            goto NextCase;
+                        }
+                    }
 
                     GameObject respawnPoint = new GameObject($"RespawnPoint_{index.ToString("D2")}");
                     respawnPoint.transform.SetParent(respawnPointsContainer.transform);
@@ -279,33 +287,18 @@ namespace Map
                     respawnPointController.trackPointIndexCorrespondingTo = index;
                     respawnPointController.ChangeTransformBasedOnTrackPoint(mapController);
 
+
                     // Around the respawn point, the index itself and the two indexes before and those of after are not allowed to generate hazard, we set a flag for them
                     for (int i = Mathf.Max(0, index - 2); i <= Mathf.Min(mapParentTrackPoints.Count - 1, index + 2); i++)
                     {
                         nearRespawnPointTrackPointIndexes.Add(i);
                     }
 
-                    index += 9;
+                    NextCase:
+                        index += 9;
                 }
                 else
                 {
-                    
-                        // if there is a respawn point before this abyss index in the range of 4 indexes, we need to delete it because the respawn point is too close to the abyss
-                        // just need to see the latest respawn point: index - 9
-
-
-
-                        //for (int i = Mathf.Max(0, index - 4); i < index; i++)
-                        //{
-                        //    // delete the respawn point gameobject
-                        //    Transform respawnPointToDelete = respawnPointsContainer.transform.Find($"RespawnPoint_{i.ToString("D2")}");
-                        //    if (respawnPointToDelete != null)
-                        //    {
-                        //        DestroyImmediate(respawnPointToDelete.gameObject);
-                        //    }
-                        //    nearRespawnPointTrackPointIndexes.Remove(i);
-                        //}
-
 
                     index++;
                 }
