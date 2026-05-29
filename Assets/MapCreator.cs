@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEditor;
 using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
@@ -31,10 +32,13 @@ namespace Map
         private List<TrackPoint> trackPoints;
         private HashSet<int> abyssTrackPointIndexes = new HashSet<int>();
         private HashSet<int> nearRespawnPointTrackPointIndexes = new HashSet<int>();
+        private HashSet<int> nearHazardTrackPointIndexes = new HashSet<int>();
 
         [Header("Goal Point")]
         [SerializeField] private GameObject goalPointPrefab;
 
+        [Header("Hazard Properties")]
+        [SerializeField] private List<HazardProperties> hazardPropertiesList;
 
         private void OnValidate()
         {
@@ -82,7 +86,7 @@ namespace Map
                     endClip = startClip + clipRangePercentage;
                     mapPart.SetClipRange(startClip, endClip);
                     startClip = endClip;
-                    
+
                 }
             }
         }
@@ -144,7 +148,7 @@ namespace Map
                 }
             }
 
-            
+
         }
 
         private GameObject CreatingMapPrefab(int mapID)
@@ -157,7 +161,7 @@ namespace Map
             List<TrackPoint> mapParentTrackPoints = mapParentController.TrackPoints;
 
             // creating map parts gameObjects without spline mesh components
-            for (int i=0; i < mapPartsParent.childCount; i++)
+            for (int i = 0; i < mapPartsParent.childCount; i++)
             {
                 GameObject mapPartGenerated = new GameObject($"MapPart_{i.ToString("D2")}");
                 mapPartGenerated.transform.SetParent(mapParent.transform);
@@ -190,11 +194,11 @@ namespace Map
             }
 
             // creating goal gameObject
-            GameObject goalPoint = Instantiate(goalPointPrefab, mapParent.transform);
+            GameObject goalPoint = (GameObject) PrefabUtility.InstantiatePrefab(goalPointPrefab, mapParent.transform);
 
             float length = splineComputer.CalculateLength();
             SplineSample goalPointSample = splineComputer.Evaluate((length - 100f) / length); // set the goal point at the end of the track, with an offset of 100 units
-            
+
             goalPoint.transform.position = goalPointSample.position;
             goalPoint.transform.rotation = goalPointSample.rotation;
 
@@ -202,8 +206,11 @@ namespace Map
             // creating respawn points
             CreatingRespawnPoints(mapParent, mapParentTrackPoints);
 
+            // creating hazards
+            CreatingHazards(mapParent, mapParentTrackPoints);
+
             return mapParent;
-        }    
+        }
 
         public void AutoCreateTrackPoints()
         {
@@ -224,7 +231,7 @@ namespace Map
 
                 while (mapPartIndex < mapPartsParent.childCount)
                 {
-                  
+
                     if (sample.percent >= startClip && sample.percent <= endClip)
                     {
                         break;
@@ -241,7 +248,7 @@ namespace Map
                         mapPart.GetClipRange(out startClip, out endClip);
                     }
 
-                    
+
                 }
 
                 if (isInAbyss)
@@ -268,7 +275,7 @@ namespace Map
             int index = 0;
             while (index < mapParentTrackPoints.Count)
             {
-                
+
                 if (!abyssTrackPointIndexes.Contains(index))
                 {
                     // if behind the respawn point there is an abyss in the range of 4 indexes, we can't create respawn point
@@ -294,8 +301,8 @@ namespace Map
                         nearRespawnPointTrackPointIndexes.Add(i);
                     }
 
-                    NextCase:
-                        index += 9;
+                NextCase:
+                    index += 9;
                 }
                 else
                 {
@@ -303,6 +310,69 @@ namespace Map
                     index++;
                 }
             }
+        }
+
+        private void CreatingHazards(GameObject mapParent, List<TrackPoint> mapParentTrackPoints)
+        {
+            Transform hazardsContainer = new GameObject("Hazards").transform;
+            hazardsContainer.SetParent(mapParent.transform);
+
+            
+            List<int> availableIndexesRemain = new List<int>();
+            for (int i = 0; i < mapParentTrackPoints.Count; i++)
+            {
+                if (!abyssTrackPointIndexes.Contains(i) && !nearRespawnPointTrackPointIndexes.Contains(i))
+                {
+                    availableIndexesRemain.Add(i);
+                }
+            }
+
+            foreach (var hazardProperties in hazardPropertiesList)
+            {
+                for (int i = 0; i < hazardProperties.numberOfHazard; i++)
+                {
+                    if (availableIndexesRemain.Count == 0)
+                    {
+                        Debug.LogWarning("No more available track points to place hazards.");
+                        goto EndGeneratingHazards;
+                    }
+
+                    int trackPointIndex = -1;
+                    while (true)
+                    {
+                        int randomListIndex = Random.Range(0, availableIndexesRemain.Count);
+                        trackPointIndex = availableIndexesRemain[randomListIndex];
+                        if (!nearHazardTrackPointIndexes.Contains(trackPointIndex))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            availableIndexesRemain.RemoveAt(randomListIndex);
+                            if (availableIndexesRemain.Count == 0)
+                            {
+                                Debug.LogWarning("No more available track points to place hazards.");
+                                goto EndGeneratingHazards;
+                            }
+                        }
+                    }
+
+                    // 2 indexes before and after the hazard point are not allowed to generate hazard, we set a flag for them
+                    for (int j = Mathf.Max(0, trackPointIndex - 1); j <= Mathf.Min(mapParentTrackPoints.Count - 1, trackPointIndex + 1); j++)
+                    {
+                        nearHazardTrackPointIndexes.Add(j);
+                    }
+
+                    
+                    TrackPoint trackPoint = mapParentTrackPoints[trackPointIndex];
+                    GameObject hazard = (GameObject)PrefabUtility.InstantiatePrefab(hazardProperties.hazardPrefab, hazardsContainer);
+                    hazard.transform.position = trackPoint.position;
+                    hazard.transform.rotation = trackPoint.rotation;
+                }
+            }
+
+            EndGeneratingHazards:;
+
         }
 
         [Serializable]
@@ -350,6 +420,13 @@ namespace Map
 
                 return points;
             }
+        }
+
+        [Serializable]
+        private struct HazardProperties
+        {
+            public GameObject hazardPrefab;
+            public int numberOfHazard;
         }
     }
 }
