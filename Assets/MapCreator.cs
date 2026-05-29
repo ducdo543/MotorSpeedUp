@@ -214,6 +214,9 @@ namespace Map
 
         public void AutoCreateTrackPoints()
         {
+            //reset abyss track point indexes
+            abyssTrackPointIndexes = new HashSet<int>();
+
             trackPoints = new List<TrackPoint>();
             float totalLength = splineComputer.CalculateLength();
             int numberOfTrackPoints = Mathf.FloorToInt(totalLength / trackPointInterval);
@@ -266,6 +269,9 @@ namespace Map
 
         private void CreatingRespawnPoints(GameObject mapParent, List<TrackPoint> mapParentTrackPoints)
         {
+            // reset nearRespawnPointTrackPointIndexes
+            nearRespawnPointTrackPointIndexes = new HashSet<int>();
+
             MapController mapController = mapParent.GetComponent<MapController>();
 
             GameObject respawnPointsContainer = new GameObject("RespawnPoints");
@@ -290,9 +296,10 @@ namespace Map
                     GameObject respawnPoint = new GameObject($"RespawnPoint_{index.ToString("D2")}");
                     respawnPoint.transform.SetParent(respawnPointsContainer.transform);
 
-                    RespawnPointController respawnPointController = respawnPoint.AddComponent<RespawnPointController>();
-                    respawnPointController.trackPointIndexCorrespondingTo = index;
-                    respawnPointController.ChangeTransformBasedOnTrackPoint(mapController);
+                    TrackPointFollower trackPointFollower = respawnPoint.AddComponent<TrackPointFollower>();
+                    trackPointFollower.trackPointIndexCorrespondingTo = index;
+                    trackPointFollower.ChangeTransformBasedOnTrackPoint(mapController);
+                    
 
 
                     // Around the respawn point, the index itself and the two indexes before and those of after are not allowed to generate hazard, we set a flag for them
@@ -314,6 +321,12 @@ namespace Map
 
         private void CreatingHazards(GameObject mapParent, List<TrackPoint> mapParentTrackPoints)
         {
+            // reset nearHazardTrackPointIndexes
+            nearHazardTrackPointIndexes = new HashSet<int>();
+
+            MapController mapController = mapParent.GetComponent<MapController>();
+
+
             Transform hazardsContainer = new GameObject("Hazards").transform;
             hazardsContainer.SetParent(mapParent.transform);
 
@@ -326,6 +339,8 @@ namespace Map
                     availableIndexesRemain.Add(i);
                 }
             }
+
+            Debug.Log($"available track points: {availableIndexesRemain.Count}");
 
             foreach (var hazardProperties in hazardPropertiesList)
             {
@@ -364,10 +379,12 @@ namespace Map
                     }
 
                     
-                    TrackPoint trackPoint = mapParentTrackPoints[trackPointIndex];
+                    
                     GameObject hazard = (GameObject)PrefabUtility.InstantiatePrefab(hazardProperties.hazardPrefab, hazardsContainer);
-                    hazard.transform.position = trackPoint.position;
-                    hazard.transform.rotation = trackPoint.rotation;
+                    
+                    TrackPointFollower trackPointFollower = hazard.GetComponent<TrackPointFollower>();
+                    trackPointFollower.trackPointIndexCorrespondingTo = trackPointIndex;
+                    trackPointFollower.ChangeTransformBasedOnTrackPoint(mapController);
                 }
             }
 

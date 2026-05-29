@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RespawnPointController : MonoBehaviour
+public class TrackPointFollower : MonoBehaviour
 {
     public int trackPointIndexCorrespondingTo;
     private int _lastTrackPointIndexCorrespondingTo;
