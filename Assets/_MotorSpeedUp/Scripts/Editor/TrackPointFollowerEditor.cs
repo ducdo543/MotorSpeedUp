@@ -3,15 +3,15 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(RespawnPointController))]
-public class RespawnPointControllerEditor : Editor
+[CustomEditor(typeof(TrackPointFollower))]
+public class TrackPointFollowerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        RespawnPointController controller =
-            (RespawnPointController)target;
+        TrackPointFollower controller =
+            (TrackPointFollower)target;
 
         GUILayout.Space(10);
 
