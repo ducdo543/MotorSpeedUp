@@ -160,7 +160,6 @@ namespace Map
             for (int i=0; i < mapPartsParent.childCount; i++)
             {
                 GameObject mapPartGenerated = new GameObject($"MapPart_{i.ToString("D2")}");
-                mapPartGenerated.AddComponent<MapPart>();
                 mapPartGenerated.transform.SetParent(mapParent.transform);
 
 

@@ -24,8 +24,8 @@ public class RespawnPointController : MonoBehaviour
             Debug.LogError("MapController not found.");
             return;
         }
-        //debug object name that contains map controller
-        Debug.Log($"MapController found: {mapController.gameObject.name}");
+        ////debug object name that contains map controller
+        //Debug.Log($"MapController found: {mapController.gameObject.name}");
         List<TrackPoint> trackPoints = mapController.TrackPoints;
 
         if (trackPointIndexCorrespondingTo >= 0 && trackPointIndexCorrespondingTo < trackPoints.Count)
