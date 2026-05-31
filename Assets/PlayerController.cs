@@ -14,9 +14,20 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(moveAction.action.enabled);
+        
         moveDirection = moveAction.action.ReadValue<Vector2>();
 
+        Debug.Log(moveAction.action.controls.Count);
+        //Debug.Log(Keyboard.current.wKey.isPressed);
+
+        //foreach (var binding in moveAction.action.bindings)
+        //{
+        //    Debug.Log(binding.path);
+        //}
+
+        //Debug.Log(moveAction.action.phase);
+        //Debug.Log(moveAction.action.triggered);
+        //Debug.Log(moveAction.action.ReadValue<Vector2>());
     }
 
     private void FixedUpdate()
