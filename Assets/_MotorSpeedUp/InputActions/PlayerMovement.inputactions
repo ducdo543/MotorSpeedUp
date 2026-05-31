@@ -9,7 +9,7 @@
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "dcc4e9b6-81e4-4d35-a948-3861e9d105c4",
+                    "id": "a55c4c96-5854-4cc5-a00d-18556fd2cefd",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -19,7 +19,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "c66b6e52-a314-4c94-bd8f-add3b96298d2",
+                    "id": "e64a8e83-9f74-4c16-8827-629c19d659b1",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -30,75 +30,64 @@
                 },
                 {
                     "name": "up",
-                    "id": "3370578f-2816-44b4-8f9e-b9b83a9e35da",
+                    "id": "552aa504-dfce-4007-b8cf-e44eb9c98585",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "410cf92b-54b8-4fb7-b680-209b934e8688",
+                    "id": "65378c53-0bc2-4ba7-9917-867e4d9d5a77",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "500db0d9-b775-4045-ac29-f41d88e3175c",
+                    "id": "197afba0-0646-4723-960b-ef84e8aa0b99",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "453e9f32-078c-46e3-86c1-cfc758f0ba01",
+                    "id": "91bbc4da-cea2-47a4-aca1-27f440b2716c",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "62eca839-347f-4529-8760-3d326fed9087",
-                    "path": "<Joystick>/stick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }
     ],
     "controlSchemes": [
         {
-            "name": "Keyboard&Joystick",
-            "bindingGroup": "Keyboard&Joystick",
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
-                    "isOptional": false,
+                    "isOptional": true,
                     "isOR": false
                 },
                 {
                     "devicePath": "<Joystick>",
-                    "isOptional": false,
+                    "isOptional": true,
                     "isOR": false
                 }
             ]
