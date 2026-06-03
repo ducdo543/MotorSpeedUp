@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private void GetNewDirection()
     {
         inputHandlePlayer.HandleMovementInput();
-        playerDirection = cameraTransform.forward * inputHandlePlayer.VerticalInput + cameraTransform.right * inputHandlePlayer.HorizontalInput;
+        playerDirection = transform.forward * inputHandlePlayer.VerticalInput + transform.right * inputHandlePlayer.HorizontalInput;
         playerDirection.y = 0f;
         playerDirection.Normalize();
 
