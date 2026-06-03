@@ -40,6 +40,8 @@ namespace Map
         [Header("Hazard Properties")]
         [SerializeField] private List<HazardProperties> hazardPropertiesList;
 
+        [Header("Debug")]
+        [SerializeField] private MapController mapControllerForDebug;
         private void OnValidate()
         {
 
@@ -148,6 +150,8 @@ namespace Map
                 }
             }
 
+            // add track points to mapController for debug
+            mapControllerForDebug.InitializeMap(mapID, trackPoints);
 
         }
 

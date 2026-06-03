@@ -5,43 +5,67 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private InputHandlePlayer inputHandlePlayer;
+    private PlayerMovement playerMovement;
 
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private Rigidbody rb;
-    private Vector2 moveDirection;
-    private Vector3 playerDirection = new Vector3();
 
-    [Header("Other serialized fields")]
-    [SerializeField] private Transform cameraTransform;
+
+    //[Header("Other serialized fields")]
+    private TrackPoint closestTrackPointBehind = new TrackPoint();
 
     private void Start()
     {
-        inputHandlePlayer = GetComponent<InputHandlePlayer>();
-        
+        playerMovement = GetComponent<PlayerMovement>();
+
     }
     // Update is called once per frame
     void Update()
     {
-        
-        GetNewDirection();
-
+        playerMovement.GetNewDirection();
+        playerMovement.RotatePlayer();
+        GetClosestTrackPointBehind();
+        Debug.Log("Closest track point behind: " + closestTrackPointBehind.index);
     }
 
-    private void GetNewDirection()
-    {
-        inputHandlePlayer.HandleMovementInput();
-        playerDirection = transform.forward * inputHandlePlayer.VerticalInput + transform.right * inputHandlePlayer.HorizontalInput;
-        playerDirection.y = 0f;
-        playerDirection.Normalize();
 
-
-    }
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(playerDirection.x * moveSpeed, rb.velocity.y, playerDirection.z * moveSpeed);
-        Debug.Log(playerDirection.y * moveSpeed);
+        playerMovement.MovePlayer();
     }
 
+    private void GetClosestTrackPointBehind()
+    {
+        MapController mapController = GameObject.FindObjectOfType<MapController>();
+        int startIndex = 0;
+        if (closestTrackPointBehind.position == null)
+        {
+            startIndex = 0;
+        }
+        else
+        {
+            startIndex = closestTrackPointBehind.index;
+        }
+        for (int i = startIndex; i < mapController.TrackPoints.Count; i++)
+        {
+            TrackPoint trackPoint = mapController.TrackPoints[i];
+
+            Vector3 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+            if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) > 0)
+            {
+                closestTrackPointBehind = trackPoint;
+            }
+            else
+            {
+                break;
+            }
+            //Vector3 directionToTrackPoint = trackPoint.position - transform.position;
+            //if (Vector3.Dot(transform.forward, directionToTrackPoint) < 0)
+            //{
+            //    closestTrackPointBehind = trackPoint;
+            //}
+            //else
+            //{
+            //    break;
+            //}
+        }
+    }
 }
