@@ -5,34 +5,43 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private InputHandlePlayer inputHandlePlayer;
+
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Rigidbody rb;
     private Vector2 moveDirection;
+    private Vector3 playerDirection = new Vector3();
 
-    [SerializeField] private InputActionReference moveAction;
+    [Header("Other serialized fields")]
+    [SerializeField] private Transform cameraTransform;
 
+    private void Start()
+    {
+        inputHandlePlayer = GetComponent<InputHandlePlayer>();
+        
+    }
     // Update is called once per frame
     void Update()
     {
         
-        moveDirection = moveAction.action.ReadValue<Vector2>();
+        GetNewDirection();
 
-        Debug.Log(moveAction.action.controls.Count);
-        //Debug.Log(Keyboard.current.wKey.isPressed);
-
-        //foreach (var binding in moveAction.action.bindings)
-        //{
-        //    Debug.Log(binding.path);
-        //}
-
-        //Debug.Log(moveAction.action.phase);
-        //Debug.Log(moveAction.action.triggered);
-        //Debug.Log(moveAction.action.ReadValue<Vector2>());
     }
 
+    private void GetNewDirection()
+    {
+        inputHandlePlayer.HandleMovementInput();
+        playerDirection = cameraTransform.forward * inputHandlePlayer.VerticalInput + cameraTransform.right * inputHandlePlayer.HorizontalInput;
+        playerDirection.y = 0f;
+        playerDirection.Normalize();
+
+
+    }
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.y * moveSpeed);
+        rb.velocity = new Vector3(playerDirection.x * moveSpeed, rb.velocity.y, playerDirection.z * moveSpeed);
+        Debug.Log(playerDirection.y * moveSpeed);
     }
 
 }
