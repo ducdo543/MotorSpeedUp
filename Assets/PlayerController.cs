@@ -35,57 +35,87 @@ public class PlayerController : MonoBehaviour
     private void GetClosestTrackPointBehind()
     {
         MapController mapController = GameObject.FindObjectOfType<MapController>();
-        int startIndex = 0;
+        
         if (closestTrackPointBehind.position == null)
         {
-            startIndex = 0;
+            closestTrackPointBehind = mapController.TrackPoints[0];
+        }
+        
+
+        Vector3 directionFromTrackPointToPlayer = transform.position - closestTrackPointBehind.position;
+        if (Vector3.Dot(closestTrackPointBehind.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
+        {
+            if (closestTrackPointBehind.index == 0)
+            {
+                Debug.LogWarning("Out of map");
+                return;
+            }
+            for (int i = closestTrackPointBehind.index - 1; i >= 0; i--)
+            {
+                TrackPoint trackPoint = mapController.TrackPoints[i];
+                directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+                if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
+                {
+                    closestTrackPointBehind = trackPoint;
+                    return;
+                }
+            }
         }
         else
         {
-            startIndex = closestTrackPointBehind.index;
-        }
-
-        
-        for (int i = startIndex; i >= 0; i--)
-        {
-            TrackPoint trackPoint = mapController.TrackPoints[i];
-            Vector3 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
-            if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
+            for (int i = closestTrackPointBehind.index + 1; i < mapController.TrackPoints.Count; i++)
             {
-                if (i == 0)
+                TrackPoint trackPoint = mapController.TrackPoints[i];
+                directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+                if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
                 {
-                    closestTrackPointBehind = trackPoint;
-                    Debug.LogWarning("Out of map");
+                    
                     return;
                 }
-                TrackPoint trackPointBehind = mapController.TrackPoints[i - 1];
-                closestTrackPointBehind = trackPointBehind;
-            }
-            else
-            {
-                if (closestTrackPointBehind.index != startIndex)
-                {
-                    return;
-                }
-                break;
-            }
-            
-        }
-
-        for (int i = startIndex; i < mapController.TrackPoints.Count; i++)
-        {
-            TrackPoint trackPoint = mapController.TrackPoints[i];
-
-            Vector3 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
-            if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
-            {
                 closestTrackPointBehind = trackPoint;
             }
-            else
-            {
-                break;
-            }
-            
         }
+
+        //for (int i = startIndex; i >= 0; i--)
+        //{
+        //    TrackPoint trackPoint = mapController.TrackPoints[i];
+        //    Vector3 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+        //    if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
+        //    {
+        //        if (i == 0)
+        //        {
+        //            closestTrackPointBehind = trackPoint;
+        //            Debug.LogWarning("Out of map");
+        //            return;
+        //        }
+        //        TrackPoint trackPointBehind = mapController.TrackPoints[i - 1];
+        //        closestTrackPointBehind = trackPointBehind;
+        //    }
+        //    else
+        //    {
+        //        if (closestTrackPointBehind.index != startIndex)
+        //        {
+        //            return;
+        //        }
+        //        break;
+        //    }
+
+        //}
+
+        //for (int i = startIndex; i < mapController.TrackPoints.Count; i++)
+        //{
+        //    TrackPoint trackPoint = mapController.TrackPoints[i];
+
+        //    Vector3 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+        //    if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
+        //    {
+        //        closestTrackPointBehind = trackPoint;
+        //    }
+        //    else
+        //    {
+        //        break;
+        //    }
+
+        //}
     }
 }
