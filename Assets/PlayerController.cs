@@ -44,12 +44,40 @@ public class PlayerController : MonoBehaviour
         {
             startIndex = closestTrackPointBehind.index;
         }
+
+        
+        for (int i = startIndex; i >= 0; i--)
+        {
+            TrackPoint trackPoint = mapController.TrackPoints[i];
+            Vector3 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+            if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
+            {
+                if (i == 0)
+                {
+                    closestTrackPointBehind = trackPoint;
+                    Debug.LogWarning("Out of map");
+                    return;
+                }
+                TrackPoint trackPointBehind = mapController.TrackPoints[i - 1];
+                closestTrackPointBehind = trackPointBehind;
+            }
+            else
+            {
+                if (closestTrackPointBehind.index != startIndex)
+                {
+                    return;
+                }
+                break;
+            }
+            
+        }
+
         for (int i = startIndex; i < mapController.TrackPoints.Count; i++)
         {
             TrackPoint trackPoint = mapController.TrackPoints[i];
 
             Vector3 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
-            if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) > 0)
+            if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
             {
                 closestTrackPointBehind = trackPoint;
             }
@@ -57,15 +85,7 @@ public class PlayerController : MonoBehaviour
             {
                 break;
             }
-            //Vector3 directionToTrackPoint = trackPoint.position - transform.position;
-            //if (Vector3.Dot(transform.forward, directionToTrackPoint) < 0)
-            //{
-            //    closestTrackPointBehind = trackPoint;
-            //}
-            //else
-            //{
-            //    break;
-            //}
+            
         }
     }
 }
