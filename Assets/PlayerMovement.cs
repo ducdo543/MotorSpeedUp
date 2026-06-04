@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Time;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private Rigidbody rb;
     private Vector3 playerDirection = new Vector3();
-    private float pastYVelocity = 0f;
+    private float pastPlusYVelocity = 0f;
 
     [Header("Other serialized fields")]
     [SerializeField] private Transform cameraTransform;
@@ -32,13 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void MovePlayer()
     {
-        if (rb.velocity.y == 0)
-        {
-            pastYVelocity = 0f;
-        }
-        float currentYVelocity = rb.velocity.y - pastYVelocity + playerDirection.y * moveSpeed;
+
+        float currentYVelocity = rb.velocity.y - pastPlusYVelocity + (playerDirection.y * moveSpeed);
         rb.velocity = new Vector3(playerDirection.x * moveSpeed, currentYVelocity, playerDirection.z * moveSpeed);
-        pastYVelocity = rb.velocity.y;
+        pastPlusYVelocity = (playerDirection.y * moveSpeed);
     }
 
     public void RotatePlayer()
