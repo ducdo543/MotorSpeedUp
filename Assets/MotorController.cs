@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MotorController : MonoBehaviour
 {
-    [SerializeField] private Transform bikerTransform;
+    [SerializeField] private Transform pointForBiker;
     [SerializeField] private BikerController bikerController;
     private Vector3 offSetLocal;
     void Start()
     {
-        offSetLocal = bikerTransform.position - transform.position;
+        offSetLocal = pointForBiker.position - transform.position;
+        Debug.Log($"offSetLocal: {offSetLocal}");
     }
 
     // Update is called once per frame
