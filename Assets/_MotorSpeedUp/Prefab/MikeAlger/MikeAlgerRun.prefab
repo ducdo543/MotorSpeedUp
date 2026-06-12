@@ -968,7 +968,6 @@ GameObject:
   - component: {fileID: 8478415016750629492}
   - component: {fileID: 4999319148922900442}
   - component: {fileID: 8700967338834409279}
-  - component: {fileID: 2710999120824240480}
   - component: {fileID: 5171558123912359614}
   - component: {fileID: 8209932231468905865}
   - component: {fileID: 2419572406033934298}
@@ -1074,37 +1073,6 @@ CapsuleCollider:
   m_Height: 1.89
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &2710999120824240480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585496588214235384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: f1729d9078420ba4aaf0a207cfe14e96,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: Game Play
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &5171558123912359614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1141,9 +1109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d5d4717fc4eb84e9b4db3110a1dba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   rotationSpeed: 10
-  rb: {fileID: 4999319148922900442}
+  baseMoveOnSpline:
+    moveSpeed: 5
+    rb: {fileID: 4999319148922900442}
 --- !u!114 &2294718994157518603
 MonoBehaviour:
   m_ObjectHideFlags: 0

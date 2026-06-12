@@ -4,15 +4,59 @@ using UnityEngine;
 
 public class MotorMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private InputHandleMovement inputHandleMovement;
+
+    [Header("Movement")]
+    [SerializeField] private float rotationSpeed = 10f;
+    private Vector3 playerDirection = new Vector3();
+    
+    [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
+
+    [Header("Other serialized fields")]
+
+
+
+
+    private TrackPoint trackPointBehind = new TrackPoint();
+    private MapController mapController;
+    private Quaternion interpolatedRotation;
+
+
+
+    private void Start()
     {
-        
+        inputHandleMovement = GetComponent<InputHandleMovement>();
+        mapController = GameObject.FindObjectOfType<MapController>();
+
+        baseMoveOnSpline.SetMapController(mapController);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GetNewDirection()
     {
-        
+        inputHandleMovement.HandleMovementInput();
+        playerDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
+        playerDirection.Normalize();
     }
+
+    public void MovePlayer()
+    {
+        baseMoveOnSpline.MovePlayer(playerDirection);
+    }
+
+    public void RotatePlayer()
+    {
+        if (playerDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+    }
+
+
+    public void CalculateInterpolatedPosition()
+    {
+        baseMoveOnSpline.GetClosestTrackPointBehind(ref trackPointBehind, transform);
+        baseMoveOnSpline.CalculateInterpolatedPosition(ref interpolatedRotation, trackPointBehind, transform);
+    }
+
 }

@@ -5,12 +5,11 @@ using static UnityEngine.Time;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private InputHandlePlayer inputHandlePlayer;
+    private InputHandleMovement inputHandleMovement;
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 10f;
     private Vector3 playerDirection = new Vector3();
-    private float pastPlusYVelocity = 0f;
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
 
     [Header("Other serialized fields")]
@@ -26,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        inputHandlePlayer = GetComponent<InputHandlePlayer>();
+        inputHandleMovement = GetComponent<InputHandleMovement>();
         mapController = GameObject.FindObjectOfType<MapController>();
 
         baseMoveOnSpline.SetMapController(mapController);
@@ -34,14 +33,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetNewDirection()
     {
-        inputHandlePlayer.HandleMovementInput();
-        playerDirection = interpolatedRotation * Vector3.forward * inputHandlePlayer.VerticalInput + interpolatedRotation * Vector3.right * inputHandlePlayer.HorizontalInput;
+        inputHandleMovement.HandleMovementInput();
+        playerDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
         playerDirection.Normalize();
     }
 
     public void MovePlayer()
     {
-        baseMoveOnSpline.MovePlayer(ref pastPlusYVelocity, playerDirection);
+        baseMoveOnSpline.MovePlayer(playerDirection);
     }
 
     public void RotatePlayer()

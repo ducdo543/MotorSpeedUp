@@ -8,6 +8,7 @@ public class BaseMoveOnSpline
     private MapController mapController;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Rigidbody rb;
+    private float pastPlusYVelocity = 0f;
     public void SetMapController(MapController mapController)
     {
         this.mapController = mapController;
@@ -71,7 +72,7 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
     }
 
-    public void MovePlayer(ref float pastPlusYVelocity, Vector3 playerDirection)
+    public void MovePlayer(Vector3 playerDirection)
     {
 
         float currentYVelocity = rb.velocity.y - pastPlusYVelocity + (playerDirection.y * moveSpeed);
