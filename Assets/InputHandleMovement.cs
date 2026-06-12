@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputHandlePlayer : MonoBehaviour
+public class InputHandleMovement : MonoBehaviour
 {
     private PlayerControls playerControls;
 
