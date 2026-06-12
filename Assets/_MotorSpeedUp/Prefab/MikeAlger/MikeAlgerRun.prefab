@@ -972,6 +972,7 @@ GameObject:
   - component: {fileID: 5171558123912359614}
   - component: {fileID: 8209932231468905865}
   - component: {fileID: 2419572406033934298}
+  - component: {fileID: 2294718994157518603}
   m_Layer: 0
   m_Name: MikeAlgerRun
   m_TagString: Untagged
@@ -1143,7 +1144,19 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 10
   rb: {fileID: 4999319148922900442}
-  cameraTransform: {fileID: 0}
+--- !u!114 &2294718994157518603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585496588214235384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc003b19b9464d47a6594fc37cc06af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: -203655887218126122, guid: 799fc47cc3478fa49ae9536b902716f9, type: 3}
 --- !u!1 &1633150630069996876
 GameObject:
   m_ObjectHideFlags: 0

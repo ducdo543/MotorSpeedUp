@@ -10,7 +10,6 @@ public class MotorController : MonoBehaviour
     void Start()
     {
         offSetLocal = pointForBiker.position - transform.position;
-        Debug.Log($"offSetLocal: {offSetLocal}");
     }
 
     // Update is called once per frame

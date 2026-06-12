@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerMovement.GetClosestTrackPointBehind();
         playerMovement.CalculateInterpolatedPosition();
         playerMovement.GetNewDirection();
         playerMovement.RotatePlayer();
