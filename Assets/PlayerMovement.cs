@@ -15,18 +15,22 @@ public class PlayerMovement : MonoBehaviour
     private float pastPlusYVelocity = 0f;
 
     [Header("Other serialized fields")]
-    [SerializeField] private Transform cameraTransform;
+    
 
 
     private TrackPoint trackPointBehind = new TrackPoint();
     private MapController mapController;
     private Quaternion interpolatedRotation;
 
+    [Header("BaseClasses")]
+    private BaseMoveOnSpline baseMoveOnSpline;
 
     private void Start()
     {
         inputHandlePlayer = GetComponent<InputHandlePlayer>();
         mapController = GameObject.FindObjectOfType<MapController>();
+
+        baseMoveOnSpline = new BaseMoveOnSpline(mapController);
     }
 
     public void GetNewDirection()
@@ -38,10 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MovePlayer()
     {
-
-        float currentYVelocity = rb.velocity.y - pastPlusYVelocity + (playerDirection.y * moveSpeed);
-        rb.velocity = new Vector3(playerDirection.x * moveSpeed, currentYVelocity, playerDirection.z * moveSpeed);
-        pastPlusYVelocity = (playerDirection.y * moveSpeed);
+        baseMoveOnSpline.MovePlayer(ref pastPlusYVelocity, playerDirection, moveSpeed, rb);
     }
 
     public void RotatePlayer()
@@ -53,63 +54,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void GetClosestTrackPointBehind()
-    {
-        
-        if (trackPointBehind.position == null)
-        {
-            trackPointBehind = mapController.TrackPoints[0];
-        }
-
-
-        Vector3 directionFromTrackPointToPlayer = transform.position - trackPointBehind.position;
-        if (Vector3.Dot(trackPointBehind.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
-        {
-            if (trackPointBehind.index == 0)
-            {
-                Debug.LogWarning("Out of map");
-                return;
-            }
-            for (int i = trackPointBehind.index - 1; i >= 0; i--)
-            {
-                TrackPoint trackPoint = mapController.TrackPoints[i];
-                directionFromTrackPointToPlayer = transform.position - trackPoint.position;
-                if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
-                {
-                    trackPointBehind = trackPoint;
-                    return;
-                }
-            }
-        }
-        else
-        {
-            for (int i = trackPointBehind.index + 1; i < mapController.TrackPoints.Count; i++)
-            {
-                TrackPoint trackPoint = mapController.TrackPoints[i];
-                directionFromTrackPointToPlayer = transform.position - trackPoint.position;
-                if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
-                {
-
-                    return;
-                }
-                trackPointBehind = trackPoint;
-            }
-        }
-    }
 
     public void CalculateInterpolatedPosition()
     {
-        TrackPoint trackPointAhead = mapController.TrackPoints[trackPointBehind.index + 1];
-        Vector3 trackDirection = (trackPointAhead.position - trackPointBehind.position);
-        float t = Vector3.Dot(transform.position - trackPointBehind.position, trackDirection) / trackDirection.sqrMagnitude;
-        t = Mathf.Clamp01(t);
-
-        interpolatedRotation = Quaternion.Slerp(trackPointBehind.rotation, trackPointAhead.rotation, t);
-
-        // for debug draw
-        Debug.DrawLine(trackPointBehind.position, trackPointAhead.position, Color.red);
-        Vector3 interpolatedPosition = Vector3.Lerp(trackPointBehind.position, trackPointAhead.position, t);
-        Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
+        baseMoveOnSpline.GetClosestTrackPointBehind(ref trackPointBehind, transform);
+        baseMoveOnSpline.CalculateInterpolatedPosition(ref interpolatedRotation, trackPointBehind, transform);
     }
 
 }
