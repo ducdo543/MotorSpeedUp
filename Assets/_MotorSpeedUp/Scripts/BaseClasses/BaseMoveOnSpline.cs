@@ -7,8 +7,11 @@ public class BaseMoveOnSpline
 {
     private MapController mapController;
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float acceleration = 10f;
     [SerializeField] private Rigidbody rb;
+
     private float pastPlusYVelocity = 0f;
+    private float currentZVelocity = 0f;
     public void SetMapController(MapController mapController)
     {
         this.mapController = mapController;
@@ -76,7 +79,10 @@ public class BaseMoveOnSpline
     {
 
         float currentYVelocity = rb.velocity.y - pastPlusYVelocity + (playerMoveDirection.y * moveSpeed);
-        rb.velocity = new Vector3(playerMoveDirection.x * moveSpeed, currentYVelocity, playerMoveDirection.z * moveSpeed);
+        float targetZVelocity = playerMoveDirection.z * moveSpeed;
+        currentZVelocity = Mathf.MoveTowards(currentZVelocity, targetZVelocity, acceleration * Time.fixedDeltaTime);
+
+        rb.velocity = new Vector3(playerMoveDirection.x * moveSpeed, currentYVelocity, currentZVelocity);
         pastPlusYVelocity = (playerMoveDirection.y * moveSpeed);
     }
 }
