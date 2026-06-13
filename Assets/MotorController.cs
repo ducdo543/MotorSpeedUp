@@ -24,7 +24,8 @@ public class MotorController : MonoBehaviour
         bikerController.ChangeTransform(transform.position + offSetWorld, transform.rotation);
 
         motorMovement.CalculateInterpolatedPosition();
-        motorMovement.GetNewDirection();
+        motorMovement.GetMoveDirection();
+        motorMovement.GetRotationQuaternion();
         motorMovement.RotatePlayer();
     }
 

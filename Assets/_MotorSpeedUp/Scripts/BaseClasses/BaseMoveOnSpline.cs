@@ -72,11 +72,11 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
     }
 
-    public void Move(Vector3 playerDirection)
+    public void Move(Vector3 playerMoveDirection)
     {
 
-        float currentYVelocity = rb.velocity.y - pastPlusYVelocity + (playerDirection.y * moveSpeed);
-        rb.velocity = new Vector3(playerDirection.x * moveSpeed, currentYVelocity, playerDirection.z * moveSpeed);
-        pastPlusYVelocity = (playerDirection.y * moveSpeed);
+        float currentYVelocity = rb.velocity.y - pastPlusYVelocity + (playerMoveDirection.y * moveSpeed);
+        rb.velocity = new Vector3(playerMoveDirection.x * moveSpeed, currentYVelocity, playerMoveDirection.z * moveSpeed);
+        pastPlusYVelocity = (playerMoveDirection.y * moveSpeed);
     }
 }

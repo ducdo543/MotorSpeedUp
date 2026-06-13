@@ -29,6 +29,11 @@ public class InputHandleMovement : MonoBehaviour
         playerControls.Disable();
     }
 
+    private void Update()
+    {
+        HandleMovementInput();
+    }
+
     public void HandleMovementInput()
     {
         verticalInput = movementInput.y;

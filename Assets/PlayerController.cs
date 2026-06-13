@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         playerMovement.CalculateInterpolatedPosition();
-        playerMovement.GetNewDirection();
+        playerMovement.GetMoveDirection();
         playerMovement.RotatePlayer();
     }
 
