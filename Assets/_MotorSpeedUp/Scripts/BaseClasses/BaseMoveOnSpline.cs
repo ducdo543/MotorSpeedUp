@@ -72,7 +72,7 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
     }
 
-    public void MovePlayer(Vector3 playerDirection)
+    public void Move(Vector3 playerDirection)
     {
 
         float currentYVelocity = rb.velocity.y - pastPlusYVelocity + (playerDirection.y * moveSpeed);

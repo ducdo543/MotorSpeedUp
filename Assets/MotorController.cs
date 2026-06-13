@@ -30,6 +30,6 @@ public class MotorController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        motorMovement.MovePlayer();
+        motorMovement.Move();
     }
 }

@@ -34,13 +34,13 @@ public class MotorMovement : MonoBehaviour
     public void GetNewDirection()
     {
         inputHandleMovement.HandleMovementInput();
-        playerDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
+        playerDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput;
         playerDirection.Normalize();
     }
 
-    public void MovePlayer()
+    public void Move()
     {
-        baseMoveOnSpline.MovePlayer(playerDirection);
+        baseMoveOnSpline.Move(playerDirection);
     }
 
     public void RotatePlayer()
