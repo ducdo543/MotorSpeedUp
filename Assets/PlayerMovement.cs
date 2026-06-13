@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 10f;
-    private Vector3 playerDirection = new Vector3();
+    private Vector3 playerMoveDirection = new Vector3();
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
 
     [Header("Other serialized fields")]
@@ -31,23 +31,23 @@ public class PlayerMovement : MonoBehaviour
         baseMoveOnSpline.SetMapController(mapController);
     }
 
-    public void GetNewDirection()
+    public void GetMoveDirection()
     {
-        inputHandleMovement.HandleMovementInput();
-        playerDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
-        playerDirection.Normalize();
+        
+        playerMoveDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
+        playerMoveDirection.Normalize();
     }
 
     public void Move()
     {
-        baseMoveOnSpline.Move(playerDirection);
+        baseMoveOnSpline.Move(playerMoveDirection);
     }
 
     public void RotatePlayer()
     {
-        if (playerDirection != Vector3.zero)
+        if (playerMoveDirection != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(playerMoveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
     }
