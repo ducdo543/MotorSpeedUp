@@ -7040,7 +7040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f40842cc10247489d977b2c431b85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 10
+  rotationSpeed: 5
+  maxLeanAngle: 45
   baseMoveOnSpline:
     moveSpeed: 10
     rb: {fileID: 7577515018437195512}

@@ -7,7 +7,8 @@ public class MotorMovement : MonoBehaviour
     private InputHandleMovement inputHandleMovement;
 
     [Header("Movement")]
-    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float maxLeanAngle = 45f;
     private Vector3 playerMoveDirection = new Vector3();
     private Quaternion targetRotation;
 
@@ -46,7 +47,11 @@ public class MotorMovement : MonoBehaviour
 
     public void GetRotation()
     {
-        targetRotation = interpolatedRotation;
+        Quaternion uprightRotation = interpolatedRotation;
+
+        float leanAngle = -(maxLeanAngle * inputHandleMovement.HorizontalInput);
+        Quaternion leanRotation = Quaternion.AngleAxis(leanAngle, uprightRotation * Vector3.forward);
+        targetRotation = uprightRotation * leanRotation;
     }    
 
     public void RotatePlayer()
