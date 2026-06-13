@@ -44,7 +44,7 @@ public class MotorMovement : MonoBehaviour
         baseMoveOnSpline.Move(playerMoveDirection);
     }
 
-    public void GetRotationQuaternion()
+    public void GetRotation()
     {
         targetRotation = interpolatedRotation;
     }    
