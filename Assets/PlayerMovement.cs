@@ -38,9 +38,9 @@ public class PlayerMovement : MonoBehaviour
         playerDirection.Normalize();
     }
 
-    public void MovePlayer()
+    public void Move()
     {
-        baseMoveOnSpline.MovePlayer(playerDirection);
+        baseMoveOnSpline.Move(playerDirection);
     }
 
     public void RotatePlayer()
