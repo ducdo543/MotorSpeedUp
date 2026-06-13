@@ -19,8 +19,6 @@ public class InputHandleMovement : MonoBehaviour
             playerControls = new PlayerControls();
         }
 
-        playerControls.GamePlay.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
-
         playerControls.Enable();
     }
 
@@ -31,12 +29,10 @@ public class InputHandleMovement : MonoBehaviour
 
     private void Update()
     {
-        HandleMovementInput();
-    }
+        movementInput = playerControls.GamePlay.Move.ReadValue<Vector2>();
 
-    public void HandleMovementInput()
-    {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
     }
+
 }
