@@ -11,6 +11,7 @@ public class MotorMovement : MonoBehaviour
     [SerializeField] private float maxLeanAngle = 45f;
     private Vector3 playerMoveDirection = new Vector3();
     private Quaternion targetRotation;
+    private float maxHorizontalInput = 0.7f;
 
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
 
@@ -36,8 +37,11 @@ public class MotorMovement : MonoBehaviour
     public void GetMoveDirection()
     {
         
-        playerMoveDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
-        playerMoveDirection.Normalize();
+        playerMoveDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput 
+    + interpolatedRotation * Vector3.right * Mathf.Clamp(
+    inputHandleMovement.HorizontalInput,
+    -maxHorizontalInput,
+    maxHorizontalInput)/1.5f;
     }
 
     public void Move()
