@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         playerMoveDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
-        playerMoveDirection.Normalize();
+        
     }
 
     public void Move()
