@@ -12,7 +12,7 @@ public class MotorController : MonoBehaviour
     private MotorMovement motorMovement;
     void Start()
     {
-        offSetLocal = pointForBiker.position - transform.position; 
+        
 
         motorMovement = GetComponent<MotorMovement>();
     }
@@ -20,13 +20,13 @@ public class MotorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 offSetWorld = transform.rotation * offSetLocal;
-        bikerController.ChangeTransform(transform.position + offSetWorld, transform.rotation);
 
         motorMovement.CalculateInterpolatedPosition();
         motorMovement.GetMoveDirection();
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();
+
+        bikerController.ChangeTransform(pointForBiker);
     }
 
     private void FixedUpdate()

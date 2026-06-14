@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BikerController : MonoBehaviour
 {
-    public void ChangeTransform(Vector3 position, Quaternion rotation)
+    public void ChangeTransform(Transform pointForBiker)
     {
-        transform.position = position;
-        transform.rotation = rotation;
+        transform.position = pointForBiker.position;
+        transform.rotation = pointForBiker.rotation;
     }
 }
