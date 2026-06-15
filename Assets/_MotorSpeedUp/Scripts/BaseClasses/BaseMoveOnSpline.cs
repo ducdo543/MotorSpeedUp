@@ -10,8 +10,7 @@ public class BaseMoveOnSpline
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private Rigidbody rb;
 
-    private float currentZVelocity = 0f;
-    private float currentXVelocity = 0f;
+    private float plusYVelocity = 0f;
     public void SetMapController(MapController mapController)
     {
         this.mapController = mapController;
@@ -78,14 +77,19 @@ public class BaseMoveOnSpline
     public void Move(Vector3 playerMoveDirection)
     {
 
-        
+        // we shouldn't accelerate gradually on each axis separately, so I discard this code as commented.
         //float targetZVelocity = playerMoveDirection.z * moveSpeed;
         //currentZVelocity = Mathf.MoveTowards(rb.velocity.z, targetZVelocity, acceleration * Time.fixedDeltaTime);
         //float targetXVelocity = playerMoveDirection.x * moveSpeed;
         //currentXVelocity = Mathf.MoveTowards(rb.velocity.x, targetXVelocity, acceleration * Time.fixedDeltaTime);
-        currentZVelocity = playerMoveDirection.z * moveSpeed;
-        currentXVelocity = playerMoveDirection.x * moveSpeed;
-        rb.velocity = new Vector3(currentXVelocity, rb.velocity.y, currentZVelocity);
-        
+        //currentZVelocity = playerMoveDirection.z * moveSpeed;
+        //currentXVelocity = playerMoveDirection.x * moveSpeed;
+
+        Vector3 currentVelocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+        Vector3 targetVelocity = playerMoveDirection * moveSpeed;
+
+        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+        rb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
+
     }
 }

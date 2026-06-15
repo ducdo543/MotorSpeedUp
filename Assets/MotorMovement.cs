@@ -42,6 +42,7 @@ public class MotorMovement : MonoBehaviour
     inputHandleMovement.HorizontalInput,
     -maxHorizontalInput,
     maxHorizontalInput)/1.5f;
+        //playerMoveDirection = new Vector3(playerMoveDirection.x, 0, playerMoveDirection.z);
     }
 
     public void Move()
