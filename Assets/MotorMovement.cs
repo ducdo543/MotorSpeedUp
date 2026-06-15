@@ -55,12 +55,12 @@ public class MotorMovement : MonoBehaviour
 
         float leanAngle = -(maxLeanAngle * inputHandleMovement.HorizontalInput);
         Quaternion leanRotation = Quaternion.AngleAxis(leanAngle, uprightRotation * Vector3.forward);
-        targetRotation = uprightRotation * leanRotation;
+        targetRotation = leanRotation * uprightRotation;
     }    
 
     public void RotatePlayer()
     {
- 
+
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
     }
