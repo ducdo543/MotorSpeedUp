@@ -36,12 +36,15 @@ public class MotorMovement : MonoBehaviour
 
     public void GetMoveDirection()
     {
-        
-        playerMoveDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput 
+        Vector2 moveInput = new Vector2(inputHandleMovement.HorizontalInput / 2f, inputHandleMovement.VerticalInput).normalized;
+        float newVerticalInput = moveInput.y;
+        float newHorizontalInput = moveInput.x;
+
+        playerMoveDirection = interpolatedRotation * Vector3.forward * newVerticalInput
     + interpolatedRotation * Vector3.right * Mathf.Clamp(
-    inputHandleMovement.HorizontalInput,
+    newHorizontalInput,
     -maxHorizontalInput,
-    maxHorizontalInput)/1.5f;
+    maxHorizontalInput);
         //playerMoveDirection = new Vector3(playerMoveDirection.x, 0, playerMoveDirection.z);
     }
 
