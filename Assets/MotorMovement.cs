@@ -53,10 +53,16 @@ public class MotorMovement : MonoBehaviour
     public void GetRotation()
     {
         Quaternion uprightRotation = interpolatedRotation;
-
+        //Debug.Log($"interpolatedRotation: {uprightRotation * Vector3.forward}");
         float leanAngle = -(maxLeanAngle * inputHandleMovement.HorizontalInput);
         Quaternion leanRotation = Quaternion.AngleAxis(leanAngle, uprightRotation * Vector3.forward);
         targetRotation = leanRotation * uprightRotation;
+
+        //Debug.Log($"targetRotation: {targetRotation * Vector3.forward}");
+    //    Debug.Log(
+    //Vector3.Angle(
+    //    uprightRotation * Vector3.forward,
+    //    targetRotation * Vector3.forward));
     }    
 
     public void RotatePlayer()

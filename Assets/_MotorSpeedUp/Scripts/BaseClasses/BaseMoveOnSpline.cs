@@ -9,8 +9,6 @@ public class BaseMoveOnSpline
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private Rigidbody rb;
-
-    private float plusYVelocity = 0f;
     public void SetMapController(MapController mapController)
     {
         this.mapController = mapController;
@@ -67,6 +65,7 @@ public class BaseMoveOnSpline
         t = Mathf.Clamp01(t);
 
         interpolatedRotation = Quaternion.Slerp(trackPointBehind.rotation, trackPointAhead.rotation, t);
+        interpolatedRotation.Normalize();
 
         // for debug draw
         Debug.DrawLine(trackPointBehind.position, trackPointAhead.position, Color.red);
