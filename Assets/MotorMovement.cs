@@ -23,6 +23,7 @@ public class MotorMovement : MonoBehaviour
     private TrackPoint trackPointBehind = new TrackPoint();
     private MapController mapController;
     private Quaternion interpolatedRotation;
+    public Quaternion InterpolatedRotation => interpolatedRotation;
 
 
 
@@ -62,10 +63,10 @@ public class MotorMovement : MonoBehaviour
         targetRotation = leanRotation * uprightRotation;
 
         //Debug.Log($"targetRotation: {targetRotation * Vector3.forward}");
-    //    Debug.Log(
-    //Vector3.Angle(
-    //    uprightRotation * Vector3.forward,
-    //    targetRotation * Vector3.forward));
+        //    Debug.Log(
+        //Vector3.Angle(
+        //    uprightRotation * Vector3.forward,
+        //    targetRotation * Vector3.forward));
     }    
 
     public void RotatePlayer()
