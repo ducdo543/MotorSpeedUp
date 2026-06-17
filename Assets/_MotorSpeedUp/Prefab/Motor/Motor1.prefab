@@ -7147,7 +7147,7 @@ MonoBehaviour:
   maxLeanAngle: 45
   baseMoveOnSpline:
     moveSpeed: 20
-    acceleration: 15
+    acceleration: 20
     rb: {fileID: 7577515018437195512}
 --- !u!1 &2409239079138802957
 GameObject:
