@@ -17,14 +17,15 @@ public class MotorMovement : MonoBehaviour
 
     [Header("Other serialized fields")]
 
-
-
-
     private TrackPoint trackPointBehind = new TrackPoint();
     private MapController mapController;
     private Quaternion interpolatedRotation;
     public Quaternion InterpolatedRotation => interpolatedRotation;
 
+    [Header("Fields for check ground")]
+    [SerializeField] private float castDistance = 0.2f;
+    [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] private Vector3 halfExtents = new Vector3(0.1f, 0.1f, 0.5f);
 
 
     private void Start()
@@ -33,6 +34,15 @@ public class MotorMovement : MonoBehaviour
         mapController = GameObject.FindObjectOfType<MapController>();
 
         baseMoveOnSpline.SetMapController(mapController);
+
+    }
+
+    private void Update()
+    {
+        if (!IsGrounded())
+        {
+            Debug.LogWarning("Player is not grounded!");
+        }
     }
 
     public void GetMoveDirection()
@@ -83,4 +93,24 @@ public class MotorMovement : MonoBehaviour
         baseMoveOnSpline.CalculateInterpolatedPosition(ref interpolatedRotation, trackPointBehind, transform);
     }
 
+
+    // check ground method
+    private bool IsGrounded()
+    {
+        bool isGrounded = Physics.BoxCast(transform.position + new Vector3 (0, 1f, 0), halfExtents, Vector3.down, transform.rotation, castDistance, groundLayerMask);
+        // + (0,1,0) to ensure the center of the box is above the ground, so it can detect the ground properly. Now we just need to change the castDistance 
+        return isGrounded;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.matrix = Matrix4x4.TRS(
+            transform.position + new Vector3(0, 1f, 0),
+            transform.rotation,
+            Vector3.one);
+
+        Gizmos.DrawWireCube(
+            Vector3.zero,
+            halfExtents * 2f);
+    }
 }
