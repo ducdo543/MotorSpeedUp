@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MotorController : MonoBehaviour
 {
-    [SerializeField] private Transform pointForBiker;
     [SerializeField] private BikerController bikerController;
     private Vector3 offSetLocal;
 
@@ -26,7 +25,6 @@ public class MotorController : MonoBehaviour
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();
 
-        bikerController.ChangeTransform(pointForBiker);
     }
 
     private void FixedUpdate()
