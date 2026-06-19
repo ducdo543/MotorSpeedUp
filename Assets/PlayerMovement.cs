@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private TrackPoint trackPointBehind = new TrackPoint();
     private MapController mapController;
+    private Rigidbody rb;
     private Quaternion interpolatedRotation;
 
 
@@ -27,8 +28,9 @@ public class PlayerMovement : MonoBehaviour
     {
         inputHandleMovement = GetComponent<InputHandleMovement>();
         mapController = GameObject.FindObjectOfType<MapController>();
+        rb = GetComponent<Rigidbody>();
 
-        baseMoveOnSpline.SetMapController(mapController);
+        baseMoveOnSpline.SetFields(mapController, rb);
     }
 
     public void GetMoveDirection()
@@ -40,7 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        baseMoveOnSpline.Move(playerMoveDirection);
+        Vector3 targetVelocity = playerMoveDirection * baseMoveOnSpline.MoveSpeed;
+        baseMoveOnSpline.Move(targetVelocity);
     }
 
     public void RotatePlayer()

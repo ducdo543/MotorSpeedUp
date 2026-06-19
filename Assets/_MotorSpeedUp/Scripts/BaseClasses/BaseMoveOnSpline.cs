@@ -7,11 +7,13 @@ public class BaseMoveOnSpline
 {
     private MapController mapController;
     [SerializeField] private float moveSpeed = 5f;
+    public float MoveSpeed => moveSpeed;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private Rigidbody rb;
-    public void SetMapController(MapController mapController)
+    public void SetFields(MapController mapController, Rigidbody rb)
     {
         this.mapController = mapController;
+        this.rb = rb;
     }
     public void GetClosestTrackPointBehind(ref TrackPoint trackPointBehind, Transform transform)
     {
@@ -73,7 +75,7 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
     }
 
-    public void Move(Vector3 playerMoveDirection)
+    public void Move(Vector3 targetVelocity)
     {
 
         // we shouldn't accelerate gradually on each axis separately, so I discard this code as commented.
@@ -85,7 +87,7 @@ public class BaseMoveOnSpline
         //currentXVelocity = playerMoveDirection.x * moveSpeed;
 
         Vector3 currentVelocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
-        Vector3 targetVelocity = playerMoveDirection * moveSpeed;
+
 
         currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         rb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);

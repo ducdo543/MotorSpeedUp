@@ -19,6 +19,7 @@ public class MotorMovement : MonoBehaviour
 
     private TrackPoint trackPointBehind = new TrackPoint();
     private MapController mapController;
+    private Rigidbody rb;
     private Quaternion interpolatedRotation;
     public Quaternion InterpolatedRotation => interpolatedRotation;
 
@@ -32,8 +33,9 @@ public class MotorMovement : MonoBehaviour
     {
         inputHandleMovement = GetComponent<InputHandleMovement>();
         mapController = GameObject.FindObjectOfType<MapController>();
+        rb = GetComponent<Rigidbody>();
 
-        baseMoveOnSpline.SetMapController(mapController);
+        baseMoveOnSpline.SetFields(mapController, rb);
 
     }
 
@@ -51,17 +53,27 @@ public class MotorMovement : MonoBehaviour
         float newVerticalInput = moveInput.y;
         float newHorizontalInput = moveInput.x;
 
+        if (!IsGrounded())
+        {
+            newVerticalInput = 0;
+        }
+
         playerMoveDirection = interpolatedRotation * Vector3.forward * newVerticalInput
     + interpolatedRotation * Vector3.right * Mathf.Clamp(
     newHorizontalInput,
     -maxHorizontalInput,
     maxHorizontalInput);
-        //playerMoveDirection = new Vector3(playerMoveDirection.x, 0, playerMoveDirection.z);
+        playerMoveDirection = new Vector3(playerMoveDirection.x, 0, playerMoveDirection.z);
+
     }
 
     public void Move()
     {
-        baseMoveOnSpline.Move(playerMoveDirection);
+        Vector3 targetVelocity = Vector3.zero;
+
+        targetVelocity = new Vector3(playerMoveDirection.x * baseMoveOnSpline.MoveSpeed, rb.velocity.y, playerMoveDirection.z * baseMoveOnSpline.MoveSpeed);
+
+        baseMoveOnSpline.Move(targetVelocity);
     }
 
     public void GetRotation()
