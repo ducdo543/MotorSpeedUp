@@ -4994,7 +4994,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212243327489324211}
-  m_Material: {fileID: 13400000, guid: 0f70204b33acdfe4297598a80205cf64, type: 2}
+  m_Material: {fileID: 13400000, guid: abfe1d9a5465cfb4ba880d17f4d86312, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -8994,7 +8994,7 @@ MonoBehaviour:
     moveSpeed: 20
     acceleration: 20
     rb: {fileID: 7577515018437195512}
-  castDistance: 1.2
+  castDistance: 1.3
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -13427,7 +13427,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3414604818726115902}
-  m_Material: {fileID: 13400000, guid: 0f70204b33acdfe4297598a80205cf64, type: 2}
+  m_Material: {fileID: 13400000, guid: abfe1d9a5465cfb4ba880d17f4d86312, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
