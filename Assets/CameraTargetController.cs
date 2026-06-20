@@ -24,7 +24,7 @@ public class CameraTargetController : MonoBehaviour
     private void UpdateRotation()
     {
         Vector3 forward = motor.forward;
-        forward.y = -(cameraDownFactor); // Add a downward component to the forward vector
+        forward.y = motor.forward.y - cameraDownFactor; // Add a downward component to the forward vector
         forward.Normalize();
         if (forward.sqrMagnitude > 0) // Quaternion.LookRotation requires a non-zero vector
         {
