@@ -10,6 +10,7 @@ public class BaseMoveOnSpline
     public float MoveSpeed => moveSpeed;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private Rigidbody rb;
+    private Quaternion previousRotation;
     public void SetFields(MapController mapController, Rigidbody rb)
     {
         this.mapController = mapController;
@@ -75,10 +76,10 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
     }
 
-    public void Move(Vector3 targetVelocity)
+    public void Move(Quaternion interpolatedRotation, Vector3 targetVelocity)
     {
 
-        // we shouldn't accelerate gradually on each axis separately, so I discard this code as commented.
+        //// we shouldn't accelerate gradually on each axis separately, so I discard this code as commented.
         //float targetZVelocity = playerMoveDirection.z * moveSpeed;
         //currentZVelocity = Mathf.MoveTowards(rb.velocity.z, targetZVelocity, acceleration * Time.fixedDeltaTime);
         //float targetXVelocity = playerMoveDirection.x * moveSpeed;
@@ -86,11 +87,27 @@ public class BaseMoveOnSpline
         //currentZVelocity = playerMoveDirection.z * moveSpeed;
         //currentXVelocity = playerMoveDirection.x * moveSpeed;
 
-        Vector3 currentVelocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
 
+        //// instead of set rb.velocity directly, we can use add force
+        //Vector3 currentVelocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
+        //currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+        //rb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
 
-        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-        rb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
+        // rotate the current velocity based on previous and current rotation
+        if (previousRotation == null)
+        {
+            previousRotation = interpolatedRotation;
+        }
 
+        Quaternion deltaRotation = interpolatedRotation * Quaternion.Inverse(previousRotation);
+        rb.velocity = deltaRotation * rb.velocity;
+
+        // addForce to reach the target velocity
+        Vector3 speedError = targetVelocity - rb.velocity;
+        Vector3 force = speedError * acceleration;
+        rb.AddForce(force, ForceMode.Force);
+        Debug.Log(force);
+
+        previousRotation = interpolatedRotation;
     }
 }

@@ -9,9 +9,9 @@ public class MotorMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float maxLeanAngle = 45f;
-    private Vector3 playerMoveDirection = new Vector3();
     private Quaternion targetRotation;
     private float maxHorizontalInput = 0.7f;
+    private Vector3 targetVelocity = new Vector3();
 
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
 
@@ -58,22 +58,19 @@ public class MotorMovement : MonoBehaviour
             newVerticalInput = 0;
         }
 
-        playerMoveDirection = interpolatedRotation * Vector3.forward * newVerticalInput
-    + interpolatedRotation * Vector3.right * Mathf.Clamp(
+        Vector3 verticalTargetVelocity = interpolatedRotation * Vector3.forward * newVerticalInput * baseMoveOnSpline.MoveSpeed;
+        Vector3 horizontalTargetVelocity = interpolatedRotation * Vector3.right * Mathf.Clamp(
     newHorizontalInput,
     -maxHorizontalInput,
-    maxHorizontalInput);
-        playerMoveDirection = new Vector3(playerMoveDirection.x, 0, playerMoveDirection.z);
-
+    maxHorizontalInput) * baseMoveOnSpline.MoveSpeed;
+        
+        targetVelocity = verticalTargetVelocity + horizontalTargetVelocity;
     }
 
     public void Move()
     {
-        Vector3 targetVelocity = Vector3.zero;
 
-        targetVelocity = new Vector3(playerMoveDirection.x * baseMoveOnSpline.MoveSpeed, rb.velocity.y, playerMoveDirection.z * baseMoveOnSpline.MoveSpeed);
-
-        baseMoveOnSpline.Move(targetVelocity);
+        baseMoveOnSpline.Move(interpolatedRotation, targetVelocity);
     }
 
     public void GetRotation()

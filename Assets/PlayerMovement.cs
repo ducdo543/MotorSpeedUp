@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move()
     {
         Vector3 targetVelocity = playerMoveDirection * baseMoveOnSpline.MoveSpeed;
-        baseMoveOnSpline.Move(targetVelocity);
+        //baseMoveOnSpline.Move(targetVelocity);
     }
 
     public void RotatePlayer()
