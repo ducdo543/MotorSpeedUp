@@ -93,18 +93,26 @@ public class BaseMoveOnSpline
         //currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         //rb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
 
-        // rotate the current velocity based on previous and current rotation
+        // rotate the current velocity based on previous and current rotation, but just use Yaw rotate (rotate around Up Y world axis)
         if (previousRotation == null)
         {
             previousRotation = interpolatedRotation;
         }
 
-        Quaternion deltaRotation = interpolatedRotation * Quaternion.Inverse(previousRotation);
-        rb.velocity = deltaRotation * rb.velocity;
+        Vector3 prevForward = Vector3.ProjectOnPlane(previousRotation * Vector3.forward, Vector3.up).normalized;
+        Vector3 currForward = Vector3.ProjectOnPlane(interpolatedRotation * Vector3.forward, Vector3.up).normalized;
+
+        Quaternion yawRotation = Quaternion.FromToRotation(prevForward, currForward);
+        //Quaternion deltaRotation = interpolatedRotation * Quaternion.Inverse(previousRotation);
+        rb.velocity = yawRotation * rb.velocity;
 
         // addForce to reach the target velocity
         Vector3 speedError = targetVelocity - rb.velocity;
         Vector3 force = speedError * acceleration;
+        // projecting the vector onto a road plane, we want to remove the normal force so that it doesn't affect spring force of wheelCollider
+        Vector3 normal = interpolatedRotation * Vector3.up;
+        force = Vector3.ProjectOnPlane(force, normal);
+
         rb.AddForce(force, ForceMode.Force);
         Debug.Log(force);
 
