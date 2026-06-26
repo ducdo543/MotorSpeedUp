@@ -8990,9 +8990,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 5
   maxLeanAngle: 45
+  wheelColliders:
+  - {fileID: 8729562638593958876}
+  - {fileID: 5697462825272377440}
   baseMoveOnSpline:
-    moveSpeed: 20
-    acceleration: 20
+    moveSpeed: 40
+    acceleration: 30
     rb: {fileID: 7577515018437195512}
   castDistance: 1.3
   groundLayerMask:

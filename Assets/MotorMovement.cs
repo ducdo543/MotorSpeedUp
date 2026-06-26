@@ -12,6 +12,7 @@ public class MotorMovement : MonoBehaviour
     private Quaternion targetRotation;
     private float maxHorizontalInput = 0.7f;
     private Vector3 targetVelocity = new Vector3();
+    [SerializeField] private WheelCollider[] wheelColliders;
 
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
 
@@ -71,6 +72,12 @@ public class MotorMovement : MonoBehaviour
     {
 
         baseMoveOnSpline.Move(interpolatedRotation, targetVelocity);
+        for (int i = 0; i < wheelColliders.Length; i++)
+        {
+            wheelColliders[i].motorTorque = 0.01f;
+            // this is to inform internal physics handle the movement case instead of the static case
+            // if not set motorTorque a little bit, even we add force by rb.AddForce, the motor can't move
+        }
     }
 
     public void GetRotation()
