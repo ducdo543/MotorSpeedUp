@@ -75,7 +75,7 @@ public class MotorMovement : MonoBehaviour
         for (int i = 0; i < wheelColliders.Length; i++)
         {
             wheelColliders[i].motorTorque = 0.01f;
-            // this is to inform internal physics handle the movement case instead of the static case
+            // this is to inform internal physics handle the movement case instead of the static case for wheelCollider
             // if not set motorTorque a little bit, even we add force by rb.AddForce, the motor can't move
         }
     }

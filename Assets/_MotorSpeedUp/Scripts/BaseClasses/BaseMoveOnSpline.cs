@@ -114,7 +114,7 @@ public class BaseMoveOnSpline
         force = Vector3.ProjectOnPlane(force, normal);
 
         rb.AddForce(force, ForceMode.Force);
-        Debug.Log(force);
+        //Debug.Log(force);
 
         previousRotation = interpolatedRotation;
     }
