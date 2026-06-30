@@ -50,10 +50,9 @@ public class MotorMovement : MonoBehaviour
 
     public void GetMoveDirection()
     {
-        Vector2 moveInput = new Vector2(inputHandleMovement.HorizontalInput / 2f, inputHandleMovement.VerticalInput).normalized;
-        float newVerticalInput = moveInput.y;
-        float newHorizontalInput = moveInput.x;
-
+        float newVerticalInput = inputHandleMovement.VerticalInput;
+        float newHorizontalInput = inputHandleMovement.HorizontalInput;
+        
         if (!IsGrounded())
         {
             newVerticalInput = 0;
