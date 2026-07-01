@@ -9,13 +9,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 10f;
-    private Vector3 playerMoveDirection = new Vector3();
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
-
+    private Quaternion targetRotation;
+    private float newVerticalInput;
+    private float newHorizontalInput;
     [Header("Other serialized fields")]
-
-    
-
 
     private TrackPoint trackPointBehind = new TrackPoint();
     private MapController mapController;
@@ -33,26 +31,30 @@ public class PlayerMovement : MonoBehaviour
         baseMoveOnSpline.SetFields(mapController, rb);
     }
 
-    public void GetMoveDirection()
+    public void WorkingWithInput()
     {
-        
-        playerMoveDirection = interpolatedRotation * Vector3.forward * inputHandleMovement.VerticalInput + interpolatedRotation * Vector3.right * inputHandleMovement.HorizontalInput;
-        
+
+        newVerticalInput = inputHandleMovement.VerticalInput;
+        newHorizontalInput = inputHandleMovement.HorizontalInput;
     }
 
     public void Move()
     {
-        Vector3 targetVelocity = playerMoveDirection * baseMoveOnSpline.MoveSpeed;
-        //baseMoveOnSpline.Move(targetVelocity);
+        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput);
     }
 
-    public void RotatePlayer()
+    public void GetRotation()
     {
+        Vector3 playerMoveDirection = interpolatedRotation * Vector3.forward * newVerticalInput + interpolatedRotation * Vector3.right * newHorizontalInput;
         if (playerMoveDirection != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(playerMoveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            targetRotation = Quaternion.LookRotation(playerMoveDirection);
         }
+    }
+    public void RotatePlayer()
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
     }
 
 

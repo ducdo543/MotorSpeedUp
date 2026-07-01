@@ -76,7 +76,7 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
     }
 
-    public void Move(Quaternion interpolatedRotation, Vector3 targetVelocity)
+    public void Move(Quaternion interpolatedRotation, float verticalInput, float horizontalInput)
     {
 
         //// we shouldn't accelerate gradually on each axis separately, so I discard this code as commented.
@@ -93,11 +93,13 @@ public class BaseMoveOnSpline
         //currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         //rb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
 
+
+
+
+        float targetSpeedForward = verticalInput * moveSpeed;
+        float targetSpeedRight = horizontalInput * moveSpeed;
+
         // rotate the current velocity based on previous and current rotation, but just use Yaw rotate (rotate around Up Y world axis)
-        if (previousRotation == null)
-        {
-            previousRotation = interpolatedRotation;
-        }
 
         Vector3 prevForward = Vector3.ProjectOnPlane(previousRotation * Vector3.forward, Vector3.up).normalized;
         Vector3 currForward = Vector3.ProjectOnPlane(interpolatedRotation * Vector3.forward, Vector3.up).normalized;
@@ -106,14 +108,21 @@ public class BaseMoveOnSpline
         //Quaternion deltaRotation = interpolatedRotation * Quaternion.Inverse(previousRotation);
         rb.velocity = yawRotation * rb.velocity;
 
+        // when calculate force, projecting the vector velocity onto a road plane, we want to remove the normal force so that it doesn't affect spring force of wheelCollider
+        Vector3 projectedCurrentVelocity = Vector3.ProjectOnPlane(rb.velocity, interpolatedRotation * Vector3.up);
+       
+        
+        float speedErrorForward = targetSpeedForward - Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.forward);
+        float speedErrorRight = targetSpeedRight - Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.right);
         // addForce to reach the target velocity
-        Vector3 speedError = targetVelocity - rb.velocity;
-        Vector3 force = speedError * acceleration;
-        // projecting the vector onto a road plane, we want to remove the normal force so that it doesn't affect spring force of wheelCollider
-        Vector3 normal = interpolatedRotation * Vector3.up;
-        force = Vector3.ProjectOnPlane(force, normal);
 
-        rb.AddForce(force, ForceMode.Force);
+        Vector3 forceForward = speedErrorForward * acceleration * (interpolatedRotation * Vector3.forward);
+        Vector3 forceRight = speedErrorRight * acceleration * (interpolatedRotation * Vector3.right);
+
+
+
+        rb.AddForce(forceForward, ForceMode.Force);
+        rb.AddForce(forceRight, ForceMode.Force);
 
         previousRotation = interpolatedRotation;
     }
