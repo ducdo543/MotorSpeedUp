@@ -11,7 +11,8 @@ public class MotorMovement : MonoBehaviour
     [SerializeField] private float maxLeanAngle = 45f;
     private Quaternion targetRotation;
     private float maxHorizontalInput = 0.7f;
-    private Vector3 targetVelocity = new Vector3();
+    private float newVerticalInput;
+    private float newHorizontalInput;
     [SerializeField] private WheelCollider[] wheelColliders;
 
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
@@ -48,29 +49,23 @@ public class MotorMovement : MonoBehaviour
         }
     }
 
-    public void GetMoveDirection()
+    public void WorkingWithInput()
     {
-        float newVerticalInput = inputHandleMovement.VerticalInput;
-        float newHorizontalInput = inputHandleMovement.HorizontalInput;
-        
+        newVerticalInput = inputHandleMovement.VerticalInput;
+        newHorizontalInput = Mathf.Clamp(inputHandleMovement.HorizontalInput, -maxHorizontalInput, maxHorizontalInput);
+
         if (!IsGrounded())
         {
             newVerticalInput = 0;
         }
 
-        Vector3 verticalTargetVelocity = interpolatedRotation * Vector3.forward * newVerticalInput * baseMoveOnSpline.MoveSpeed;
-        Vector3 horizontalTargetVelocity = interpolatedRotation * Vector3.right * Mathf.Clamp(
-    newHorizontalInput,
-    -maxHorizontalInput,
-    maxHorizontalInput) * baseMoveOnSpline.MoveSpeed;
         
-        targetVelocity = verticalTargetVelocity + horizontalTargetVelocity;
     }
 
     public void Move()
     {
-
-        baseMoveOnSpline.Move(interpolatedRotation, targetVelocity);
+        
+        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput);
         for (int i = 0; i < wheelColliders.Length; i++)
         {
             wheelColliders[i].motorTorque = 0.01f;

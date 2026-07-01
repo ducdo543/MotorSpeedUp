@@ -21,7 +21,7 @@ public class MotorController : MonoBehaviour
     {
 
         motorMovement.CalculateInterpolatedPosition();
-        motorMovement.GetMoveDirection();
+        motorMovement.WorkingWithInput();
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();
 
