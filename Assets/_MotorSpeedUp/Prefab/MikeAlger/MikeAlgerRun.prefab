@@ -987,7 +987,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585496588214235384}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 1.34, z: 5.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1111,7 +1111,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 10
   baseMoveOnSpline:
-    moveSpeed: 5
+    moveSpeed: 40
+    acchieveTargetSpeedInstantly: 1
+    acceleration: 0
+    decelerationForward: 0
+    decelerationRight: 0
     rb: {fileID: 4999319148922900442}
 --- !u!114 &2294718994157518603
 MonoBehaviour:
