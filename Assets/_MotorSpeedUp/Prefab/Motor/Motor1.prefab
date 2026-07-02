@@ -8994,8 +8994,11 @@ MonoBehaviour:
   - {fileID: 8729562638593958876}
   - {fileID: 5697462825272377440}
   baseMoveOnSpline:
-    moveSpeed: 40
+    moveSpeed: 50
+    acchieveTargetSpeedInstantly: 0
     acceleration: 30
+    decelerationForward: 30
+    decelerationRight: 250
     rb: {fileID: 7577515018437195512}
   castDistance: 1.3
   groundLayerMask:

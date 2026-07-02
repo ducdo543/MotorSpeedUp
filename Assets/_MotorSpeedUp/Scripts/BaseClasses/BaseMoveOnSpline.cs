@@ -8,7 +8,13 @@ public class BaseMoveOnSpline
     private MapController mapController;
     [SerializeField] private float moveSpeed = 5f;
     public float MoveSpeed => moveSpeed;
+
+    [Tooltip("When enabled, acceleration and deceleration are ignored. The object instantly reaches the target speed.")]
+    [SerializeField] private bool acchieveTargetSpeedInstantly = false;
+
     [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float decelerationForward = 10f;
+    [SerializeField] private float decelerationRight = 10f;
     [SerializeField] private Rigidbody rb;
     private Quaternion previousRotation;
     public void SetFields(MapController mapController, Rigidbody rb)
@@ -78,7 +84,7 @@ public class BaseMoveOnSpline
 
     public void Move(Quaternion interpolatedRotation, float verticalInput, float horizontalInput)
     {
-
+        // discard
         //// we shouldn't accelerate gradually on each axis separately, so I discard this code as commented.
         //float targetZVelocity = playerMoveDirection.z * moveSpeed;
         //currentZVelocity = Mathf.MoveTowards(rb.velocity.z, targetZVelocity, acceleration * Time.fixedDeltaTime);
@@ -87,7 +93,7 @@ public class BaseMoveOnSpline
         //currentZVelocity = playerMoveDirection.z * moveSpeed;
         //currentXVelocity = playerMoveDirection.x * moveSpeed;
 
-
+        // discard
         //// instead of set rb.velocity directly, we can use add force
         //Vector3 currentVelocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
         //currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
@@ -95,6 +101,7 @@ public class BaseMoveOnSpline
 
 
 
+        WorkingWithAcceleration();
 
         float targetSpeedForward = verticalInput * moveSpeed;
         float targetSpeedRight = horizontalInput * moveSpeed;
@@ -111,19 +118,65 @@ public class BaseMoveOnSpline
         // when calculate force, projecting the vector velocity onto a road plane, we want to remove the normal force so that it doesn't affect spring force of wheelCollider
         Vector3 projectedCurrentVelocity = Vector3.ProjectOnPlane(rb.velocity, interpolatedRotation * Vector3.up);
        
-        
-        float speedErrorForward = targetSpeedForward - Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.forward);
-        float speedErrorRight = targetSpeedRight - Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.right);
+        float currentSpeedForward = Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.forward);
+        float currentSpeedRight = Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.right);
+        float speedErrorForward = targetSpeedForward - currentSpeedForward;
+        float speedErrorRight = targetSpeedRight - currentSpeedRight;
         // addForce to reach the target velocity
+        Vector3 forceForward;
+        Vector3 forceRight;
 
-        Vector3 forceForward = speedErrorForward * acceleration * (interpolatedRotation * Vector3.forward);
-        Vector3 forceRight = speedErrorRight * acceleration * (interpolatedRotation * Vector3.right);
+        if (targetSpeedForward == 0)
+        {
+            float newDecelerationForward = decelerationForward;
+            if (Mathf.Abs(currentSpeedForward) < 3f)
+            {
+                newDecelerationForward = (rb.mass / Time.fixedDeltaTime)/10f;
+            }
 
+            if (Mathf.Abs(currentSpeedForward) < 0.4f)
+            {
+                newDecelerationForward = rb.mass / Time.fixedDeltaTime;
+            }
+            forceForward = speedErrorForward * newDecelerationForward * (interpolatedRotation * Vector3.forward);
+        }
+        else
+        {
+            forceForward = speedErrorForward * acceleration * (interpolatedRotation * Vector3.forward);
+        }
+
+        if (targetSpeedRight == 0)
+        {
+            forceRight = speedErrorRight * decelerationRight * (interpolatedRotation * Vector3.right);
+        }
+        else
+        {
+            forceRight = speedErrorRight * acceleration * (interpolatedRotation * Vector3.right);
+        }
 
 
         rb.AddForce(forceForward, ForceMode.Force);
         rb.AddForce(forceRight, ForceMode.Force);
 
         previousRotation = interpolatedRotation;
+    }
+
+    private void WorkingWithAcceleration()
+    {
+        if (!acchieveTargetSpeedInstantly)
+        {
+            // if acceleration or deceleration surpasses rb.mass / Time.fixedDeltaTime, the player will surpass the target speed in one frame
+            // that's not what we want (and this can also cause jitter issue), we will need to reduce acceleration or deceleration
+            if (acceleration > rb.mass / Time.fixedDeltaTime || decelerationForward > rb.mass / Time.fixedDeltaTime || decelerationRight > rb.mass / Time.fixedDeltaTime)
+            {
+                Debug.LogWarning("Acceleration or deceleration is too high, it may cause jitter issue");
+            }
+        }
+        else
+        {
+            acceleration = rb.mass / Time.fixedDeltaTime;
+            decelerationForward = rb.mass / Time.fixedDeltaTime;
+            decelerationRight = rb.mass / Time.fixedDeltaTime;
+        }
     }
 }
