@@ -20,7 +20,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Quaternion interpolatedRotation;
 
-
+    [Header("Fields for check ground")]
+    [SerializeField] private float castDistance = 0.2f;
+    [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] private Vector3 halfExtents = new Vector3(0.1f, 0.1f, 0.5f);
 
     private void Start()
     {
@@ -36,18 +39,52 @@ public class PlayerMovement : MonoBehaviour
 
         newVerticalInput = inputHandleMovement.VerticalInput;
         newHorizontalInput = inputHandleMovement.HorizontalInput;
+
+        if (!IsGrounded())
+        {
+            newVerticalInput = 0;
+        }
     }
 
     public void Move()
     {
-        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput);
+        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput, IsGrounded());
     }
 
     public void GetRotation()
     {
-        Vector3 playerMoveDirection = interpolatedRotation * Vector3.forward * newVerticalInput + interpolatedRotation * Vector3.right * newHorizontalInput;
-        if (playerMoveDirection != Vector3.zero)
+        //Vector3 playerMoveDirection = interpolatedRotation * Vector3.forward * newVerticalInput + interpolatedRotation * Vector3.right * newHorizontalInput;
+        //if (playerMoveDirection != Vector3.zero)
+        //{
+        //    targetRotation = Quaternion.LookRotation(playerMoveDirection);
+        //}
+        //else
+        //{
+        //    if (interpolatedRotation != baseMoveOnSpline.PreviousRotation)
+        //    {
+        //        Quaternion deltaQuaternion = interpolatedRotation * Quaternion.Inverse(baseMoveOnSpline.PreviousRotation);
+        //        targetRotation = transform.rotation * deltaQuaternion;
+        //    }
+        //}
+        Vector3 playerMoveDirection = Vector3.zero;
+        Vector3 velocityWithoutUp = Vector3.zero;
+
+        if (!IsGrounded())
         {
+            // we want to remove the up component of the velocity
+            Vector3 velocityWithoutUpWorld = Vector3.ProjectOnPlane(rb.velocity, Vector3.up);
+            // then project that onto the plane defined by the up axis of the spline
+            velocityWithoutUp = Vector3.ProjectOnPlane(velocityWithoutUpWorld, interpolatedRotation * Vector3.up);
+        }
+        else
+        {
+            // forward that is perpendicular to the up axis of the spline
+            velocityWithoutUp = Vector3.ProjectOnPlane(rb.velocity, interpolatedRotation * Vector3.up);
+        }
+
+        if (velocityWithoutUp.magnitude > 1f)
+        {
+            playerMoveDirection = velocityWithoutUp.normalized;
             targetRotation = Quaternion.LookRotation(playerMoveDirection);
         }
     }
@@ -64,4 +101,32 @@ public class PlayerMovement : MonoBehaviour
         baseMoveOnSpline.CalculateInterpolatedPosition(ref interpolatedRotation, trackPointBehind, transform);
     }
 
+    private bool IsGrounded()
+    {
+        bool isGrounded = Physics.BoxCast(transform.position + transform.up * 1f, halfExtents, -transform.up, transform.rotation, castDistance, groundLayerMask);
+        // + (0,1,0) to ensure the center of the box is above the ground, so it can detect the ground properly. Now we just need to change the castDistance 
+        return isGrounded;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+
+        Vector3 start = transform.position + transform.up * 1f;
+        Vector3 end = start - transform.up * castDistance;
+
+        // draw the boxcast gizmo
+        Gizmos.matrix = Matrix4x4.TRS(
+            transform.position + new Vector3(0, 1f, 0),
+            transform.rotation,
+            Vector3.one);
+
+        Gizmos.DrawWireCube(
+            Vector3.zero,
+            halfExtents * 2f);
+
+        // draw castDistance line
+        Gizmos.matrix = Matrix4x4.identity;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(start, end);
+    }
 }
