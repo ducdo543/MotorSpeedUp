@@ -43,10 +43,10 @@ public class MotorMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!IsGrounded())
-        {
-            Debug.LogWarning("Player is not grounded!");
-        }
+        //if (!IsGrounded())
+        //{
+        //    Debug.LogWarning("Player is not grounded!");
+        //}
     }
 
     public void WorkingWithInput()
@@ -65,7 +65,7 @@ public class MotorMovement : MonoBehaviour
     public void Move()
     {
         
-        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput);
+        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput, IsGrounded());
         for (int i = 0; i < wheelColliders.Length; i++)
         {
             wheelColliders[i].motorTorque = 0.01f;
@@ -107,13 +107,18 @@ public class MotorMovement : MonoBehaviour
     // check ground method
     private bool IsGrounded()
     {
-        bool isGrounded = Physics.BoxCast(transform.position + new Vector3 (0, 1f, 0), halfExtents, Vector3.down, transform.rotation, castDistance, groundLayerMask);
+        bool isGrounded = Physics.BoxCast(transform.position + transform.up * 1f, halfExtents, - transform.up, transform.rotation, castDistance, groundLayerMask);
         // + (0,1,0) to ensure the center of the box is above the ground, so it can detect the ground properly. Now we just need to change the castDistance 
         return isGrounded;
     }
 
     private void OnDrawGizmosSelected()
     {
+        
+        Vector3 start = transform.position + transform.up * 1f;
+        Vector3 end = start - transform.up * castDistance;
+
+        // draw the boxcast gizmo
         Gizmos.matrix = Matrix4x4.TRS(
             transform.position + new Vector3(0, 1f, 0),
             transform.rotation,
@@ -122,5 +127,10 @@ public class MotorMovement : MonoBehaviour
         Gizmos.DrawWireCube(
             Vector3.zero,
             halfExtents * 2f);
+
+        // draw castDistance line
+        Gizmos.matrix = Matrix4x4.identity;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(start, end);
     }
 }

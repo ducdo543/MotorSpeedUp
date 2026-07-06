@@ -15,12 +15,17 @@ public class BaseMoveOnSpline
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float decelerationForward = 10f;
     [SerializeField] private float decelerationRight = 10f;
+    private float decelerationOnSky = 10f; 
     [SerializeField] private Rigidbody rb;
     private Quaternion previousRotation;
+    public Quaternion PreviousRotation => previousRotation;
     public void SetFields(MapController mapController, Rigidbody rb)
     {
         this.mapController = mapController;
         this.rb = rb;
+
+        // decelerationOnSky should be really small compare to rb.mass / Time.fixedDeltaTime, otherwise the player will move upwards when not grounded (cause forward is canceled out, but velocity.y is still not 0, so the player will move upwards)
+        decelerationOnSky = (rb.mass / Time.fixedDeltaTime) / 35f;
     }
     public void GetClosestTrackPointBehind(ref TrackPoint trackPointBehind, Transform transform)
     {
@@ -82,29 +87,14 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
     }
 
-    public void Move(Quaternion interpolatedRotation, float verticalInput, float horizontalInput)
+    public void Move(Quaternion interpolatedRotation, float verticalInput, float horizontalInput, bool isGrounded = true)
     {
-        // discard
-        //// we shouldn't accelerate gradually on each axis separately, so I discard this code as commented.
-        //float targetZVelocity = playerMoveDirection.z * moveSpeed;
-        //currentZVelocity = Mathf.MoveTowards(rb.velocity.z, targetZVelocity, acceleration * Time.fixedDeltaTime);
-        //float targetXVelocity = playerMoveDirection.x * moveSpeed;
-        //currentXVelocity = Mathf.MoveTowards(rb.velocity.x, targetXVelocity, acceleration * Time.fixedDeltaTime);
-        //currentZVelocity = playerMoveDirection.z * moveSpeed;
-        //currentXVelocity = playerMoveDirection.x * moveSpeed;
-
-        // discard
-        //// instead of set rb.velocity directly, we can use add force
-        //Vector3 currentVelocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z);
-        //currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-        //rb.velocity = new Vector3(currentVelocity.x, currentVelocity.y, currentVelocity.z);
-
 
 
         WorkingWithAcceleration();
 
-        float targetSpeedForward = verticalInput * moveSpeed;
-        float targetSpeedRight = horizontalInput * moveSpeed;
+        Vector3 targetVelocityForward = verticalInput * moveSpeed * (interpolatedRotation * Vector3.forward);
+        Vector3 targetVelocityRight = horizontalInput * moveSpeed * (interpolatedRotation * Vector3.right);
 
         // rotate the current velocity based on previous and current rotation, but just use Yaw rotate (rotate around Up Y world axis)
 
@@ -115,47 +105,71 @@ public class BaseMoveOnSpline
         //Quaternion deltaRotation = interpolatedRotation * Quaternion.Inverse(previousRotation);
         rb.velocity = yawRotation * rb.velocity;
 
-        // when calculate force, projecting the vector velocity onto a road plane, we want to remove the normal force so that it doesn't affect spring force of wheelCollider
-        Vector3 projectedCurrentVelocity = Vector3.ProjectOnPlane(rb.velocity, interpolatedRotation * Vector3.up);
-       
-        float currentSpeedForward = Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.forward);
-        float currentSpeedRight = Vector3.Dot(projectedCurrentVelocity, interpolatedRotation * Vector3.right);
-        float speedErrorForward = targetSpeedForward - currentSpeedForward;
-        float speedErrorRight = targetSpeedRight - currentSpeedRight;
+
+        Vector3 currentVelocityRight;
+        Vector3 currentVelocityWithoutRight;
+
+      
+        currentVelocityWithoutRight = Vector3.ProjectOnPlane(rb.velocity, interpolatedRotation * Vector3.right);
+        currentVelocityRight = Vector3.Dot(rb.velocity, interpolatedRotation * Vector3.right) * (interpolatedRotation * Vector3.right);
+
+
+
+        Vector3 speedErrorWithoutRight = targetVelocityForward - currentVelocityWithoutRight;
+        Vector3 speedErrorRight = targetVelocityRight - currentVelocityRight;
+        
         // addForce to reach the target velocity
-        Vector3 forceForward;
+        Vector3 forceWithoutRight;
         Vector3 forceRight;
 
-        if (targetSpeedForward == 0)
+        float newDecelerationForward;
+        if (targetVelocityForward == Vector3.zero)
         {
-            float newDecelerationForward = decelerationForward;
-            if (Mathf.Abs(currentSpeedForward) < 3f)
+            newDecelerationForward = decelerationForward;
+            if (Mathf.Abs(currentVelocityWithoutRight.magnitude) < 3f)
             {
                 newDecelerationForward = (rb.mass / Time.fixedDeltaTime)/10f;
             }
 
-            if (Mathf.Abs(currentSpeedForward) < 0.4f)
+            if (Mathf.Abs(currentVelocityWithoutRight.magnitude) < 0.4f)
             {
                 newDecelerationForward = rb.mass / Time.fixedDeltaTime;
             }
-            forceForward = speedErrorForward * newDecelerationForward * (interpolatedRotation * Vector3.forward);
+            forceWithoutRight = speedErrorWithoutRight * newDecelerationForward;
         }
         else
         {
-            forceForward = speedErrorForward * acceleration * (interpolatedRotation * Vector3.forward);
+            forceWithoutRight = speedErrorWithoutRight * acceleration;
         }
 
-        if (targetSpeedRight == 0)
+        if (targetVelocityRight == Vector3.zero)
         {
-            forceRight = speedErrorRight * decelerationRight * (interpolatedRotation * Vector3.right);
+            forceRight = speedErrorRight * decelerationRight;
         }
         else
         {
-            forceRight = speedErrorRight * acceleration * (interpolatedRotation * Vector3.right);
+            forceRight = speedErrorRight * acceleration;
         }
 
+        if (isGrounded)
+        {
+            float currentVelocityUp = Vector3.Dot(rb.velocity, interpolatedRotation * Vector3.up);
+            if (Mathf.Abs(currentVelocityUp) < 0.45f)
+            {
+                // don't add force in up direction any more to not conflict with wheel collider's suspension, to avoid jitter 
+                forceWithoutRight = Vector3.ProjectOnPlane(forceWithoutRight, interpolatedRotation * Vector3.up);
+            }
+        }
 
-        rb.AddForce(forceForward, ForceMode.Force);
+        if (!isGrounded)
+        {
+            // if not grounded, we don't want to add force in world up direction, to avoid conflicting with gravity
+            // and deceleration of forward (decelerationOnSky) should be small, if deceleration is too large, forward velocity will be canceled out, and velocity.y is still !0, making the player move upwards, that's weird
+            newDecelerationForward = decelerationOnSky;
+            forceWithoutRight = Vector3.ProjectOnPlane(speedErrorWithoutRight * newDecelerationForward, Vector3.up);
+        }
+
+        rb.AddForce(forceWithoutRight, ForceMode.Force);
         rb.AddForce(forceRight, ForceMode.Force);
 
         previousRotation = interpolatedRotation;

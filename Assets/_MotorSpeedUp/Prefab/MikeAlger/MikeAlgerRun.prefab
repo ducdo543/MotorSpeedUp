@@ -978,7 +978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4066681584684421289
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,10 +1113,15 @@ MonoBehaviour:
   baseMoveOnSpline:
     moveSpeed: 40
     acchieveTargetSpeedInstantly: 1
-    acceleration: 0
-    decelerationForward: 0
-    decelerationRight: 0
+    acceleration: 20
+    decelerationForward: 20
+    decelerationRight: 20
     rb: {fileID: 4999319148922900442}
+  castDistance: 1.2
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  halfExtents: {x: 0.1, y: 0.1, z: 0.44}
 --- !u!114 &2294718994157518603
 MonoBehaviour:
   m_ObjectHideFlags: 0
