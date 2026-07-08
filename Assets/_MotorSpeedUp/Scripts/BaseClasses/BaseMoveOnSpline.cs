@@ -136,6 +136,8 @@ public class BaseMoveOnSpline
                 newDecelerationForward = rb.mass / Time.fixedDeltaTime;
             }
             forceWithoutRight = speedErrorWithoutRight * newDecelerationForward;
+
+
         }
         else
         {

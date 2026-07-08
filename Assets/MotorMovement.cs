@@ -66,11 +66,22 @@ public class MotorMovement : MonoBehaviour
     {
         
         baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput, IsGrounded());
-        for (int i = 0; i < wheelColliders.Length; i++)
+
+        if (newVerticalInput == 0 && newHorizontalInput == 0)
         {
-            wheelColliders[i].motorTorque = 0.01f;
-            // this is to inform internal physics handle the movement case instead of the static case for wheelCollider
-            // if not set motorTorque a little bit, even we add force by rb.AddForce, the motor can't move
+            for (int i = 0; i < wheelColliders.Length; i++)
+            {
+                wheelColliders[i].motorTorque = 0f;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < wheelColliders.Length; i++)
+            {
+                wheelColliders[i].motorTorque = 0.01f;
+                // this is to inform internal physics handle the movement case instead of the static case for wheelCollider
+                // if not set motorTorque a little bit, even we add force by rb.AddForce, the motor can't move
+            }
         }
     }
 
