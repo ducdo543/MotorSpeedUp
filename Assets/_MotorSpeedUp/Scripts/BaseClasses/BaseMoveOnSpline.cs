@@ -74,7 +74,7 @@ public class BaseMoveOnSpline
     public void CalculateInterpolatedPosition(ref Quaternion interpolatedRotation, TrackPoint trackPointBehind, Transform transform)
     {
         TrackPoint trackPointAhead = mapController.TrackPoints[trackPointBehind.index + 1];
-        Vector3 trackDirection = (trackPointAhead.position - trackPointBehind.position);
+        Vector3 trackDirection = Vector3.Dot(trackPointAhead.position - trackPointBehind.position, trackPointBehind.rotation * Vector3.forward) * (trackPointBehind.rotation * Vector3.forward);
         float t = Vector3.Dot(transform.position - trackPointBehind.position, trackDirection) / trackDirection.sqrMagnitude;
         t = Mathf.Clamp01(t);
 
@@ -82,9 +82,10 @@ public class BaseMoveOnSpline
         interpolatedRotation.Normalize();
 
         // for debug draw
-        Debug.DrawLine(trackPointBehind.position, trackPointAhead.position, Color.red);
-        Vector3 interpolatedPosition = Vector3.Lerp(trackPointBehind.position, trackPointAhead.position, t);
-        Debug.DrawLine(transform.position, interpolatedPosition, Color.green);
+        Debug.DrawLine(trackPointBehind.position + new Vector3(0, 1f, 0), trackPointAhead.position + new Vector3(0, 1f, 0), Color.blue);
+        Debug.DrawLine(trackPointBehind.position + new Vector3(0, 1f, 0), trackPointBehind.position + trackDirection + new Vector3(0, 1f, 0), Color.blue);
+        Vector3 interpolatedPosition = Vector3.Lerp(trackPointBehind.position, trackPointBehind.position + trackDirection, t);
+        Debug.DrawLine(transform.position + new Vector3(0, 1f, 0), interpolatedPosition + new Vector3(0, 1f, 0), Color.blue);
     }
 
     public void Move(Quaternion interpolatedRotation, float verticalInput, float horizontalInput, bool isGrounded = true)
