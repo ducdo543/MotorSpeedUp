@@ -25,7 +25,7 @@ public class BaseMoveOnSpline
         this.rb = rb;
 
         // decelerationOnSky should be really small compare to rb.mass / Time.fixedDeltaTime, otherwise the player will move upwards when not grounded (cause forward is canceled out, but velocity.y is still not 0, so the player will move upwards)
-        decelerationOnSky = (rb.mass / Time.fixedDeltaTime) / 35f;
+        decelerationOnSky = (rb.mass / Time.fixedDeltaTime) / 50f;
     }
     public void GetClosestTrackPointBehind(ref TrackPoint trackPointBehind, Transform transform)
     {
@@ -74,7 +74,12 @@ public class BaseMoveOnSpline
     public void CalculateInterpolatedPosition(ref Quaternion interpolatedRotation, TrackPoint trackPointBehind, Transform transform)
     {
         TrackPoint trackPointAhead = mapController.TrackPoints[trackPointBehind.index + 1];
+
         Vector3 trackDirection = Vector3.Dot(trackPointAhead.position - trackPointBehind.position, trackPointBehind.rotation * Vector3.forward) * (trackPointBehind.rotation * Vector3.forward);
+        // changing the logic of CalculatedInterpolated so that when only going left or right, it never changes trackPointBehind, 
+        // with the old logic: Vector3 trackDirection = trackPointAhead.position - trackPointBehind.position,
+        // this may occur, and if trackPointBehind -1 +1 constantly, the motor change its rotation constantly, 
+        // imagine going right but rotation change back and forth, that affects player experiences
         float t = Vector3.Dot(transform.position - trackPointBehind.position, trackDirection) / trackDirection.sqrMagnitude;
         t = Mathf.Clamp01(t);
 
@@ -157,7 +162,7 @@ public class BaseMoveOnSpline
         if (isGrounded)
         {
             float currentVelocityUp = Vector3.Dot(rb.velocity, interpolatedRotation * Vector3.up);
-            if (Mathf.Abs(currentVelocityUp) < 0.45f)
+            if (currentVelocityUp < 0.45f) // remember consider even negative, we don't want to add force in up direction
             {
                 // don't add force in up direction any more to not conflict with wheel collider's suspension, to avoid jitter 
                 forceWithoutRight = Vector3.ProjectOnPlane(forceWithoutRight, interpolatedRotation * Vector3.up);
