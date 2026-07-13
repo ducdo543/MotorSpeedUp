@@ -78,7 +78,7 @@ public class BaseMoveOnSpline
         Vector3 trackDirection = Vector3.Dot(trackPointAhead.position - trackPointBehind.position, trackPointBehind.rotation * Vector3.forward) * (trackPointBehind.rotation * Vector3.forward);
         // changing the logic of CalculatedInterpolated so that when only going left or right, it never changes trackPointBehind, 
         // with the old logic: Vector3 trackDirection = trackPointAhead.position - trackPointBehind.position,
-        // this may occur, and if trackPointBehind -1 +1 constantly, the motor change its rotation constantly, 
+        // this may occur, because if trackPointBehind -1 +1 constantly, the motor change its rotation constantly, 
         // imagine going right but rotation change back and forth, that affects player experiences
         float t = Vector3.Dot(transform.position - trackPointBehind.position, trackDirection) / trackDirection.sqrMagnitude;
         t = Mathf.Clamp01(t);
