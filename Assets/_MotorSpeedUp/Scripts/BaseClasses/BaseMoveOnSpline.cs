@@ -148,6 +148,8 @@ public class BaseMoveOnSpline
         else
         {
             forceWithoutRight = speedErrorWithoutRight * acceleration;
+            // when accelerate the object, we don't add up force to avoid conflict with wheel collider's suspension, to avoid jitter while moving fast
+            forceWithoutRight = Vector3.ProjectOnPlane(forceWithoutRight, interpolatedRotation * Vector3.up);
         }
 
         if (targetVelocityRight == Vector3.zero)
