@@ -125,31 +125,50 @@ public class BaseMoveOnSpline
         Vector3 speedErrorRight = targetVelocityRight - currentVelocityRight;
         
         // addForce to reach the target velocity
-        Vector3 forceWithoutRight;
+        Vector3 forceWithoutRight = Vector3.zero;
         Vector3 forceRight;
 
         float newDecelerationForward;
-        if (targetVelocityForward == Vector3.zero)
+
+        if (!isGrounded)
         {
-            newDecelerationForward = decelerationForward;
-            if (Mathf.Abs(currentVelocityWithoutRight.magnitude) < 3f)
-            {
-                newDecelerationForward = (rb.mass / Time.fixedDeltaTime)/10f;
-            }
-
-            if (Mathf.Abs(currentVelocityWithoutRight.magnitude) < 0.4f)
-            {
-                newDecelerationForward = rb.mass / Time.fixedDeltaTime;
-            }
-            forceWithoutRight = speedErrorWithoutRight * newDecelerationForward;
-
-
+            // if not grounded, we don't want to add force in world up direction, to avoid conflicting with gravity
+            // and deceleration of forward (decelerationOnSky) should be small, if deceleration is too large, forward velocity will be canceled out, and velocity.y is still !0, making the player move upwards, that's weird
+            newDecelerationForward = decelerationOnSky;
+            forceWithoutRight = Vector3.ProjectOnPlane(speedErrorWithoutRight * newDecelerationForward, Vector3.up);
         }
-        else
+
+        if (isGrounded)
         {
-            forceWithoutRight = speedErrorWithoutRight * acceleration;
-            // when accelerate the object, we don't add up force to avoid conflict with wheel collider's suspension, to avoid jitter while moving fast
-            forceWithoutRight = Vector3.ProjectOnPlane(forceWithoutRight, interpolatedRotation * Vector3.up);
+            if (targetVelocityForward == Vector3.zero)
+            {
+                newDecelerationForward = decelerationForward;
+                if (Mathf.Abs(currentVelocityWithoutRight.magnitude) < 3f)
+                {
+                    newDecelerationForward = (rb.mass / Time.fixedDeltaTime) / 10f;
+                }
+
+                if (Mathf.Abs(currentVelocityWithoutRight.magnitude) < 0.4f)
+                {
+                    newDecelerationForward = rb.mass / Time.fixedDeltaTime;
+                }
+                forceWithoutRight = speedErrorWithoutRight * newDecelerationForward;
+
+
+                float currentVelocityUp = Vector3.Dot(rb.velocity, interpolatedRotation * Vector3.up);
+                if (currentVelocityUp < 0.45f) // remember consider even negative, we don't want to add force in up direction
+                {
+                    // don't add force in up direction any more to not conflict with wheel collider's suspension, to avoid jitter 
+                    forceWithoutRight = Vector3.ProjectOnPlane(forceWithoutRight, interpolatedRotation * Vector3.up);
+                }
+
+            }
+            else
+            {
+                forceWithoutRight = speedErrorWithoutRight * acceleration;
+                // when accelerate the object, we don't add up force to avoid conflict with wheel collider's suspension, to avoid jitter while moving fast
+                forceWithoutRight = Vector3.ProjectOnPlane(forceWithoutRight, interpolatedRotation * Vector3.up);
+            }
         }
 
         if (targetVelocityRight == Vector3.zero)
@@ -161,23 +180,7 @@ public class BaseMoveOnSpline
             forceRight = speedErrorRight * acceleration;
         }
 
-        if (isGrounded)
-        {
-            float currentVelocityUp = Vector3.Dot(rb.velocity, interpolatedRotation * Vector3.up);
-            if (currentVelocityUp < 0.45f) // remember consider even negative, we don't want to add force in up direction
-            {
-                // don't add force in up direction any more to not conflict with wheel collider's suspension, to avoid jitter 
-                forceWithoutRight = Vector3.ProjectOnPlane(forceWithoutRight, interpolatedRotation * Vector3.up);
-            }
-        }
 
-        if (!isGrounded)
-        {
-            // if not grounded, we don't want to add force in world up direction, to avoid conflicting with gravity
-            // and deceleration of forward (decelerationOnSky) should be small, if deceleration is too large, forward velocity will be canceled out, and velocity.y is still !0, making the player move upwards, that's weird
-            newDecelerationForward = decelerationOnSky;
-            forceWithoutRight = Vector3.ProjectOnPlane(speedErrorWithoutRight * newDecelerationForward, Vector3.up);
-        }
 
         rb.AddForce(forceWithoutRight, ForceMode.Force);
         rb.AddForce(forceRight, ForceMode.Force);
