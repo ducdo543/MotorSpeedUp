@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour, IVehicleMovement
         if (velocityWithoutUp.magnitude > 1f)
         {
             playerMoveDirection = velocityWithoutUp.normalized;
-            targetRotation = Quaternion.LookRotation(playerMoveDirection);
+            targetRotation = Quaternion.LookRotation(playerMoveDirection, InterpolatedRotation * Vector3.up);
         }
     }
     public void RotatePlayer()
