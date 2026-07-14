@@ -12,13 +12,23 @@ public class CameraTargetController : MonoBehaviour
     [SerializeField] private float rotationSpeedYaw = 7f;
     [SerializeField] private float rotationSpeedTilt = 3f;
     private Quaternion targetRotation;
+
     private void Awake()
+    {
+        Initialized();
+    }
+
+    private void OnValidate()
+    {
+        Initialized();
+    }
+
+    private void Initialized()
     {
         if (vehicle == null)
         {
             vehicle = GameObject.FindWithTag("MainMotor").transform;
         }
-
         vehicleMovement = vehicle.GetComponent<IVehicleMovement>();
     }
 
