@@ -5,7 +5,8 @@ using static UnityEngine.Time;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private InputHandleMovement inputHandleMovement;
+    private MapController mapController;
+    private Rigidbody rb;
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 10f;
@@ -13,12 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion targetRotation;
     private float newVerticalInput;
     private float newHorizontalInput;
-    [Header("Other serialized fields")]
 
-    private TrackPoint trackPointBehind = new TrackPoint();
-    private MapController mapController;
-    private Rigidbody rb;
-    private Quaternion interpolatedRotation;
+    private InputHandleMovement inputHandleMovement;
+
+    private Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
 
     [Header("Fields for check ground")]
     [SerializeField] private float castDistance = 0.2f;
@@ -31,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         mapController = GameObject.FindObjectOfType<MapController>();
         rb = GetComponent<Rigidbody>();
 
-        baseMoveOnSpline.SetFields(mapController, rb);
+        baseMoveOnSpline.SetFields(mapController, rb, transform);
     }
 
     public void WorkingWithInput()
@@ -48,24 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput, IsGrounded());
+        baseMoveOnSpline.Move(newVerticalInput, newHorizontalInput, IsGrounded());
     }
 
     public void GetRotation()
     {
-        //Vector3 playerMoveDirection = interpolatedRotation * Vector3.forward * newVerticalInput + interpolatedRotation * Vector3.right * newHorizontalInput;
-        //if (playerMoveDirection != Vector3.zero)
-        //{
-        //    targetRotation = Quaternion.LookRotation(playerMoveDirection);
-        //}
-        //else
-        //{
-        //    if (interpolatedRotation != baseMoveOnSpline.PreviousRotation)
-        //    {
-        //        Quaternion deltaQuaternion = interpolatedRotation * Quaternion.Inverse(baseMoveOnSpline.PreviousRotation);
-        //        targetRotation = transform.rotation * deltaQuaternion;
-        //    }
-        //}
+
         Vector3 playerMoveDirection = Vector3.zero;
         Vector3 velocityWithoutUp = Vector3.zero;
 
@@ -74,12 +61,12 @@ public class PlayerMovement : MonoBehaviour
             // we want to remove the up component of the velocity
             Vector3 velocityWithoutUpWorld = Vector3.ProjectOnPlane(rb.velocity, Vector3.up);
             // then project that onto the plane defined by the up axis of the spline
-            velocityWithoutUp = Vector3.ProjectOnPlane(velocityWithoutUpWorld, interpolatedRotation * Vector3.up);
+            velocityWithoutUp = Vector3.ProjectOnPlane(velocityWithoutUpWorld, InterpolatedRotation * Vector3.up);
         }
         else
         {
             // forward that is perpendicular to the up axis of the spline
-            velocityWithoutUp = Vector3.ProjectOnPlane(rb.velocity, interpolatedRotation * Vector3.up);
+            velocityWithoutUp = Vector3.ProjectOnPlane(rb.velocity, InterpolatedRotation * Vector3.up);
         }
 
         if (velocityWithoutUp.magnitude > 1f)
@@ -97,8 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void CalculateInterpolatedPosition()
     {
-        baseMoveOnSpline.GetClosestTrackPointBehind(ref trackPointBehind, transform);
-        baseMoveOnSpline.CalculateInterpolatedPosition(ref interpolatedRotation, trackPointBehind, transform);
+        baseMoveOnSpline.CalculateInterpolatedPosition();
     }
 
     private bool IsGrounded()

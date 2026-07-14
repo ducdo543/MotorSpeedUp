@@ -8988,7 +8988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f40842cc10247489d977b2c431b85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5
+  rotationSpeed: 4
   maxLeanAngle: 45
   wheelColliders:
   - {fileID: 8729562638593958876}

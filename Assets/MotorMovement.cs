@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MotorMovement : MonoBehaviour
 {
-    private InputHandleMovement inputHandleMovement;
+    private MapController mapController;
+    private Rigidbody rb;
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 5f;
@@ -13,17 +14,12 @@ public class MotorMovement : MonoBehaviour
     private float maxHorizontalInput = 0.7f;
     private float newVerticalInput;
     private float newHorizontalInput;
+
     [SerializeField] private WheelCollider[] wheelColliders;
-
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
+    private InputHandleMovement inputHandleMovement;
 
-    [Header("Other serialized fields")]
-
-    private TrackPoint trackPointBehind = new TrackPoint();
-    private MapController mapController;
-    private Rigidbody rb;
-    private Quaternion interpolatedRotation;
-    public Quaternion InterpolatedRotation => interpolatedRotation;
+    public Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
 
     [Header("Fields for check ground")]
     [SerializeField] private float castDistance = 0.2f;
@@ -37,16 +33,8 @@ public class MotorMovement : MonoBehaviour
         mapController = GameObject.FindObjectOfType<MapController>();
         rb = GetComponent<Rigidbody>();
 
-        baseMoveOnSpline.SetFields(mapController, rb);
+        baseMoveOnSpline.SetFields(mapController, rb, transform);
 
-    }
-
-    private void Update()
-    {
-        //if (!IsGrounded())
-        //{
-        //    Debug.LogWarning("Player is not grounded!");
-        //}
     }
 
     public void WorkingWithInput()
@@ -65,7 +53,7 @@ public class MotorMovement : MonoBehaviour
     public void Move()
     {
         
-        baseMoveOnSpline.Move(interpolatedRotation, newVerticalInput, newHorizontalInput, IsGrounded());
+        baseMoveOnSpline.Move(newVerticalInput, newHorizontalInput, IsGrounded());
 
         if (newVerticalInput == 0 && newHorizontalInput == 0)
         {
@@ -87,7 +75,7 @@ public class MotorMovement : MonoBehaviour
 
     public void GetRotation()
     {
-        Quaternion uprightRotation = interpolatedRotation;
+        Quaternion uprightRotation = InterpolatedRotation;
         //Debug.Log($"interpolatedRotation: {uprightRotation * Vector3.forward}");
         float leanAngle = -(maxLeanAngle * inputHandleMovement.HorizontalInput);
         Quaternion leanRotation = Quaternion.AngleAxis(leanAngle, uprightRotation * Vector3.forward);
@@ -110,8 +98,7 @@ public class MotorMovement : MonoBehaviour
 
     public void CalculateInterpolatedPosition()
     {
-        baseMoveOnSpline.GetClosestTrackPointBehind(ref trackPointBehind, transform);
-        baseMoveOnSpline.CalculateInterpolatedPosition(ref interpolatedRotation, trackPointBehind, transform);
+        baseMoveOnSpline.CalculateInterpolatedPosition();
     }
 
 
