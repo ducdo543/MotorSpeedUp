@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CameraTargetController : MonoBehaviour
 {
-    private Transform motor;
-    private MotorMovement motorMovement;
+    [SerializeField] private Transform vehicle;
+    private IVehicleMovement vehicleMovement;
+    public Quaternion InterpolatedRotation => vehicleMovement.InterpolatedRotation;
     [SerializeField] private float cameraDownFactorOnGround = 0.1f;
     [SerializeField] private float cameraDownFactorOnSky = 0.5f;
     [SerializeField] private float rotationSpeedYaw = 7f;
@@ -13,16 +14,19 @@ public class CameraTargetController : MonoBehaviour
     private Quaternion targetRotation;
     private void Awake()
     {
-        motor = GameObject.FindWithTag("MainMotor").transform;
+        if (vehicle == null)
+        {
+            vehicle = GameObject.FindWithTag("MainMotor").transform;
+        }
 
-        motorMovement = motor.GetComponent<MotorMovement>();
+        vehicleMovement = vehicle.GetComponent<IVehicleMovement>();
     }
 
     private void FixedUpdate()
     {
-        if (motor != null)
+        if (vehicle != null)
         {
-            transform.position = motor.position;
+            transform.position = vehicle.position;
             
             UpdateRotation();
         }
@@ -31,15 +35,15 @@ public class CameraTargetController : MonoBehaviour
     private void UpdateRotation()
     {
         Vector3 forward = Vector3.zero;
-        if (motorMovement.IsGrounded())
+        if (vehicleMovement.IsGrounded())
         {
-            forward = motor.forward;
-            forward.y = motor.forward.y - cameraDownFactorOnGround; // Add a downward component to the forward vector
+            forward = InterpolatedRotation * Vector3.forward;
+            forward.y = forward.y - cameraDownFactorOnGround; // Add a downward component to the forward vector
 
         }
         else
         {
-            forward = Vector3.ProjectOnPlane(motor.forward, Vector3.up);
+            forward = Vector3.ProjectOnPlane(InterpolatedRotation * Vector3.forward, Vector3.up);
             forward.Normalize();
             forward.y = -cameraDownFactorOnSky; // Add a downward component to the forward vector
 
