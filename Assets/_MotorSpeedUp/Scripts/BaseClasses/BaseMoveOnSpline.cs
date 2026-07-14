@@ -6,6 +6,11 @@ using UnityEngine;
 public class BaseMoveOnSpline
 {
     private MapController mapController;
+    private Rigidbody rb;
+    private Transform transform;
+
+
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     public float MoveSpeed => moveSpeed;
 
@@ -15,22 +20,30 @@ public class BaseMoveOnSpline
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float decelerationForward = 10f;
     [SerializeField] private float decelerationRight = 10f;
-    private float decelerationOnSky = 10f; 
-    [SerializeField] private Rigidbody rb;
+    private float decelerationOnSky = 10f;
+
+
+    [Header("TrackPoint")]
+    private TrackPoint trackPointBehind = new TrackPoint();
+
     private Quaternion previousRotation;
+    private Quaternion interpolatedRotation;
     public Quaternion PreviousRotation => previousRotation;
-    public void SetFields(MapController mapController, Rigidbody rb)
+    public Quaternion InterpolatedRotation => interpolatedRotation;
+
+
+    public void SetFields(MapController mapController, Rigidbody rb, Transform transform)
     {
         this.mapController = mapController;
         this.rb = rb;
+        this.transform = transform;
 
         // decelerationOnSky should be really small compare to rb.mass / Time.fixedDeltaTime, otherwise the player will move upwards when not grounded (cause forward is canceled out, but velocity.y is still not 0, so the player will move upwards)
         decelerationOnSky = (rb.mass / Time.fixedDeltaTime) / 50f;
     }
-    public void GetClosestTrackPointBehind(ref TrackPoint trackPointBehind, Transform transform)
+    private void GetClosestTrackPointBehind()
     {
-
-        if (trackPointBehind.position == null)
+        if (trackPointBehind.position == Vector3.zero)
         {
             trackPointBehind = mapController.TrackPoints[0];
         }
@@ -69,10 +82,13 @@ public class BaseMoveOnSpline
                 trackPointBehind = trackPoint;
             }
         }
+        return;
     }
 
-    public void CalculateInterpolatedPosition(ref Quaternion interpolatedRotation, TrackPoint trackPointBehind, Transform transform)
+    public void CalculateInterpolatedPosition()
     {
+        GetClosestTrackPointBehind();
+
         TrackPoint trackPointAhead = mapController.TrackPoints[trackPointBehind.index + 1];
 
         Vector3 trackDirection = Vector3.Dot(trackPointAhead.position - trackPointBehind.position, trackPointBehind.rotation * Vector3.forward) * (trackPointBehind.rotation * Vector3.forward);
@@ -93,7 +109,7 @@ public class BaseMoveOnSpline
         Debug.DrawLine(transform.position + new Vector3(0, 1f, 0), interpolatedPosition + new Vector3(0, 1f, 0), Color.blue);
     }
 
-    public void Move(Quaternion interpolatedRotation, float verticalInput, float horizontalInput, bool isGrounded = true)
+    public void Move(float verticalInput, float horizontalInput, bool isGrounded = true)
     {
 
 
