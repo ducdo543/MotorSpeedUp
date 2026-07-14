@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Time;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IVehicleMovement
 {
     private MapController mapController;
     private Rigidbody rb;
@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         baseMoveOnSpline.CalculateInterpolatedPosition();
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         bool isGrounded = Physics.BoxCast(transform.position + transform.up * 1f, halfExtents, -transform.up, transform.rotation, castDistance, groundLayerMask);
         // + (0,1,0) to ensure the center of the box is above the ground, so it can detect the ground properly. Now we just need to change the castDistance 

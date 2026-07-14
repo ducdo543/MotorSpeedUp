@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MotorMovement : MonoBehaviour
+public class MotorMovement : MonoBehaviour, IVehicleMovement
 {
     private MapController mapController;
     private Rigidbody rb;

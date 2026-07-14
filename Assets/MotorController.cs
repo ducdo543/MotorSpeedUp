@@ -5,14 +5,11 @@ using UnityEngine;
 public class MotorController : MonoBehaviour
 {
     [SerializeField] private BikerController bikerController;
-    private Vector3 offSetLocal;
 
     [Header("Movement")]
     private MotorMovement motorMovement;
     void Start()
     {
-        
-
         motorMovement = GetComponent<MotorMovement>();
     }
 
