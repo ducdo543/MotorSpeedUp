@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour, IVehicleMovement
 
     private InputHandleMovement inputHandleMovement;
 
-    private Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
+    public Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
 
     [Header("Fields for check ground")]
     [SerializeField] private float castDistance = 0.2f;
