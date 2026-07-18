@@ -7016,6 +7016,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8531679705894345119}
+  - component: {fileID: 9196872146513938669}
   m_Layer: 0
   m_Name: ColliderGroup
   m_TagString: Untagged
@@ -7045,6 +7046,18 @@ Transform:
   - {fileID: 2452406562830451096}
   m_Father: {fileID: 2279592650422418894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9196872146513938669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858726560511512020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7dac6c0bed1d4f48b101516d12edd10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1861411160349023883
 GameObject:
   m_ObjectHideFlags: 0
@@ -7211,8 +7224,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.31, y: 0.98, z: 1.26}
-  m_Center: {x: 0.06, y: 0.42, z: -0.96}
+  m_Size: {x: 0.31, y: 0.83, z: 2.32}
+  m_Center: {x: 0.06, y: 0.42, z: -0.78}
 --- !u!1 &1891033428679701938
 GameObject:
   m_ObjectHideFlags: 0
@@ -8999,11 +9012,7 @@ MonoBehaviour:
     acceleration: 30
     decelerationForward: 30
     decelerationRight: 250
-    rb: {fileID: 7577515018437195512}
   castDistance: 1.15
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
   halfExtents: {x: 0.1, y: 0.01, z: 1.07}
 --- !u!1 &2409239079138802957
 GameObject:

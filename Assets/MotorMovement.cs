@@ -23,7 +23,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
 
     [Header("Fields for check ground")]
     [SerializeField] private float castDistance = 0.2f;
-    [SerializeField] private LayerMask groundLayerMask;
+    //[SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private Vector3 halfExtents = new Vector3(0.1f, 0.1f, 0.5f);
 
 
@@ -105,7 +105,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     // check ground method
     public bool IsGrounded()
     {
-        bool isGrounded = Physics.BoxCast(transform.position + transform.up * 1f, halfExtents, - transform.up, transform.rotation, castDistance, groundLayerMask);
+        bool isGrounded = Physics.BoxCast(transform.position + transform.up * 1f, halfExtents, - transform.up, transform.rotation, castDistance);
         // + (0,1,0) to ensure the center of the box is above the ground, so it can detect the ground properly. Now we just need to change the castDistance 
         return isGrounded;
     }
