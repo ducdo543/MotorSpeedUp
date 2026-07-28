@@ -19,7 +19,9 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
     private InputHandleMovement inputHandleMovement;
 
+    public BaseMoveOnSpline BaseMoveOnSpline => baseMoveOnSpline;
     public Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
+    
 
     [Header("Fields for check ground")]
     [SerializeField] private float castDistance = 0.2f;

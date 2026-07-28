@@ -1,21 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraTargetController : MonoBehaviour
 {
     [SerializeField] private Transform vehicle;
     private IVehicleMovement vehicleMovement;
     public Quaternion InterpolatedRotation => vehicleMovement.InterpolatedRotation;
+
     [SerializeField] private float cameraDownFactorOnGround = 0.1f;
     [SerializeField] private float cameraDownFactorOnSky = 0.5f;
     [SerializeField] private float rotationSpeedYaw = 7f;
     [SerializeField] private float rotationSpeedTilt = 3f;
     private Quaternion targetRotation;
 
+    [Header("Virtual Camera")]
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    private CinemachineTransposer transposer;
+    [SerializeField] private float zDamping = 0.3f;
+    [SerializeField] private float zDampingChangeSpeed = 1f;
+
+    private BaseMoveOnSpline baseMoveOnSpline;
+    private float velocityForwardWorld;
     private void Awake()
     {
         Initialized();
+
+        transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
     }
 
     private void OnValidate()
@@ -30,6 +42,7 @@ public class CameraTargetController : MonoBehaviour
             vehicle = GameObject.FindWithTag("MainMotor").transform;
         }
         vehicleMovement = vehicle.GetComponent<IVehicleMovement>();
+        baseMoveOnSpline = vehicleMovement.BaseMoveOnSpline;
     }
 
     private void FixedUpdate()
@@ -37,11 +50,51 @@ public class CameraTargetController : MonoBehaviour
         if (vehicle != null)
         {
             transform.position = vehicle.position;
-            
+
             UpdateRotation();
         }
+
+        UpdateDamping();
     }
 
+    private void UpdateDamping()
+    {
+        // update the damping of the virtual camera based on whether the vehicle is grounded or in the air and the direction
+        float targetDamping = transposer.m_ZDamping;
+        //if (vehicleMovement.IsGrounded())
+        //{
+        //    targetDamping = damping;
+        //}
+        //else
+        //{
+        //    targetDamping = dampingInAir;
+        //}
+
+        velocityForwardWorld = baseMoveOnSpline.GetVelocityForwardWorld();
+
+        if (velocityForwardWorld > 0.1f)
+        {
+            targetDamping = zDamping;
+        }
+        else if (velocityForwardWorld < -0.1f)
+        {
+            targetDamping = 0f;
+        }
+
+
+            //transposer.m_XDamping = Mathf.MoveTowards(
+            //    transposer.m_XDamping,
+            //    targetDamping,
+            //    dampingChangeSpeed * Time.fixedDeltaTime);
+            //transposer.m_YDamping = Mathf.MoveTowards(
+            //    transposer.m_YDamping,
+            //    targetDamping,
+            //    dampingChangeSpeed * Time.fixedDeltaTime);
+        transposer.m_ZDamping = Mathf.MoveTowards(
+            transposer.m_ZDamping,
+            targetDamping,
+            zDampingChangeSpeed * Time.fixedDeltaTime);
+    }
     private void UpdateRotation()
     {
         Vector3 forward = Vector3.zero;

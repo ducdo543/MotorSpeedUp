@@ -222,4 +222,12 @@ public class BaseMoveOnSpline
             decelerationRight = rb.mass / Time.fixedDeltaTime;
         }
     }
+
+    public float GetVelocityForwardWorld()
+    {
+        
+        Vector3 worldForward = Vector3.ProjectOnPlane(interpolatedRotation * Vector3.forward, Vector3.up).normalized;
+        float velocityForwardWorld = Vector3.Dot(rb.velocity, worldForward);
+        return velocityForwardWorld;
+    }
 }
