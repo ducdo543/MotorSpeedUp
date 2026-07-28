@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour, IVehicleMovement
     {
 
         newVerticalInput = inputHandleMovement.VerticalInput;
-        newHorizontalInput = inputHandleMovement.HorizontalInput;
+        newHorizontalInput = inputHandleMovement.HorizontalInput * 1.3f;
 
         if (!IsGrounded())
         {

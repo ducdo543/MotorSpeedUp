@@ -18,8 +18,8 @@ public class CameraTargetController : MonoBehaviour
     [Header("Virtual Camera")]
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     private CinemachineTransposer transposer;
-    [SerializeField] private float zDamping = 0.3f;
-    [SerializeField] private float zDampingChangeSpeed = 1f;
+    [SerializeField] private float zyDamping = 0.3f;
+    [SerializeField] private float zyDampingChangeSpeed = 1f;
 
     private BaseMoveOnSpline baseMoveOnSpline;
     private float velocityForwardWorld;
@@ -74,7 +74,7 @@ public class CameraTargetController : MonoBehaviour
 
         if (velocityForwardWorld > 0.1f)
         {
-            targetDamping = zDamping;
+            targetDamping = zyDamping;
         }
         else if (velocityForwardWorld < -0.1f)
         {
@@ -82,18 +82,18 @@ public class CameraTargetController : MonoBehaviour
         }
 
 
-            //transposer.m_XDamping = Mathf.MoveTowards(
-            //    transposer.m_XDamping,
-            //    targetDamping,
-            //    dampingChangeSpeed * Time.fixedDeltaTime);
-            //transposer.m_YDamping = Mathf.MoveTowards(
-            //    transposer.m_YDamping,
-            //    targetDamping,
-            //    dampingChangeSpeed * Time.fixedDeltaTime);
+        //transposer.m_XDamping = Mathf.MoveTowards(
+        //    transposer.m_XDamping,
+        //    targetDamping,
+        //    dampingChangeSpeed * Time.fixedDeltaTime);
+        transposer.m_YDamping = Mathf.MoveTowards(
+            transposer.m_YDamping,
+            targetDamping,
+            zyDampingChangeSpeed * Time.fixedDeltaTime);
         transposer.m_ZDamping = Mathf.MoveTowards(
             transposer.m_ZDamping,
             targetDamping,
-            zDampingChangeSpeed * Time.fixedDeltaTime);
+            zyDampingChangeSpeed * Time.fixedDeltaTime);
     }
     private void UpdateRotation()
     {

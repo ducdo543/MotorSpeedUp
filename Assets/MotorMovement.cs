@@ -42,7 +42,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     public void WorkingWithInput()
     {
         newVerticalInput = inputHandleMovement.VerticalInput;
-        newHorizontalInput = Mathf.Clamp(inputHandleMovement.HorizontalInput, -maxHorizontalInput, maxHorizontalInput);
+        newHorizontalInput = Mathf.Clamp(inputHandleMovement.HorizontalInput, -maxHorizontalInput, maxHorizontalInput) * 2f;
 
         if (!IsGrounded())
         {

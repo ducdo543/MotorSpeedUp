@@ -1111,16 +1111,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 10
   baseMoveOnSpline:
-    moveSpeed: 40
+    moveSpeed: 20
     acchieveTargetSpeedInstantly: 1
     acceleration: 20
     decelerationForward: 20
     decelerationRight: 20
-    rb: {fileID: 4999319148922900442}
   castDistance: 1.2
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
   halfExtents: {x: 0.1, y: 0.1, z: 0.44}
 --- !u!114 &2294718994157518603
 MonoBehaviour:
