@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+// use DataManager to save and load data from json file
 public class DataManager
 {
     private string savePath = Application.persistentDataPath + "/MotorSpeedUpData.json";
