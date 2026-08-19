@@ -9,6 +9,7 @@ public class MapController : MonoBehaviour
     [SerializeField] private List<TrackPoint> trackPoints = new List<TrackPoint>();
     public List<TrackPoint> TrackPoints => trackPoints;
     private int mapID;
+    public int MapID => mapID;
 
     public void InitializeMap(int mapID, List<TrackPoint> trackPoints)
     {
