@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_MotorSpeedUp/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/_MotorSpeedUp/Scenes/PersistentScene.unity
+    guid: 3aaaaa7ecc676eb4a9d0d57187096aa9
+  - enabled: 1
+    path: Assets/_MotorSpeedUp/Scenes/RaceScene.unity
+    guid: 42dd8213c65aea54dbecc765fa627d23
   m_configObjects: {}

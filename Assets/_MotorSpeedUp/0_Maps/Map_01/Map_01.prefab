@@ -1034,6 +1034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9bd92a365ad2b47a2a5c252cd8db6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapID: 1
   trackPoints:
   - index: 0
     position: {x: 0, y: 0, z: 0}
