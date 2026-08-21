@@ -20,8 +20,16 @@ public class MapDataSO : ScriptableObject
         foreach (var mapPrefab in mapPrefabs)
         {
             var mapController = mapPrefab.GetComponent<MapController>();
+            Debug.Log($"level: {mapController.MapID}");
+            if (mapController == null)
+            {
+                Debug.LogError($"Map prefab {mapPrefab.name} does not have a MapController component.");
+                
+                continue;
+            }
             if (mapController != null && mapController.MapID == level)
             {
+                
                 return mapPrefab;
             }
         }
