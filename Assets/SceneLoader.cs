@@ -70,6 +70,9 @@ public class SceneLoader : MonoBehaviour
             //Debugger.LogAllLoadedScenes();
             // update current scene
             currentScene = newScene;
+
+            //Debug.Log($"After: {RenderSettings.ambientIntensity}");
+            //Debug.Log($"After skybox: {RenderSettings.skybox}");
         };
         return loadOp;
     }

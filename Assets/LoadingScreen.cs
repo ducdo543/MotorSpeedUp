@@ -12,10 +12,19 @@ public class LoadingScreen : MonoBehaviour
 
     IEnumerator LoadFirstScene()
     {
+        //Debug.Log($"Before: {RenderSettings.ambientIntensity}");
+        //Debug.Log($"Before skybox: {RenderSettings.skybox}");
+
         // Simulate loading time, and wait for SceneLoader.Instance to be created
         yield return new WaitForSecondsRealtime(3f);
 
 
         AsyncOperation op = SceneLoader.Instance.LoadFirstSceneCustom(SceneID.RaceScene);
+
+        while (!op.isDone)
+        {
+            yield return null;
+        }
+
     }
 }
