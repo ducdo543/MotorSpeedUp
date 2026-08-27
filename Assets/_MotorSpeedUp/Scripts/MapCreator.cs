@@ -29,6 +29,7 @@ namespace Map
 
         [Header("Track Points")]
         [SerializeField] private int trackPointInterval;
+        [SerializeField] private int minHazardDistance = 2; // calculated in track point index
         private List<TrackPoint> trackPoints;
         private HashSet<int> abyssTrackPointIndexes = new HashSet<int>();
         private HashSet<int> nearRespawnPointTrackPointIndexes = new HashSet<int>();
@@ -280,6 +281,7 @@ namespace Map
 
             GameObject respawnPointsContainer = new GameObject("RespawnPoints");
             respawnPointsContainer.transform.SetParent(mapParent.transform);
+            mapController.SetRespawnPointHolder(respawnPointsContainer.transform);
 
             // respawn point interval is 9 track points, but if trackPoint is in the abyss, we need to check the next track point
             int index = 0;
@@ -288,7 +290,7 @@ namespace Map
 
                 if (!abyssTrackPointIndexes.Contains(index))
                 {
-                    // if behind the respawn point there is an abyss in the range of 4 indexes, we can't create respawn point
+                    // if after the respawn point there is an abyss in the range of 4 indexes, we can't create respawn point
                     for (int i = index + 1; i <= Mathf.Min(mapParentTrackPoints.Count - 1, index + 4); i++)
                     {
                         if (abyssTrackPointIndexes.Contains(i))
@@ -376,8 +378,8 @@ namespace Map
                         }
                     }
 
-                    // 2 indexes before and after the hazard point are not allowed to generate hazard, we set a flag for them
-                    for (int j = Mathf.Max(0, trackPointIndex - 1); j <= Mathf.Min(mapParentTrackPoints.Count - 1, trackPointIndex + 1); j++)
+                    // depends on minHazardsDistance, some indexes before and indexes after the hazard point are not allowed to generate hazard, we set a flag for them
+                    for (int j = Mathf.Max(0, trackPointIndex - minHazardDistance); j <= Mathf.Min(mapParentTrackPoints.Count - 1, trackPointIndex + minHazardDistance); j++)
                     {
                         nearHazardTrackPointIndexes.Add(j);
                     }

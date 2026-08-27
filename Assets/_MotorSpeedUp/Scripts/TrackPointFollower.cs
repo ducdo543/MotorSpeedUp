@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrackPointFollower : MonoBehaviour
 {
     public int trackPointIndexCorrespondingTo;
+    public int TrackPointIndexCorrespondingTo => trackPointIndexCorrespondingTo;
     private int _lastTrackPointIndexCorrespondingTo;
     [Header("check that track point value")]
     [ReadOnly]

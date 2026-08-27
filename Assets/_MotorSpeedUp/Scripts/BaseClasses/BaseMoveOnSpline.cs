@@ -24,6 +24,9 @@ public class BaseMoveOnSpline
 
 
     [Header("TrackPoint")]
+    private TrackPoint furthestTrackPoint = new TrackPoint();
+    public TrackPoint FurthestTrackPoint => furthestTrackPoint;
+
     private TrackPoint trackPointBehind = new TrackPoint();
 
     private Quaternion previousRotation;
@@ -41,13 +44,18 @@ public class BaseMoveOnSpline
         // decelerationOnSky should be really small compare to rb.mass / Time.fixedDeltaTime, otherwise the player will move upwards when not grounded (cause forward is canceled out, but velocity.y is still not 0, so the player will move upwards)
         decelerationOnSky = (rb.mass / Time.fixedDeltaTime) / 50f;
     }
-    private void GetClosestTrackPointBehind()
+    private void GetClosestTrackPointBehind(bool isGrounded = true)
     {
         if (trackPointBehind.position == Vector3.zero)
         {
             trackPointBehind = mapController.TrackPoints[0];
+            furthestTrackPoint = trackPointBehind;
         }
 
+        if (!isGrounded)
+        {
+            return;
+        }
 
         Vector3 directionFromTrackPointToPlayer = transform.position - trackPointBehind.position;
         if (Vector3.Dot(trackPointBehind.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
@@ -64,6 +72,8 @@ public class BaseMoveOnSpline
                 if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
                 {
                     trackPointBehind = trackPoint;
+                    Debug.Log($"trackPointBehind index: {trackPointBehind.index}");
+                    Debug.Log($"furthestTrackPoint index: {furthestTrackPoint.index}");
                     return;
                 }
             }
@@ -80,14 +90,20 @@ public class BaseMoveOnSpline
                     return;
                 }
                 trackPointBehind = trackPoint;
+                Debug.Log($"trackPointBehind index: {trackPointBehind.index}");
+                if (trackPointBehind.index > furthestTrackPoint.index)
+                {
+                    furthestTrackPoint = trackPointBehind;
+                    Debug.Log($"furthestTrackPoint index: {furthestTrackPoint.index}");
+                }
             }
         }
         return;
     }
 
-    public void CalculateInterpolatedPosition()
+    public void CalculateInterpolatedPosition(bool isGrounded = true)
     {
-        GetClosestTrackPointBehind();
+        GetClosestTrackPointBehind(isGrounded);
 
         TrackPoint trackPointAhead = mapController.TrackPoints[trackPointBehind.index + 1];
 
