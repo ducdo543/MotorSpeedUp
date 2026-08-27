@@ -21,7 +21,8 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
 
     public BaseMoveOnSpline BaseMoveOnSpline => baseMoveOnSpline;
     public Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
-    
+    public TrackPoint FurthestTrackPoint => baseMoveOnSpline.FurthestTrackPoint;
+
 
     [Header("Fields for check ground")]
     [SerializeField] private float castDistance = 0.2f;
@@ -100,7 +101,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
 
     public void CalculateInterpolatedPosition()
     {
-        baseMoveOnSpline.CalculateInterpolatedPosition();
+        baseMoveOnSpline.CalculateInterpolatedPosition(IsGrounded());
     }
 
 

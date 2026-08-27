@@ -8,9 +8,11 @@ public class MotorController : MonoBehaviour
 
     [Header("Movement")]
     private MotorMovement motorMovement;
+    private VehicleRevive vehicleRevive;
     void Start()
     {
         motorMovement = GetComponent<MotorMovement>();
+        vehicleRevive = GetComponent<VehicleRevive>();
     }
 
     // Update is called once per frame
@@ -18,6 +20,9 @@ public class MotorController : MonoBehaviour
     {
 
         motorMovement.CalculateInterpolatedPosition();
+
+        // vehicleRevive
+
         motorMovement.WorkingWithInput();
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();

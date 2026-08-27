@@ -5,12 +5,14 @@ using System;
 
 public class MapController : MonoBehaviour
 {
-    [SerializeField] int mapID;
+    [SerializeField] private int mapID;
     public int MapID => mapID;
+
+    [SerializeField] private Transform respawnPointHolder;
+    public Transform RespawnPointHolder => respawnPointHolder;
 
     [SerializeField] private List<TrackPoint> trackPoints = new List<TrackPoint>();
     public List<TrackPoint> TrackPoints => trackPoints;
-
 
     public void InitializeMap(int mapID, List<TrackPoint> trackPoints)
     {
@@ -18,7 +20,12 @@ public class MapController : MonoBehaviour
         this.trackPoints = trackPoints;
     }
 
-    
+    public void SetRespawnPointHolder(Transform respawnPointHolder)
+    {
+        this.respawnPointHolder = respawnPointHolder;
+    }
+
+
 }
 
 [Serializable]
