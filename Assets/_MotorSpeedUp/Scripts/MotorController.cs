@@ -22,6 +22,10 @@ public class MotorController : MonoBehaviour
         motorMovement.CalculateInterpolatedPosition();
 
         // vehicleRevive
+        if (vehicleRevive.CheckDead())
+        {
+            vehicleRevive.Revive(motorMovement.FurthestTrackPoint);
+        }
 
         motorMovement.WorkingWithInput();
         motorMovement.GetRotation();
