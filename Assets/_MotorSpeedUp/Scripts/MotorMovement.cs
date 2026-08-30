@@ -113,6 +113,11 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
         return isGrounded;
     }
 
+    public void ResetTrackPoint(TrackPoint trackPoint)
+    {
+        baseMoveOnSpline.ResetTrackPoint(trackPoint);
+    }
+
     private void OnDrawGizmosSelected()
     {
         

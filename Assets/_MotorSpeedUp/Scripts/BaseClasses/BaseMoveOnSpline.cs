@@ -49,32 +49,30 @@ public class BaseMoveOnSpline
         if (trackPointBehind.position == Vector3.zero)
         {
             trackPointBehind = mapController.TrackPoints[0];
-            furthestTrackPoint = trackPointBehind;
         }
-
-        if (!isGrounded)
+        if (furthestTrackPoint.position == Vector3.zero)
         {
-            return;
+            furthestTrackPoint = mapController.TrackPoints[0];
         }
 
+        // becareful, if the vehicle suddently jump to another trackPoint (like when it revive),
+        // this logic can't be true anymore cause it supposes that the vehicle moves gradually
         Vector3 directionFromTrackPointToPlayer = transform.position - trackPointBehind.position;
         if (Vector3.Dot(trackPointBehind.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
         {
-            if (trackPointBehind.index == 0)
-            {
-                Debug.LogWarning("Out of map");
-                return;
-            }
+            //if (trackPointBehind.index == 0)
+            //{
+            //    Debug.LogWarning("Out of map");
+            //    return;
+            //}
             for (int i = trackPointBehind.index - 1; i >= 0; i--)
             {
                 TrackPoint trackPoint = mapController.TrackPoints[i];
                 directionFromTrackPointToPlayer = transform.position - trackPoint.position;
                 if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
                 {
-                    trackPointBehind = trackPoint;
+                    trackPointBehind = trackPoint; // update trackPointBehind
                     Debug.Log($"trackPointBehind index: {trackPointBehind.index}");
-                    Debug.Log($"furthestTrackPoint index: {furthestTrackPoint.index}");
-                    return;
                 }
             }
         }
@@ -87,16 +85,16 @@ public class BaseMoveOnSpline
                 if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
                 {
 
-                    return;
+                    break;
                 }
-                trackPointBehind = trackPoint;
+                trackPointBehind = trackPoint; // update trackPointBehind
                 Debug.Log($"trackPointBehind index: {trackPointBehind.index}");
-                if (trackPointBehind.index > furthestTrackPoint.index)
-                {
-                    furthestTrackPoint = trackPointBehind;
-                    Debug.Log($"furthestTrackPoint index: {furthestTrackPoint.index}");
-                }
             }
+        }
+        if (trackPointBehind.index > furthestTrackPoint.index && isGrounded)
+        {
+            furthestTrackPoint = trackPointBehind;
+            Debug.Log($"furthestTrackPoint index: {furthestTrackPoint.index}");
         }
         return;
     }
@@ -245,5 +243,10 @@ public class BaseMoveOnSpline
         Vector3 worldForward = Vector3.ProjectOnPlane(interpolatedRotation * Vector3.forward, Vector3.up).normalized;
         float velocityForwardWorld = Vector3.Dot(rb.velocity, worldForward);
         return velocityForwardWorld;
+    }
+
+    public void ResetTrackPoint(TrackPoint trackPoint)
+    {
+        trackPointBehind = trackPoint;
     }
 }

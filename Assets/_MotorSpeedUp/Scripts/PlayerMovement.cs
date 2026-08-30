@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour, IVehicleMovement
 
     public BaseMoveOnSpline BaseMoveOnSpline => baseMoveOnSpline;
     public Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
+    public TrackPoint FurthestTrackPoint => baseMoveOnSpline.FurthestTrackPoint;
 
     [Header("Fields for check ground")]
     [SerializeField] private float castDistance = 0.2f;
@@ -95,6 +96,10 @@ public class PlayerMovement : MonoBehaviour, IVehicleMovement
         return isGrounded;
     }
 
+    public void ResetTrackPoint(TrackPoint trackPoint)
+    {
+        baseMoveOnSpline.ResetTrackPoint(trackPoint);
+    }
     private void OnDrawGizmosSelected()
     {
 

@@ -13,6 +13,8 @@ public class MotorController : MonoBehaviour
     {
         motorMovement = GetComponent<MotorMovement>();
         vehicleRevive = GetComponent<VehicleRevive>();
+
+        vehicleRevive.Initialize(motorMovement);
     }
 
     // Update is called once per frame
@@ -21,16 +23,17 @@ public class MotorController : MonoBehaviour
 
         motorMovement.CalculateInterpolatedPosition();
 
-        // vehicleRevive
-        if (vehicleRevive.CheckDead())
-        {
-            vehicleRevive.Revive(motorMovement.FurthestTrackPoint);
-        }
-
         motorMovement.WorkingWithInput();
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();
 
+
+        // check revive just after rotating everything
+        // vehicleRevive
+        if (vehicleRevive.CheckDead())
+        {
+            vehicleRevive.Revive();
+        }
     }
 
     private void FixedUpdate()
