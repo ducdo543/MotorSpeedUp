@@ -10,8 +10,9 @@ public class TrackPointFollower : MonoBehaviour
     [Header("check that track point value")]
     [ReadOnly]
     [SerializeField] private TrackPoint trackPoint;
+    public TrackPoint TrackPoint => trackPoint;
 
-   
+
 
     public void ChangeTransformBasedOnTrackPoint(MapController mapController = null)
     {

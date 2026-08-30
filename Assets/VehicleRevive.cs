@@ -7,14 +7,23 @@ public class VehicleRevive : MonoBehaviour
 {
     [SerializeField] private Transform map;
 
-    [SerializeField] private MotorController motorController;
+    [SerializeField] private Vector3 offSetPosition = new Vector3(0, 1, 0);
+    //[SerializeField] private MotorController motorController;
+    private IVehicleMovement vehicleMovement;
 
     private int childIndex = 0;
     public void InitializeMap(Transform map)
     {
         this.map = map;
     }
-    
+
+    // actually we can use binary search,
+    // in the first place, i thought we always need to run this method in the Update method, but actually, just when the vehicle dies
+
+    public void Initialize(IVehicleMovement vehicleMovement)
+    {
+        this.vehicleMovement = vehicleMovement;
+    }
     private GameObject GetRespawnPoint(TrackPoint FurthestTrackPoint)
     {
         if (map == null)
@@ -74,15 +83,19 @@ public class VehicleRevive : MonoBehaviour
         return false;
     }
 
-    public void Revive(TrackPoint FurthestTrackPoint)
+    public void Revive()
     {
-        GameObject currentRespawnPoint = GetRespawnPoint(FurthestTrackPoint);
+        GameObject currentRespawnPoint = GetRespawnPoint(vehicleMovement.FurthestTrackPoint);
         Vector3 position = currentRespawnPoint.transform.position;
         Quaternion quaternion = currentRespawnPoint.transform.rotation;
 
  
-        transform.position = position;
+        transform.position = position + offSetPosition; // apply offset to the position
         transform.rotation = quaternion;
 
+
+        // Reset the vehicle's movement state
+        TrackPoint trackPointOfRespawn = currentRespawnPoint.GetComponent<TrackPointFollower>().TrackPoint;
+        vehicleMovement.ResetTrackPoint(trackPointOfRespawn);
     }
 }

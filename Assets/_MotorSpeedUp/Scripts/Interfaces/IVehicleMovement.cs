@@ -8,6 +8,9 @@ public interface IVehicleMovement
 
     public BaseMoveOnSpline BaseMoveOnSpline { get; }
 
+    public TrackPoint FurthestTrackPoint { get; }
+
+    void ResetTrackPoint(TrackPoint trackPoint);
     void WorkingWithInput();
     void Move();
 
