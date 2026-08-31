@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 937211577787158232}
   - component: {fileID: 6173389615358512529}
   - component: {fileID: 3107952151327503473}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RoadMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1035,6 +1035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapID: 1
+  respawnPointHolder: {fileID: 0}
   trackPoints:
   - index: 0
     position: {x: 0, y: 0, z: 0}
@@ -1496,7 +1497,7 @@ GameObject:
   - component: {fileID: 1637760629875769913}
   - component: {fileID: 5409155563000039949}
   - component: {fileID: 2196025335777287380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RoadMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1602,7 +1603,7 @@ GameObject:
   - component: {fileID: 2985990456644690040}
   - component: {fileID: 3366102338525018632}
   - component: {fileID: 4489276827652696684}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RoadMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

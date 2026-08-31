@@ -175,6 +175,8 @@ namespace Map
                 GameObject roadMesh = new GameObject($"RoadMesh");
                 roadMesh.transform.SetParent(mapPartGenerated.transform);
 
+                roadMesh.layer = LayerMask.NameToLayer("Ground");
+
                 Mesh roadMeshAsset = mapPartsParent.GetChild(i).GetComponent<MapPart>().LoadRoadMeshAsset();
                 roadMesh.AddComponent<MeshFilter>();
                 roadMesh.GetComponent<MeshFilter>().sharedMesh = roadMeshAsset;
