@@ -24,6 +24,8 @@ public class BaseMoveOnSpline
 
 
     [Header("TrackPoint")]
+
+
     private TrackPoint furthestTrackPoint = new TrackPoint();
     public TrackPoint FurthestTrackPoint => furthestTrackPoint;
 
@@ -34,6 +36,9 @@ public class BaseMoveOnSpline
     public Quaternion PreviousRotation => previousRotation;
     public Quaternion InterpolatedRotation => interpolatedRotation;
 
+    [Header("Raycast")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float raycastDistance = 6f;
 
     public void SetFields(MapController mapController, Rigidbody rb, Transform transform)
     {
@@ -55,9 +60,32 @@ public class BaseMoveOnSpline
             furthestTrackPoint = mapController.TrackPoints[0];
         }
 
+        // project the vehicle onto the ground first
+        // , to avoid the vehicle is above the sky, and the logic below could be wrong
+        Vector3 origin = transform.position + Vector3.up * raycastDistance / 2f;
+        Vector3 groundPoint = new Vector3();
+        bool raycastDetect = false;
+
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, raycastDistance, groundLayer))
+        {
+            groundPoint = hit.point;
+            raycastDetect = true;
+        }
+        else
+        {
+            raycastDetect = false;
+        }
+
+        if (!raycastDetect)
+        {
+            Debug.Log("Can't find ground");
+            return;
+        }
+
         // becareful, if the vehicle suddently jump to another trackPoint (like when it revive),
         // this logic can't be true anymore cause it supposes that the vehicle moves gradually
-        Vector3 directionFromTrackPointToPlayer = transform.position - trackPointBehind.position;
+        // we will have to set the trackPointBehind again by a method
+        Vector3 directionFromTrackPointToPlayer = groundPoint - trackPointBehind.position;
         if (Vector3.Dot(trackPointBehind.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
         {
             //if (trackPointBehind.index == 0)
@@ -68,7 +96,7 @@ public class BaseMoveOnSpline
             for (int i = trackPointBehind.index - 1; i >= 0; i--)
             {
                 TrackPoint trackPoint = mapController.TrackPoints[i];
-                directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+                directionFromTrackPointToPlayer = groundPoint - trackPoint.position;
                 if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
                 {
                     trackPointBehind = trackPoint; // update trackPointBehind
@@ -81,7 +109,7 @@ public class BaseMoveOnSpline
             for (int i = trackPointBehind.index + 1; i < mapController.TrackPoints.Count; i++)
             {
                 TrackPoint trackPoint = mapController.TrackPoints[i];
-                directionFromTrackPointToPlayer = transform.position - trackPoint.position;
+                directionFromTrackPointToPlayer = groundPoint - trackPoint.position;
                 if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) < 0)
                 {
 
