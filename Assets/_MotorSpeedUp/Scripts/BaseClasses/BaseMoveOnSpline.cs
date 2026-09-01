@@ -274,8 +274,9 @@ public class BaseMoveOnSpline
         return velocityForwardWorld;
     }
 
-    public void ResetTrackPoint(TrackPoint trackPoint)
+    public void ResetVehicleFields(TrackPoint trackPoint)
     {
         trackPointBehind = trackPoint;
+        rb.velocity = Vector3.zero;
     }
 }

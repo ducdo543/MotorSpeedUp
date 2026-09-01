@@ -96,9 +96,9 @@ public class PlayerMovement : MonoBehaviour, IVehicleMovement
         return isGrounded;
     }
 
-    public void ResetTrackPoint(TrackPoint trackPoint)
+    public void ResetVehicleFields(TrackPoint trackPoint)
     {
-        baseMoveOnSpline.ResetTrackPoint(trackPoint);
+        baseMoveOnSpline.ResetVehicleFields(trackPoint);
     }
     private void OnDrawGizmosSelected()
     {

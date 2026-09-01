@@ -10,7 +10,7 @@ public interface IVehicleMovement
 
     public TrackPoint FurthestTrackPoint { get; }
 
-    void ResetTrackPoint(TrackPoint trackPoint);
+    void ResetVehicleFields(TrackPoint trackPoint);
     void WorkingWithInput();
     void Move();
 
