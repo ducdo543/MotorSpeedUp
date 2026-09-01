@@ -61,7 +61,7 @@ public class BaseMoveOnSpline
         }
 
         // project the vehicle onto the ground first
-        // , to avoid the vehicle is above the sky, and the logic below could be wrong
+        // , to avoid the vehicle is above the sky, and the logic to calculate trackPointBehind could be wrong
         Vector3 origin = transform.position + Vector3.up * raycastDistance / 2f;
         Vector3 groundPoint = new Vector3();
         bool raycastDetect = false;
@@ -101,6 +101,7 @@ public class BaseMoveOnSpline
                 {
                     trackPointBehind = trackPoint; // update trackPointBehind
                     Debug.Log($"trackPointBehind index: {trackPointBehind.index}");
+                    break;
                 }
             }
         }
