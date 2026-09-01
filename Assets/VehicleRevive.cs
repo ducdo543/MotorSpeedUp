@@ -7,7 +7,7 @@ public class VehicleRevive : MonoBehaviour
 {
     [SerializeField] private Transform map;
 
-    [SerializeField] private Vector3 offSetPosition = new Vector3(0, 1, 0);
+    [SerializeField] private Vector3 offSetPosition = new Vector3(0, 2, 0);
     //[SerializeField] private MotorController motorController;
     private IVehicleMovement vehicleMovement;
 
@@ -97,5 +97,6 @@ public class VehicleRevive : MonoBehaviour
         // Reset the vehicle's movement state
         TrackPoint trackPointOfRespawn = currentRespawnPoint.GetComponent<TrackPointFollower>().TrackPoint;
         vehicleMovement.ResetTrackPoint(trackPointOfRespawn);
+        Debug.Log($"{trackPointOfRespawn.index}");
     }
 }
