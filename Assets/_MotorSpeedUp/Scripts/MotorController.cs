@@ -27,17 +27,18 @@ public class MotorController : MonoBehaviour
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();
 
+    }
 
+    private void FixedUpdate()
+    {
         // check revive just after rotating everything
+        // every physics and position update is in FixedUpdate, so we should call Revive() here
         // vehicleRevive
         if (vehicleRevive.CheckDead())
         {
             vehicleRevive.Revive();
         }
-    }
 
-    private void FixedUpdate()
-    {
         motorMovement.Move();
     }
 }

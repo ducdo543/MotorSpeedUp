@@ -7,6 +7,7 @@ public class CameraTargetController : MonoBehaviour
 {
     [SerializeField] private Transform vehicle;
     private IVehicleMovement vehicleMovement;
+    private VehicleRevive vehicleRevive;
     public Quaternion InterpolatedRotation => vehicleMovement.InterpolatedRotation;
 
     [SerializeField] private float cameraDownFactorOnGround = 0.1f;
@@ -35,6 +36,15 @@ public class CameraTargetController : MonoBehaviour
         Initialized();
     }
 
+    private void OnEnable()
+    {
+        vehicleRevive.OnAfterRevive += ResetFields;
+    }
+
+    private void OnDisable()
+    {
+        vehicleRevive.OnAfterRevive -= ResetFields;
+    }
     private void Initialized()
     {
         if (vehicle == null)
@@ -42,6 +52,7 @@ public class CameraTargetController : MonoBehaviour
             vehicle = GameObject.FindWithTag("MainMotor").transform;
         }
         vehicleMovement = vehicle.GetComponent<IVehicleMovement>();
+        vehicleRevive = vehicle.GetComponent<VehicleRevive>();
         baseMoveOnSpline = vehicleMovement.BaseMoveOnSpline;
     }
 
@@ -120,7 +131,7 @@ public class CameraTargetController : MonoBehaviour
             // i want Slerp rotation different for tilt and yaw quaternion, so we need to detach quaternion into tilt and yaw components
             Vector3 flatForward = Vector3.ProjectOnPlane(forward, Vector3.up).normalized;
             Quaternion targetYaw = Quaternion.LookRotation(flatForward, Vector3.up);
-            Quaternion targetTilt = Quaternion.Inverse(targetYaw) * targetRotation;
+            Quaternion targetTilt = Quaternion.Inverse(targetYaw) * targetRotation; // targetTilt * targetYaw = targetRotation
 
             Vector3 currentFlatForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
             Quaternion currentYaw = Quaternion.LookRotation(currentFlatForward, Vector3.up);
@@ -128,5 +139,14 @@ public class CameraTargetController : MonoBehaviour
 
             transform.rotation = Quaternion.Slerp(currentYaw, targetYaw, rotationSpeedYaw * Time.fixedDeltaTime) * Quaternion.Slerp(currentTilt, targetTilt, rotationSpeedTilt * Time.fixedDeltaTime);
         }
+    }
+
+    private void ResetFields(Quaternion rotation)
+    {
+        transform.rotation = rotation;
+
+        transform.position = vehicle.position;
+        transposer.m_YDamping = 0f;
+        transposer.m_ZDamping = 0f;
     }
 }

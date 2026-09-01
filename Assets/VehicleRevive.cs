@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class VehicleRevive : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class VehicleRevive : MonoBehaviour
     [SerializeField] private Vector3 offSetPosition = new Vector3(0, 2, 0);
     //[SerializeField] private MotorController motorController;
     private IVehicleMovement vehicleMovement;
+
+    public event Action<Quaternion> OnAfterRevive;
 
     private int childIndex = 0;
     public void InitializeMap(Transform map)
@@ -96,7 +99,10 @@ public class VehicleRevive : MonoBehaviour
 
         // Reset the vehicle's movement state
         TrackPoint trackPointOfRespawn = currentRespawnPoint.GetComponent<TrackPointFollower>().TrackPoint;
-        vehicleMovement.ResetTrackPoint(trackPointOfRespawn);
+        vehicleMovement.ResetVehicleFields(trackPointOfRespawn);
         Debug.Log($"{trackPointOfRespawn.index}");
+
+        // Invoke the event
+        OnAfterRevive?.Invoke(quaternion);
     }
 }
