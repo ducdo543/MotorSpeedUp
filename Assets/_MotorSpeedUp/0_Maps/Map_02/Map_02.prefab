@@ -1247,7 +1247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapID: 2
-  respawnPointHolder: {fileID: 0}
+  respawnPointHolder: {fileID: 5571390955852048492}
   trackPoints:
   - index: 0
     position: {x: 0, y: 0, z: 0}

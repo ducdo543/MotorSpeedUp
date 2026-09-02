@@ -6646,7 +6646,7 @@ Transform:
   m_GameObject: {fileID: 1669662793796584694}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.061, y: 0.441, z: -0.822}
+  m_LocalPosition: {x: 0.061, y: 0.403, z: -0.822}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6666,7 +6666,7 @@ WheelCollider:
     spring: 35000
     damper: 4000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.2
+  m_SuspensionDistance: 0.1
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.25
@@ -8912,6 +8912,7 @@ GameObject:
   - component: {fileID: 8451854354423720358}
   - component: {fileID: 992855973537310048}
   - component: {fileID: 8255255720919537210}
+  - component: {fileID: 2215507627629412649}
   m_Layer: 0
   m_Name: Motor1
   m_TagString: MainMotor
@@ -9012,8 +9013,27 @@ MonoBehaviour:
     acceleration: 30
     decelerationForward: 30
     decelerationRight: 250
+    groundLayer:
+      serializedVersion: 2
+      m_Bits: 8
+    raycastDistance: 6
   castDistance: 1.15
   halfExtents: {x: 0.1, y: 0.01, z: 1.07}
+--- !u!114 &2215507627629412649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393822631268456646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac96083fc4873d4fb68300d9965ac51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 0}
+  offSetPosition: {x: 0, y: 1, z: 0}
+  belowYThreshold: -10
 --- !u!1 &2409239079138802957
 GameObject:
   m_ObjectHideFlags: 0
@@ -12165,7 +12185,7 @@ Transform:
   m_GameObject: {fileID: 3116081465371774290}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.061, y: 0.435, z: 0.75899994}
+  m_LocalPosition: {x: 0.061, y: 0.408, z: 0.75899994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12185,7 +12205,7 @@ WheelCollider:
     spring: 35000
     damper: 4000
     targetPosition: 0.5
-  m_SuspensionDistance: 0.2
+  m_SuspensionDistance: 0.1
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.25

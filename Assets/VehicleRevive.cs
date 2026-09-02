@@ -9,6 +9,7 @@ public class VehicleRevive : MonoBehaviour
     [SerializeField] private Transform map;
 
     [SerializeField] private Vector3 offSetPosition = new Vector3(0, 2, 0);
+    [SerializeField] private float belowYThreshold = -10f;
     //[SerializeField] private MotorController motorController;
     private IVehicleMovement vehicleMovement;
 
@@ -28,6 +29,15 @@ public class VehicleRevive : MonoBehaviour
     {
         this.vehicleMovement = vehicleMovement;
     }
+
+    private void Update()
+    {
+        if (transform.position.y < belowYThreshold)
+        {
+            Revive();
+        }
+    }
+
     private GameObject GetRespawnPoint(TrackPoint FurthestTrackPoint)
     {
         if (map == null)
@@ -78,15 +88,24 @@ public class VehicleRevive : MonoBehaviour
         return surpassedRespawnPoint.gameObject;
     }
 
-
-    public bool CheckDead()
+    private void OnTriggerEnter(Collider other)
     {
-        if (Keyboard.current.pKey.wasPressedThisFrame)
+        HazardController hazardController = other.GetComponentInParent<HazardController>();
+
+        if (hazardController != null && hazardController.CanDead)
         {
-            return true;
+            Revive();
         }
-        return false;
     }
+
+    //public bool CheckDead()
+    //{
+    //    if (Keyboard.current.pKey.wasPressedThisFrame)
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     public void Revive()
     {
