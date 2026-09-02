@@ -10,7 +10,7 @@ public class MotorController : MonoBehaviour
     private MotorMovement motorMovement;
     private VehicleRevive vehicleRevive;
 
-    private bool dead = false;
+    //private bool dead = false;
     void Start()
     {
         motorMovement = GetComponent<MotorMovement>();
@@ -29,23 +29,24 @@ public class MotorController : MonoBehaviour
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();
 
-        if (vehicleRevive.CheckDead())
-        {
-            dead = true;
-        }
+
+        //if (vehicleRevive.CheckDead())
+        //{
+        //    dead = true;
+        //}
     }
 
     private void FixedUpdate()
     {
-        // check revive just after rotating everything
-        // every physics and position update is in FixedUpdate, so we should call Revive() here
-        // vehicleRevive
-        if (dead)
-        {
-            vehicleRevive.Revive();
-            Debug.Log("Vehicle revived");
-            dead = false;
-        }
+        //// check revive just after rotating everything
+        //// every physics and position update is in FixedUpdate, so we should call Revive() here
+        //// vehicleRevive
+        //if (dead)
+        //{
+        //    vehicleRevive.Revive();
+        //    Debug.Log("Vehicle revived");
+        //    dead = false;
+        //}
 
         motorMovement.Move();
     }
