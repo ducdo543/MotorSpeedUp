@@ -15,6 +15,7 @@ public class VehicleRevive : MonoBehaviour
     public event Action<Quaternion> OnAfterRevive;
 
     private int childIndex = 0;
+
     public void InitializeMap(Transform map)
     {
         this.map = map;
@@ -77,6 +78,7 @@ public class VehicleRevive : MonoBehaviour
         return surpassedRespawnPoint.gameObject;
     }
 
+
     public bool CheckDead()
     {
         if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -96,6 +98,8 @@ public class VehicleRevive : MonoBehaviour
         transform.position = position + offSetPosition; // apply offset to the position
         transform.rotation = quaternion;
 
+        // start coroutine to disable the vehicle object for 1 frame
+        StartCoroutine(DisableVehicleForOneFrame());
 
         // Reset the vehicle's movement state
         TrackPoint trackPointOfRespawn = currentRespawnPoint.GetComponent<TrackPointFollower>().TrackPoint;
@@ -104,5 +108,33 @@ public class VehicleRevive : MonoBehaviour
 
         // Invoke the event
         OnAfterRevive?.Invoke(quaternion);
+    }
+
+    private IEnumerator DisableVehicleForOneFrame()
+    {
+        // disable all children of the vehicle
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
+        // the camera has x,y,z damping to follow the vehicle,
+        // so when reviving, it can't immediately catch up with the vehicle
+        // it creates 1-2 weird frames,
+        // so we should disable the vehicle for a while
+        // then enable it after the camera catched up with the vehicle
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+
+        // enable all children of the vehicle
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(true);
+        }
+
     }
 }
