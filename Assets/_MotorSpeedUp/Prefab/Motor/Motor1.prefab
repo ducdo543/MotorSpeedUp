@@ -9033,7 +9033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 0}
   offSetPosition: {x: 0, y: 1, z: 0}
-  belowYThreshold: -10
+  belowYThreshold: -60
 --- !u!1 &2409239079138802957
 GameObject:
   m_ObjectHideFlags: 0

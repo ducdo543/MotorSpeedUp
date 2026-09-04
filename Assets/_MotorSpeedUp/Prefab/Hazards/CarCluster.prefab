@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &50609200988272445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2766552119900981497}
+  m_Layer: 0
+  m_Name: CarHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2766552119900981497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50609200988272445}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6241837428888377768}
+  - {fileID: 3384446037566912989}
+  m_Father: {fileID: 4565282762053468404}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4870073767274851395
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4565282762053468404}
   - component: {fileID: 6087056292126621281}
+  - component: {fileID: 2587664168441995018}
   m_Layer: 0
   m_Name: CarCluster
   m_TagString: Untagged
@@ -30,8 +64,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6241837428888377768}
-  - {fileID: 3384446037566912989}
+  - {fileID: 2766552119900981497}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6087056292126621281
@@ -52,18 +85,44 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
     percentage: 0
     rotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2587664168441995018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4870073767274851395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c4928ffdb92b84781e7e12187b4170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDead: 1
+  isMotion: 1
+  theHolder: {fileID: 2766552119900981497}
+  hazardProperties:
+    moveType: 2
+    offsetFromOriginPosition: {x: -4, y: 0, z: 0}
+    moveDistance: {x: 8, y: 0, z: 0}
+    moveDuration: 2
+    moveEase: 7
+    rotateType: 0
+    offsetFromOriginAngle: {x: 0, y: 0, z: 0}
+    rotateAngle: {x: 0, y: 0, z: 0}
+    rotateDuration: 0
+    rotateEase: 0
 --- !u!1001 &1249043965186706291
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4565282762053468404}
+    m_TransformParent: {fileID: 2766552119900981497}
     m_Modifications:
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5000001
+      value: 1.5000002
       objectReference: {fileID: 0}
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
@@ -73,7 +132,7 @@ PrefabInstance:
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5000001
+      value: 1.5000002
       objectReference: {fileID: 0}
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
@@ -152,12 +211,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4565282762053468404}
+    m_TransformParent: {fileID: 2766552119900981497}
     m_Modifications:
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5000001
+      value: 1.5000002
       objectReference: {fileID: 0}
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
@@ -167,7 +226,7 @@ PrefabInstance:
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5000001
+      value: 1.5000002
       objectReference: {fileID: 0}
     - target: {fileID: 4585378429102977710, guid: 023ba361ffeb2f04aa590c7b96948f61,
         type: 3}
