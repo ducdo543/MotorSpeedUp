@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MotorMovement : MonoBehaviour, IVehicleMovement
 {
-    private MapController mapController;
+    [SerializeField] private MapController mapController;
     private Rigidbody rb;
 
     [Header("Movement")]
@@ -33,7 +33,11 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     private void Start()
     {
         inputHandleMovement = GetComponent<InputHandleMovement>();
-        mapController = GameObject.FindObjectOfType<MapController>();
+
+        if (mapController == null)
+        {
+            mapController = GameObject.FindObjectOfType<MapController>();
+        }
         rb = GetComponent<Rigidbody>();
 
         baseMoveOnSpline.SetFields(mapController, rb, transform);
