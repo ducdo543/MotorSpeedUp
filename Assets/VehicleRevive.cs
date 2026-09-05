@@ -90,9 +90,9 @@ public class VehicleRevive : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        HazardController hazardController = other.GetComponentInParent<HazardController>();
+        HazardMotion hazardMotion = other.GetComponentInParent<HazardMotion>();
 
-        if (hazardController != null && hazardController.CanDead)
+        if (hazardMotion != null && hazardMotion.CanDead)
         {
             Revive();
         }
