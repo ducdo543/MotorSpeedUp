@@ -102,8 +102,8 @@ MonoBehaviour:
   theHolder: {fileID: 2766552119900981497}
   hazardProperties:
     moveType: 2
-    offsetFromOriginPosition: {x: -4, y: 0, z: 0}
-    moveDistance: {x: 8, y: 0, z: 0}
+    offsetFromOriginPosition: {x: -7, y: 0, z: 0}
+    moveDistance: {x: 14, y: 0, z: 0}
     moveDuration: 2
     moveEase: 7
     rotateType: 0

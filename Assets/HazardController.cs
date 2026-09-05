@@ -20,11 +20,10 @@ public class HazardController : MonoBehaviour
         theHolder.localPosition = theHolder.localPosition + hazardProperties.offsetFromOriginPosition;
         theHolder.localRotation = theHolder.localRotation * Quaternion.Euler(hazardProperties.offsetFromOriginAngle);
 
-        // delay is random between 0 and 1 second to avoid all hazards moving at the same time
-        delay = UnityEngine.Random.Range(0f, 1f);
+        // delay is random between 0 and 2 second to avoid all hazards moving at the same time
+        delay = UnityEngine.Random.Range(0f, 2f);
 
-        //Invoke(nameof(MoveAndRotate), delay);
-        MoveAndRotate();
+        Invoke(nameof(MoveAndRotate), delay);
     }
 
     private void MoveAndRotate()
