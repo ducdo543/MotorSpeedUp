@@ -64,7 +64,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1735476012730604938}
-  - component: {fileID: 2042112563087448802}
   - component: {fileID: 5738148703399084836}
   m_Layer: 0
   m_Name: Axe_Double
@@ -89,24 +88,6 @@ Transform:
   - {fileID: 7266996862253683000}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2042112563087448802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3600423295605154532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b3b8747fbbb1c84693a3ba70a94d047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trackPointIndexCorrespondingTo: 0
-  trackPoint:
-    index: 0
-    position: {x: 0, y: 0, z: 0}
-    percentage: 0
-    rotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &5738148703399084836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +112,7 @@ MonoBehaviour:
     rotateType: 2
     offsetFromOriginAngle: {x: 0, y: 0, z: -45}
     rotateAngle: {x: 0, y: 0, z: 90}
-    rotateDuration: 1
+    rotateDuration: 1.4
     rotateEase: 7
 --- !u!1 &5948443546634184926
 GameObject:
