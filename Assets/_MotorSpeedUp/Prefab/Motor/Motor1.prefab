@@ -7224,8 +7224,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.31, y: 0.83, z: 2.32}
-  m_Center: {x: 0.06, y: 0.42, z: -0.78}
+  m_Size: {x: 0.53, y: 1.52, z: 2.15}
+  m_Center: {x: -0, y: 0.72, z: -0.78}
 --- !u!1 &1891033428679701938
 GameObject:
   m_ObjectHideFlags: 0
@@ -9002,6 +9002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f40842cc10247489d977b2c431b85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapController: {fileID: 0}
   rotationSpeed: 4
   maxLeanAngle: 45
   wheelColliders:

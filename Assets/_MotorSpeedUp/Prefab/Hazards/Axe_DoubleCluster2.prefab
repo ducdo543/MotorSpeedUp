@@ -153,11 +153,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5738148703399084836, guid: 5ceb17db7ae707b40a55382b9810c7c9,
         type: 3}
-      propertyPath: hazardProperties.rotateDuration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5738148703399084836, guid: 5ceb17db7ae707b40a55382b9810c7c9,
-        type: 3}
       propertyPath: hazardProperties.offsetFromOriginAngle.z
       value: 45
       objectReference: {fileID: 0}
