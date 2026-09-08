@@ -242,10 +242,10 @@ namespace Map
 
             for (int i = 0; i < numberOfTrackPoints; i++)
             {
-                float percent = (float)i / (numberOfTrackPoints - 1);
+                float percent = (float)i * trackPointInterval / totalLength;
                 //Debug.Log($"Track point {i}: percent = {percent}");
                 //Debug.Log("1 is working");
-                SplineSample sample = splineComputer.Evaluate((float)i / (numberOfTrackPoints - 1));
+                SplineSample sample = splineComputer.Evaluate(percent);
                 // see whether the track point is in the abyss, if the track point is out of clip range of all map parts, then it is in the abyss
                 bool isInAbyss = false;
                 //Debug.Log("2 is working");
@@ -359,7 +359,7 @@ namespace Map
                 }
             }
 
-            Debug.Log($"available track points: {availableIndexesRemain.Count}");
+            Debug.Log($"available track points to create hazards: {availableIndexesRemain.Count}");
 
             foreach (var hazardProperties in hazardPropertiesList)
             {
