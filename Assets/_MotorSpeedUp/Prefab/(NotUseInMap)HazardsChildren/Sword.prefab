@@ -57,7 +57,7 @@ MonoBehaviour:
     rotateType: 1
     offsetFromOriginAngle: {x: 0, y: 0, z: 0}
     rotateAngle: {x: 0, y: 0, z: 90}
-    rotateDuration: 1.5
+    rotateDuration: 1
     rotateEase: 1
 --- !u!1 &3114983295080721934
 GameObject:
@@ -166,8 +166,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.005, y: 0.0027128425, z: 0.06594612}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.012, y: 0.01, z: 0.06594612}
+  m_Center: {x: 0, y: 0, z: 0.03}
 --- !u!1 &4295376688772736734
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,8 +275,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.005, y: 0.0027128425, z: 0.06594612}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.012, y: 0.01, z: 0.06594612}
+  m_Center: {x: 0, y: 0, z: 0.03}
 --- !u!1 &5763736824900959112
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,8 +384,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.005, y: 0.0027128425, z: 0.06594612}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.012, y: 0.01, z: 0.06594612}
+  m_Center: {x: 0, y: 0, z: 0.03}
 --- !u!1 &7734926453953114114
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,8 +493,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.005, y: 0.0027128425, z: 0.06594612}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.012, y: 0.01, z: 0.06594612}
+  m_Center: {x: 0, y: 0, z: 0.03}
 --- !u!1 &7997700767803868517
 GameObject:
   m_ObjectHideFlags: 0
