@@ -227,9 +227,9 @@ namespace Map
             trackPoints = new List<TrackPoint>();
             //Debug.Log($"Spline length: {splineComputer.CalculateLength()}");
             float totalLength = splineComputer.CalculateLength();
-            float reducedLength = totalLength - 100f; // we don't want to create track points in the last 100 units of the track, because we will place the goal point there
-            int numberOfTrackPoints = Mathf.FloorToInt(reducedLength / trackPointInterval) + 1;
-            //Debug.Log($"Total length: {reducedLength}, number of track points: {numberOfTrackPoints}");
+            
+            int numberOfTrackPoints = Mathf.FloorToInt(totalLength / trackPointInterval) + 1;
+            //Debug.Log($"Total length: {totalLength}, number of track points: {numberOfTrackPoints}");
 
             int mapPartIndex = -1;
             double startClip = 0f;
