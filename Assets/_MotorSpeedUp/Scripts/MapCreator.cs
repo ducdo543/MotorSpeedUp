@@ -225,19 +225,30 @@ namespace Map
             abyssTrackPointIndexes = new HashSet<int>();
 
             trackPoints = new List<TrackPoint>();
-            float totalLength = splineComputer.CalculateLength();
-            int numberOfTrackPoints = Mathf.FloorToInt(totalLength / trackPointInterval);
+            //Debug.Log($"Spline length: {splineComputer.CalculateLength()}");
+            float totalLength = splineComputer.CalculateLength() - 100f; // we don't want to create track points in the last 100 units of the track, because we will place the goal point there
+            int numberOfTrackPoints = Mathf.FloorToInt(totalLength / trackPointInterval) + 1;
+            //Debug.Log($"Total length: {totalLength}, number of track points: {numberOfTrackPoints}");
 
             int mapPartIndex = -1;
             double startClip = 0f;
             double endClip = 0f;
 
-            for (int i = 0; i <= numberOfTrackPoints; i++)
+            if (numberOfTrackPoints < 2)
             {
-                SplineSample sample = splineComputer.Evaluate((float)i / numberOfTrackPoints);
+                Debug.LogWarning("Not enough track points to do anything. Please check the trackPointInterval and the length of the spline.");
+                return;
+            }
+
+            for (int i = 0; i < numberOfTrackPoints; i++)
+            {
+                float percent = (float)i / (numberOfTrackPoints - 1);
+                //Debug.Log($"Track point {i}: percent = {percent}");
+                //Debug.Log("1 is working");
+                SplineSample sample = splineComputer.Evaluate((float)i / (numberOfTrackPoints - 1));
                 // see whether the track point is in the abyss, if the track point is out of clip range of all map parts, then it is in the abyss
                 bool isInAbyss = false;
-
+                //Debug.Log("2 is working");
 
                 while (mapPartIndex < mapPartsParent.childCount)
                 {
