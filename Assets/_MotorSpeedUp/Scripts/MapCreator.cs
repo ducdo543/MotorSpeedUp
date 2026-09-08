@@ -33,6 +33,7 @@ namespace Map
         private List<TrackPoint> trackPoints;
         private HashSet<int> abyssTrackPointIndexes = new HashSet<int>();
         private HashSet<int> nearRespawnPointTrackPointIndexes = new HashSet<int>();
+        private int numberOfTrackPointsBehindGoalGate = 0; 
         private HashSet<int> nearHazardTrackPointIndexes = new HashSet<int>();
 
         [Header("Goal Point")]
@@ -209,6 +210,10 @@ namespace Map
             goalPoint.transform.position = goalPointSample.position;
             goalPoint.transform.rotation = goalPointSample.rotation;
 
+            // adding some trackPointIndexes to afterGoalGateTrackPointIndexes,
+            // so that we don't create hazards too close to or after the goal gate
+            numberOfTrackPointsBehindGoalGate = Mathf.CeilToInt(100f / trackPointInterval); // 100 units after the goal point and ceil means we will include the track point that is beyond the goal point 1 track point
+            
 
             // creating respawn points
             CreatingRespawnPoints(mapParent, mapParentTrackPoints);
@@ -299,13 +304,14 @@ namespace Map
 
             // respawn point interval is 9 track points, but if trackPoint is in the abyss, we need to check the next track point
             int index = 0;
-            while (index < mapParentTrackPoints.Count)
+            int mapTrackPointRemain = mapParentTrackPoints.Count - numberOfTrackPointsBehindGoalGate;
+            while (index < mapTrackPointRemain)
             {
 
                 if (!abyssTrackPointIndexes.Contains(index))
                 {
                     // if after the respawn point there is an abyss in the range of 4 indexes, we can't create respawn point
-                    for (int i = index + 1; i <= Mathf.Min(mapParentTrackPoints.Count - 1, index + 4); i++)
+                    for (int i = index + 1; i <= Mathf.Min(mapTrackPointRemain - 1, index + 4); i++)
                     {
                         if (abyssTrackPointIndexes.Contains(i))
                         {
@@ -323,7 +329,7 @@ namespace Map
 
 
                     // Around the respawn point, the index itself and the two indexes before and those of after are not allowed to generate hazard, we set a flag for them
-                    for (int i = Mathf.Max(0, index - 2); i <= Mathf.Min(mapParentTrackPoints.Count - 1, index + 2); i++)
+                    for (int i = Mathf.Max(0, index - 2); i <= Mathf.Min(mapTrackPointRemain - 1, index + 2); i++)
                     {
                         nearRespawnPointTrackPointIndexes.Add(i);
                     }
@@ -352,7 +358,7 @@ namespace Map
 
             
             List<int> availableIndexesRemain = new List<int>();
-            for (int i = 0; i < mapParentTrackPoints.Count; i++)
+            for (int i = 0; i < mapParentTrackPoints.Count - numberOfTrackPointsBehindGoalGate; i++)
             {
                 if (!abyssTrackPointIndexes.Contains(i) && !nearRespawnPointTrackPointIndexes.Contains(i))
                 {
