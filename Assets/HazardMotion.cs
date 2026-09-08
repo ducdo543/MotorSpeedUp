@@ -98,7 +98,7 @@ public class HazardMotion : MonoBehaviour
                     break; // break the switch, not the while loop
                 case LoopType.Yoyo:
                     yield return RotateTo(endRotation);
-                    theHolder.rotation = startRotation; // reset rotation to start
+                    theHolder.localRotation = startRotation; // reset rotation to start
                     break;
             }
         }
