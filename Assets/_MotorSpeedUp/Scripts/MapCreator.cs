@@ -237,8 +237,9 @@ namespace Map
             //Debug.Log($"Total length: {totalLength}, number of track points: {numberOfTrackPoints}");
 
             int mapPartIndex = -1;
-            double startClip = 0f;
-            double endClip = 0f;
+            // startClip and endClip will be from infinite negative
+            double startClip = double.NegativeInfinity;
+            double endClip = double.NegativeInfinity;
 
             if (numberOfTrackPoints < 2)
             {
