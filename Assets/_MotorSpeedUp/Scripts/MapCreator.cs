@@ -279,6 +279,14 @@ namespace Map
 
                 }
 
+                // modify the track point according to the SampleModifier of the spline user
+                if (mapPartIndex == 0)
+                {
+                    //Debug.Log($"sample position first: {sample.position}");
+                    mapPartsParent.GetChild(mapPartIndex).GetComponent<MapPart>().ApplySampleModifiers(ref sample);
+                    //Debug.Log($"sample position after: {sample.position}");
+                }
+
                 if (isInAbyss)
                 {
                     abyssTrackPointIndexes.Add(i);
