@@ -166,6 +166,8 @@
 
             public float Evaluate(double t)
             {
+                //Debug centerStart and centerEnd
+                //Debug.Log($"Center Start: {_centerStart}, Center End: {_centerEnd}");
                 t = (float)GlobalToLocalPercent(t);
                 if (t < _centerStart)
                 {
