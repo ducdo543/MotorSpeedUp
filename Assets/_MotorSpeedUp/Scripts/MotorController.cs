@@ -9,6 +9,8 @@ public class MotorController : MonoBehaviour
     [Header("Movement")]
     private MotorMovement motorMovement;
     private VehicleRevive vehicleRevive;
+    private bool reachedGoal = false;
+    private Rigidbody rb;
 
     //private bool dead = false;
     void Start()
@@ -17,6 +19,8 @@ public class MotorController : MonoBehaviour
         vehicleRevive = GetComponent<VehicleRevive>();
 
         vehicleRevive.Initialize(motorMovement);
+
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -25,7 +29,15 @@ public class MotorController : MonoBehaviour
 
         motorMovement.CalculateInterpolatedPosition();
 
-        motorMovement.WorkingWithInput();
+        if (reachedGoal)
+        {
+            motorMovement.SetNoInput();
+        }
+        else
+        {
+            motorMovement.WorkingWithInput();
+        }
+
         motorMovement.GetRotation();
         motorMovement.RotatePlayer();
 
@@ -50,4 +62,10 @@ public class MotorController : MonoBehaviour
 
         motorMovement.Move();
     }
+
+    public void SetReachedGoal(bool value)
+    {
+        reachedGoal = value;
+    }
+
 }

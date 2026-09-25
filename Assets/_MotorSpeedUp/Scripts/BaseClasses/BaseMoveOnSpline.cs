@@ -100,7 +100,7 @@ public class BaseMoveOnSpline
                 if (Vector3.Dot(trackPoint.rotation * Vector3.forward, directionFromTrackPointToPlayer) >= 0)
                 {
                     trackPointBehind = trackPoint; // update trackPointBehind
-                    Debug.Log($"trackPointBehind index: {trackPointBehind.index}");
+                    //Debug.Log($"trackPointBehind index: {trackPointBehind.index}");
                     break;
                 }
             }
@@ -279,4 +279,6 @@ public class BaseMoveOnSpline
         trackPointBehind = trackPoint;
         rb.velocity = Vector3.zero;
     }
+
+
 }
