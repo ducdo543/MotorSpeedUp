@@ -57,6 +57,12 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
         
     }
 
+    public void SetNoInput()
+    {
+        newVerticalInput = 0;
+        newHorizontalInput = 0;
+    }
+
     public void Move()
     {
         
@@ -121,6 +127,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     {
         baseMoveOnSpline.ResetVehicleFields(trackPoint);
     }
+
 
     private void OnDrawGizmosSelected()
     {
