@@ -10,7 +10,10 @@ public class MotorController : MonoBehaviour
     private MotorMovement motorMovement;
     private VehicleRevive vehicleRevive;
     private bool reachedGoal = false;
+    private bool isTicking = false;
+    private bool isStopping = false;
     private Rigidbody rb;
+    private Coroutine motorRoutine;
 
     //private bool dead = false;
     void Start()
@@ -21,32 +24,54 @@ public class MotorController : MonoBehaviour
         vehicleRevive.Initialize(motorMovement);
 
         rb = GetComponent<Rigidbody>();
+
+        motorRoutine = StartCoroutine(MotorUpdate());
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator MotorUpdate()
     {
-
-        motorMovement.CalculateInterpolatedPosition();
-
-        if (reachedGoal)
+        while (true)
         {
-            motorMovement.SetNoInput();
+            motorMovement.CalculateInterpolatedPosition();
+
+            if (reachedGoal)
+            {
+                motorMovement.SetNoInput();
+                if (!isTicking )
+                {
+                    isTicking = true;
+                    StartCoroutine(StopAfterDelay());
+                }
+            }
+            else
+            {
+                motorMovement.WorkingWithInput();
+            }
+
+            motorMovement.GetRotation();
+            motorMovement.RotatePlayer();
+
+
+            //if (vehicleRevive.CheckDead())
+            //{
+            //    dead = true;
+            //}
+            yield return null;
         }
-        else
-        {
-            motorMovement.WorkingWithInput();
-        }
-
-        motorMovement.GetRotation();
-        motorMovement.RotatePlayer();
-
-
-        //if (vehicleRevive.CheckDead())
-        //{
-        //    dead = true;
-        //}
     }
+
+    IEnumerator StopAfterDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForFixedUpdate();// ensure this happens in physics step
+
+        rb.isKinematic = true;
+
+        StopCoroutine(motorRoutine);
+
+        isStopping = true;
+    }    
 
     private void FixedUpdate()
     {
@@ -59,6 +84,11 @@ public class MotorController : MonoBehaviour
         //    Debug.Log("Vehicle revived");
         //    dead = false;
         //}
+
+        if (isStopping)
+        {
+            return;
+        }
 
         motorMovement.Move();
     }
