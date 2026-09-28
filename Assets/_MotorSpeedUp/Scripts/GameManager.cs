@@ -32,12 +32,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // just for testing, remove this later
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    SaveGame(2);
-        //    //Debug.Log("Current Level: " + DataManager.MotorSpeedUpData.Level);
-        //}
+        //just for testing, remove this later
+        if (Input.GetKeyDown(KeyCode.O))
+            {
+                SaveGame(4);
+                //Debug.Log("Current Level: " + DataManager.MotorSpeedUpData.Level);
+            }
     }
 
     private void LoadGame()
