@@ -11,6 +11,7 @@ public class GoalGateCollide : MonoBehaviour
     [Header("Other SerializeFields")]
     [SerializeField] private MotorController motorController;
     private Collider[] motorColliders;
+    [SerializeField] private UIManager uiManager;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class GoalGateCollide : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        // working with the motor
         foreach (Collider motorCollider in motorColliders)
         {
             if (other == motorCollider)
@@ -39,6 +41,8 @@ public class GoalGateCollide : MonoBehaviour
                 break; // Exit the loop once a match is found
             }
         }
-        
+
+        // working with the UI
+        uiManager.SetIsWin(true);
     }
 }
