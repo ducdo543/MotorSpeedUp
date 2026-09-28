@@ -9,7 +9,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private float maxLeanAngle = 45f;
+    [SerializeField] private float leanAngleMultiplier = 22f;
     private Quaternion targetRotation;
     private float maxHorizontalInput = 0.7f;
     private float newVerticalInput;
@@ -90,7 +90,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     {
         Quaternion uprightRotation = InterpolatedRotation;
         //Debug.Log($"interpolatedRotation: {uprightRotation * Vector3.forward}");
-        float leanAngle = -(maxLeanAngle * inputHandleMovement.HorizontalInput);
+        float leanAngle = -(leanAngleMultiplier * newHorizontalInput);
         Quaternion leanRotation = Quaternion.AngleAxis(leanAngle, uprightRotation * Vector3.forward);
         targetRotation = leanRotation * uprightRotation;
 
