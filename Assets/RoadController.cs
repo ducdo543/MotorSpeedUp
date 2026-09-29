@@ -9,7 +9,7 @@ public class RoadController : MonoBehaviour
     private void Awake()
     {
         // note that GameManager need to be initialized first before getting the current level
-        int currentLevel = GameManager.Instance.CurrentLevel;
+        int currentLevel = GameManager.Instance.MotorSpeedUpData.Level;
         mapPrefab = DataReader.Instance.GetMapPrefab(currentLevel);
         
         if (mapPrefab == null)

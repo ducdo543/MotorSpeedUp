@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MotorSpeedUp.Data;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public DataManager DataManager { get; private set; }
 
-    private int currentLevel = 1;
-    public int CurrentLevel => currentLevel;
+    public MotorSpeedUpData MotorSpeedUpData => DataManager.MotorSpeedUpData;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         DataManager = new DataManager();
         LoadGame();
         //Debug.Log("Current Level: " + DataManager.MotorSpeedUpData.Level);
-        currentLevel = DataManager.MotorSpeedUpData.Level;
+        
     }
 
     private void Update()
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         //just for testing, remove this later
         if (Input.GetKeyDown(KeyCode.O))
             {
-                SaveGame(4);
+                SaveGame(4, 1, BikerType.Biker2);
                 //Debug.Log("Current Level: " + DataManager.MotorSpeedUpData.Level);
             }
     }
@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
         DataManager.LoadData();
     }    
 
-    public void SaveGame(int level)
+    public void SaveGame(int level = 1, int motorType = 1, BikerType bikerType = BikerType.Biker1)
     {
-        DataManager.SaveGame(level);
+        DataManager.SaveGame(level, motorType, bikerType);
     }
 }
