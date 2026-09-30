@@ -26,7 +26,7 @@ namespace MotorSpeedUp.Data
                 Debug.Log("Save file not found, creating new data.");
             }
         }
-        public void SaveGame(int level = 1, int motorType = 1, BikerType bikerType = BikerType.Biker1)
+        public void SaveGame(int level = 1, MotorType motorType = MotorType.Motor1, BikerType bikerType = BikerType.Biker1)
         {
             motorSpeedUpData.SetNewData(level, motorType, bikerType);
             string json = JsonUtility.ToJson(motorSpeedUpData);
