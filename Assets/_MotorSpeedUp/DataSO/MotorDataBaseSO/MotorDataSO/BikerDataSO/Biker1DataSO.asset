@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f5462dedebf4264abf69d592128dec4, type: 3}
   m_Name: Biker1DataSO
   m_EditorClassIdentifier: 
-  bikerType: 0
-  bikerPrefab: {fileID: 0}
+  bikerType: 1
+  bikerPrefab: {fileID: 7409139072497981441, guid: e6cf57437c8abe044a3828b59231039b,
+    type: 3}

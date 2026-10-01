@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee3afd6e7f4b564084932ae85153b38, type: 3}
   m_Name: MotorDataBaseSO
   m_EditorClassIdentifier: 
-  motorDataSOs: []
+  motorDataSOs:
+  - {fileID: 11400000, guid: 1b1387aa40cc0e5449cf3a168717432d, type: 2}
