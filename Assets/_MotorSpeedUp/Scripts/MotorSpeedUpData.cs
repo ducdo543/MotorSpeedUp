@@ -12,6 +12,8 @@ namespace MotorSpeedUp.Data
         [SerializeField] private MotorType motorType;
         [SerializeField] private BikerType bikerType = BikerType.Biker1;
         public int Level => level;
+        public MotorType MotorType => motorType;
+        public BikerType BikerType => bikerType;
 
         public void SetNewData(int level = 1, MotorType motorType = MotorType.Motor1, BikerType bikerType = BikerType.Biker1)
         {
