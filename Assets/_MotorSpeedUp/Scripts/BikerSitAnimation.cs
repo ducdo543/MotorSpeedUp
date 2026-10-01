@@ -7,8 +7,15 @@ public class BikerSitAnimation : MonoBehaviour
     public AnimationClip clip;
     void Start()
     {
-        clip.SampleAnimation(gameObject, 0f);
+        if (clip != null)
+        {
+            clip.SampleAnimation(gameObject, 0f);
+        }
     }
 
-    
+    public void SetSitAnimation(AnimationClip newClip)
+    {
+        clip = newClip;
+        clip.SampleAnimation(gameObject, 0f);
+    }
 }

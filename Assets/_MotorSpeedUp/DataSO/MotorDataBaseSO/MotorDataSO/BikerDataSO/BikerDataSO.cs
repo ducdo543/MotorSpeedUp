@@ -8,4 +8,7 @@ public class BikerDataSO : ScriptableObject
 {
     [SerializeField] private BikerType bikerType;
     [SerializeField] private GameObject bikerPrefab;
+
+    public BikerType BikerType => bikerType;
+    public GameObject BikerPrefab => bikerPrefab;
 }

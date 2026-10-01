@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         //just for testing, remove this later
         if (Input.GetKeyDown(KeyCode.O))
             {
-                SaveGame(4, MotorType.Motor1, BikerType.Biker2);
+                SaveGame(4, MotorType.Motor1, BikerType.Biker1);
                 //Debug.Log("Current Level: " + DataManager.MotorSpeedUpData.Level);
             }
     }

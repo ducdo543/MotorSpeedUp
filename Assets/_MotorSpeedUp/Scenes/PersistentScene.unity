@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapDataSO: {fileID: 11400000, guid: 0d88b1bbf6ce67541a69dd284185e4fa, type: 2}
+  motorDataBaseSO: {fileID: 11400000, guid: 9f686ae722117014cbdd259725ba40d1, type: 2}
 --- !u!4 &1418765985
 Transform:
   m_ObjectHideFlags: 0
