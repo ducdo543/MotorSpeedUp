@@ -5,19 +5,24 @@ using MotorSpeedUp.Data;
 
 public class RaceInitializer : MonoBehaviour
 {
-    private GameObject mapPrefab;
+    [SerializeField] private CameraTargetController cameraTargetController;
+    private GameObject motor;
+    private GameObject map;
 
     private void Awake()
     {
         SpawnMap();
         SpawnMotorBiker();
+
+        RegisterForCameraTarget();
+        RegisterForMotor();
     }
 
     private void SpawnMap()
     {
         // note that GameManager need to be initialized first before getting the current level
         int currentLevel = GameManager.Instance.MotorSpeedUpData.Level;
-        mapPrefab = DataReader.Instance.GetMapPrefab(currentLevel);
+        GameObject mapPrefab = DataReader.Instance.GetMapPrefab(currentLevel);
 
         if (mapPrefab == null)
         {
@@ -25,7 +30,7 @@ public class RaceInitializer : MonoBehaviour
             return;
         }
 
-        GameObject map = Instantiate(mapPrefab, transform);
+        map = Instantiate(mapPrefab, transform);
     }    
 
     private void SpawnMotorBiker()
@@ -42,7 +47,7 @@ public class RaceInitializer : MonoBehaviour
         DataReader.Instance.GetMotorBiker(motorType, bikerType, out motorPrefab, out bikerPrefab, out animationClip);
 
 
-        GameObject motor = Instantiate(motorPrefab, transform);
+        motor = Instantiate(motorPrefab, transform);
 
         // adding biker into the same position of the biker socket of the motor
         Transform bikerSocket = motor.transform.Find("BikerSocket");
@@ -60,4 +65,29 @@ public class RaceInitializer : MonoBehaviour
             Debug.LogError("Biker prefab does not have a BikerSitAnimation component.");
         }
     }
+
+    private void RegisterForCameraTarget()
+    {
+        if (motor != null)
+        {
+            cameraTargetController.RegisterVehicle(motor.transform);
+        }
+        else
+        {
+            Debug.LogError("Motor is not instantiated, cannot register vehicle.");
+        }
+    }    
+
+    private void RegisterForMotor()
+    {
+        MotorController motorController = motor.GetComponent<MotorController>();
+        if (motorController != null)
+        {
+            motorController.Initialize(map);
+        }
+        else
+        {
+            Debug.LogError("Motor prefab does not have a MotorController component.");
+        }
+    }    
 }

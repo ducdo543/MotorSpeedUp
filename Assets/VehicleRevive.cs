@@ -17,16 +17,12 @@ public class VehicleRevive : MonoBehaviour
 
     private int childIndex = 0;
 
-    public void InitializeMap(Transform map)
-    {
-        this.map = map;
-    }
-
     // actually we can use binary search,
     // in the first place, i thought we always need to run this method in the Update method, but actually, just when the vehicle dies
 
     public void Initialize(IVehicleMovement vehicleMovement)
     {
+        //Debug.Log($"vehicleMovement: {vehicleMovement}");
         this.vehicleMovement = vehicleMovement;
     }
 
@@ -155,5 +151,12 @@ public class VehicleRevive : MonoBehaviour
             child.gameObject.SetActive(true);
         }
 
+    }
+
+    public void RegisterMap(Transform map)
+    {
+       
+        this.map = map;
+        
     }
 }

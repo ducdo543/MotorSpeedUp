@@ -5,6 +5,7 @@ using UnityEngine;
 public class MotorController : MonoBehaviour
 {
     [SerializeField] private BikerController bikerController;
+    [SerializeField] private GameObject map;
 
     [Header("Movement")]
     private MotorMovement motorMovement;
@@ -16,12 +17,17 @@ public class MotorController : MonoBehaviour
     private Coroutine motorRoutine;
 
     //private bool dead = false;
-    void Start()
+    public void Initialize(GameObject map)
     {
         motorMovement = GetComponent<MotorMovement>();
         vehicleRevive = GetComponent<VehicleRevive>();
 
+
         vehicleRevive.Initialize(motorMovement);
+
+        
+
+        RegisterMap(map);
 
         rb = GetComponent<Rigidbody>();
 
@@ -31,6 +37,8 @@ public class MotorController : MonoBehaviour
     // Update is called once per frame
     IEnumerator MotorUpdate()
     {
+        yield return null; // wait for one frame to ensure all child components are initialized in the Start() method (if they have) before proceeding
+
         while (true)
         {
             motorMovement.CalculateInterpolatedPosition();
@@ -98,4 +106,10 @@ public class MotorController : MonoBehaviour
         reachedGoal = value;
     }
 
+    private void RegisterMap(GameObject map)
+    {
+        this.map = map;
+        motorMovement.RegisterMapController(map.GetComponent<MapController>());
+        vehicleRevive.RegisterMap(map.transform);
+    }    
 }
