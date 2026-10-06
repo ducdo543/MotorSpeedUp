@@ -38,7 +38,7 @@ public class CameraTargetController : MonoBehaviour
 
     private void OnEnable()
     {
-        vehicleRevive.OnAfterRevive += ResetFields;
+        RegisterOnAfterReviveEvent();
     }
 
     private void OnDisable()
@@ -49,7 +49,7 @@ public class CameraTargetController : MonoBehaviour
     {
         if (vehicle == null)
         {
-            vehicle = GameObject.FindWithTag("MainMotor").transform;
+            return;
         }
         vehicleMovement = vehicle.GetComponent<IVehicleMovement>();
         vehicleRevive = vehicle.GetComponent<VehicleRevive>();
@@ -148,5 +148,20 @@ public class CameraTargetController : MonoBehaviour
         transform.position = vehicle.position;
         transposer.m_YDamping = 0f;
         transposer.m_ZDamping = 0f;
+    }
+
+    public void RegisterVehicle(Transform vehicleTransform)
+    {
+        vehicle = vehicleTransform;
+        Initialized();
+        RegisterOnAfterReviveEvent();
+    }
+
+    private void RegisterOnAfterReviveEvent()
+    {
+        if (vehicleRevive != null)
+        {
+            vehicleRevive.OnAfterRevive += ResetFields;
+        }
     }
 }

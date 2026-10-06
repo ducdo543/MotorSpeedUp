@@ -30,22 +30,22 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     [SerializeField] private Vector3 halfExtents = new Vector3(0.1f, 0.1f, 0.5f);
 
 
-    private void Start()
-    {
-        inputHandleMovement = GetComponent<InputHandleMovement>();
+    //private void Start()
+    //{
+    //    inputHandleMovement = GetComponent<InputHandleMovement>();
 
-        if (mapController == null)
-        {
-            mapController = GameObject.FindObjectOfType<MapController>();
-        }
-        rb = GetComponent<Rigidbody>();
+    //    rb = GetComponent<Rigidbody>();
 
-        baseMoveOnSpline.SetFields(mapController, rb, transform);
-
-    }
+    //    if (mapController != null)
+    //    {
+    //        baseMoveOnSpline.SetFields(mapController, rb, transform);
+    //    }
+    //}
 
     public void WorkingWithInput()
     {
+        inputHandleMovement = GetComponent<InputHandleMovement>();
+
         newVerticalInput = inputHandleMovement.VerticalInput;
         newHorizontalInput = Mathf.Clamp(inputHandleMovement.HorizontalInput, -maxHorizontalInput, maxHorizontalInput) * 2f;
 
@@ -128,6 +128,15 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
         baseMoveOnSpline.ResetVehicleFields(trackPoint);
     }
 
+
+    // this is called simultaneously with Start(), we haven't had rb,
+    // so we have to GetComponent rb again
+    public void RegisterMapController(MapController mapController)
+    {
+        this.mapController = mapController;
+        rb = GetComponent<Rigidbody>();
+        baseMoveOnSpline.SetFields(mapController, rb, transform);
+    }
 
     private void OnDrawGizmosSelected()
     {
