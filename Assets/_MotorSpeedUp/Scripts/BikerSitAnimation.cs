@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BikerSitAnimation : MonoBehaviour
 {
-    public AnimationClip clip;
-    void Start()
-    {
-        if (clip != null)
-        {
-            clip.SampleAnimation(gameObject, 0f);
-        }
-    }
+    private AnimationClip clip;
+    //void Start()
+    //{
+    //    if (clip != null)
+    //    {
+    //        clip.SampleAnimation(gameObject, 0f);
+    //    }
+    //}
 
     public void SetSitAnimation(AnimationClip newClip)
     {
