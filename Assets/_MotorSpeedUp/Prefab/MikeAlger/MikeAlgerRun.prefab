@@ -978,7 +978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4066681584684421289
 Transform:
   m_ObjectHideFlags: 0
@@ -1116,6 +1116,10 @@ MonoBehaviour:
     acceleration: 20
     decelerationForward: 20
     decelerationRight: 20
+    groundLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    raycastDistance: 6
   castDistance: 1.2
   halfExtents: {x: 0.1, y: 0.1, z: 0.44}
 --- !u!114 &2294718994157518603
