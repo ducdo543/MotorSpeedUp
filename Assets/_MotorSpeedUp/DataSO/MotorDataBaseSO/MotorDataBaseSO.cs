@@ -19,12 +19,16 @@ public class MotorDataBaseSO : ScriptableObject
             if (motorDataSO.MotorType == motorType)
             {
                 motorPrefab = motorDataSO.MotorPrefab;
+                animationClip = motorDataSO.Clip;
                 foreach (var motorBikerData in motorDataSO.MotorBikerDataList)
                 {
                     if (motorBikerData.BikerDataSO.BikerType == bikerType)
                     {
                         bikerPrefab = motorBikerData.BikerDataSO.BikerPrefab;
-                        animationClip = motorBikerData.Clip;
+                        if (motorBikerData.SpecificClip != null)
+                        {
+                            animationClip = motorBikerData.SpecificClip;
+                        }
                         return;
                     }
                 }
