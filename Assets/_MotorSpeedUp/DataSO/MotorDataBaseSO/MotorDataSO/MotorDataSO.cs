@@ -8,10 +8,12 @@ public class MotorDataSO : ScriptableObject
 {
     [SerializeField] private MotorType motorType;
     [SerializeField] private GameObject motorPrefab;
+    [SerializeField] private AnimationClip clip;
     [SerializeField] private List<MotorBikerData> motorBikerDataList;
 
     public MotorType MotorType => motorType;
     public GameObject MotorPrefab => motorPrefab;
+    public AnimationClip Clip => clip;
     public List<MotorBikerData> MotorBikerDataList => motorBikerDataList;
 }
 
@@ -19,8 +21,8 @@ public class MotorDataSO : ScriptableObject
 public class MotorBikerData
 {
     [SerializeField] private BikerDataSO bikerDataSO;
-    [SerializeField] private AnimationClip clip;
+    [SerializeField] private AnimationClip specificClip;
 
     public BikerDataSO BikerDataSO => bikerDataSO;
-    public AnimationClip Clip => clip;
+    public AnimationClip SpecificClip => specificClip;
 }

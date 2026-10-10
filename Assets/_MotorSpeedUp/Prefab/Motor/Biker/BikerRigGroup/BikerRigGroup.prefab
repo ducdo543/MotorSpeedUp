@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 6581677154961072346}
   - component: {fileID: 6708409827897225431}
   - component: {fileID: 8228834590272817946}
+  - component: {fileID: 2899870841862805199}
   m_Layer: 0
   m_Name: BikerRigGroup
   m_TagString: Untagged
@@ -710,8 +711,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6957c68aea189fe46b19687d54a82ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHandChainIK: {fileID: 0}
-  leftHandChainIK: {fileID: 0}
-  headChainIK: {fileID: 0}
-  rightFootTwoBoneIK: {fileID: 0}
-  leftFootTwoBoneIK: {fileID: 0}
+  rightHandChainIK: {fileID: 3186619758005752396}
+  leftHandChainIK: {fileID: 2461612462843185971}
+  headChainIK: {fileID: 7457206098560958748}
+  rightFootTwoBoneIK: {fileID: 3819329544421535437}
+  leftFootTwoBoneIK: {fileID: 8124751332739075472}
+--- !u!114 &2899870841862805199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8876338831366697947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dca3d0290f24ad4faa148144379fa45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -2256,7 +2256,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8679118828307491257}
   - component: {fileID: 3297073545069539897}
-  - component: {fileID: 908473998117036036}
   m_Layer: 0
   m_Name: Biker2
   m_TagString: Untagged
@@ -2304,18 +2303,6 @@ MonoBehaviour:
   rootLeftFoot: {fileID: 8548657664395721522}
   midLeftFoot: {fileID: 8634362138611268861}
   tipLeftFoot: {fileID: 978958251359491660}
---- !u!114 &908473998117036036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8024507438991473830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dca3d0290f24ad4faa148144379fa45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8035312290229383000
 GameObject:
   m_ObjectHideFlags: 0
