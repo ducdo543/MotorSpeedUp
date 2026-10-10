@@ -530,6 +530,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTargetController: {fileID: 395051435}
+  motorGameplayPrefab: {fileID: 7795190387819765792, guid: 1f2e64f9c3f25d24ca4d1ad2087e6130,
+    type: 3}
+  bikerRigGroupPrefab: {fileID: 8876338831366697947, guid: bb1f77425023bbd4c8b07c90cd768f09,
+    type: 3}
 --- !u!4 &1243535255
 Transform:
   m_ObjectHideFlags: 0

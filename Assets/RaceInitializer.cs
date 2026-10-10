@@ -6,7 +6,12 @@ using MotorSpeedUp.Data;
 public class RaceInitializer : MonoBehaviour
 {
     [SerializeField] private CameraTargetController cameraTargetController;
-    private GameObject motor;
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject motorGameplayPrefab;
+    [SerializeField] private GameObject bikerRigGroupPrefab;
+
+    private GameObject motorGameplay;
     private GameObject map;
 
     private void Awake()
@@ -39,6 +44,10 @@ public class RaceInitializer : MonoBehaviour
         GameObject bikerPrefab = new GameObject();
         AnimationClip animationClip = new AnimationClip();
 
+        // when using new GameObject(), it will create an empty game object, we need to destroy it later
+        GameObject emptyMotor = motorPrefab;
+        GameObject emptyBiker = bikerPrefab;
+
 
         MotorType motorType = GameManager.Instance.MotorSpeedUpData.MotorType;
         BikerType bikerType = GameManager.Instance.MotorSpeedUpData.BikerType;
@@ -46,48 +55,59 @@ public class RaceInitializer : MonoBehaviour
         // get motor and biker prefabs and animation clip from the data reader
         DataReader.Instance.GetMotorBiker(motorType, bikerType, out motorPrefab, out bikerPrefab, out animationClip);
 
+        // destroy the empty motor and biker game objects
+        Destroy(emptyMotor);
+        Destroy(emptyBiker);
 
-        motor = Instantiate(motorPrefab, transform);
 
-        // adding biker into the same position of the biker socket of the motor
-        Transform bikerSocket = motor.transform.Find("BikerSocket");
+        motorGameplay = Instantiate(motorGameplayPrefab, transform);
+
+        GameObject motor = Instantiate(motorPrefab, motorGameplay.transform);
+
+        GameObject bikerRigGroup = Instantiate(bikerRigGroupPrefab, motor.transform);
+
         GameObject biker = Instantiate(bikerPrefab, motor.transform);
+
+        // biker needs to be the same position of the biker socket
+        Transform bikerSocket = motor.GetComponent<MotorInformation>().BikerSocket;
         biker.transform.position = bikerSocket.position;
 
         // adding animation to the biker
-        BikerSitAnimation bikerSitAnimation = biker.GetComponent<BikerSitAnimation>();
+        BikerSitAnimation bikerSitAnimation = bikerRigGroup.GetComponent<BikerSitAnimation>();
         if (bikerSitAnimation != null)
         {
             bikerSitAnimation.SetSitAnimation(animationClip);
         }
         else
         {
-            Debug.LogError("Biker prefab does not have a BikerSitAnimation component.");
+            Debug.LogError("Biker rig group prefab does not have a BikerSitAnimation component.");
         }
+
+       
     }
 
     private void RegisterForCameraTarget()
     {
-        if (motor != null)
+        if (motorGameplay != null)
         {
-            cameraTargetController.RegisterVehicle(motor.transform);
+            cameraTargetController.RegisterVehicle(motorGameplay.transform);
         }
         else
         {
-            Debug.LogError("Motor is not instantiated, cannot register vehicle.");
+            Debug.LogError("motorGameplay is not instantiated, cannot register vehicle.");
         }
     }    
 
     private void RegisterForMotor()
     {
-        MotorController motorController = motor.GetComponent<MotorController>();
+        MotorController motorController = motorGameplay.GetComponent<MotorController>();
         if (motorController != null)
         {
             motorController.Initialize(map);
         }
         else
         {
-            Debug.LogError("Motor prefab does not have a MotorController component.");
+            Debug.LogError("motorGameplay prefab does not have a MotorController component.");
         }
     }    
 }
