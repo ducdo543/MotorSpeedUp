@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 7801388260425234564}
   - component: {fileID: 85540646174644136}
   m_Layer: 0
-  m_Name: MotorFolder
+  m_Name: MotorGameplay
   m_TagString: MainMotor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Motor1DataSO
   m_EditorClassIdentifier: 
   motorType: 1
-  motorPrefab: {fileID: 2393822631268456646, guid: e4294a243220b9043bd6bc80f8c64b26,
+  motorPrefab: {fileID: 1255681261314525605, guid: e2803ea7b8fd7c34d80a16aab59ac379,
     type: 3}
+  clip: {fileID: 7400000, guid: fca5df6f96560904ea011407b88a7331, type: 2}
   motorBikerDataList:
   - bikerDataSO: {fileID: 11400000, guid: f879b26e4218cb44b8ad5d9c38aa7770, type: 2}
-    clip: {fileID: 7400000, guid: 15a3461f393325b449a445cd78be9659, type: 2}
+    specificClip: {fileID: 0}
+  - bikerDataSO: {fileID: 11400000, guid: 47286deffd7ad0c4ebf32c71946ff7d9, type: 2}
+    specificClip: {fileID: 0}
