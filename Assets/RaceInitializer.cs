@@ -66,7 +66,7 @@ public class RaceInitializer : MonoBehaviour
 
         GameObject bikerRigGroup = Instantiate(bikerRigGroupPrefab, motor.transform);
 
-        GameObject biker = Instantiate(bikerPrefab, motor.transform);
+        GameObject biker = Instantiate(bikerPrefab, bikerRigGroup.transform);
 
         // biker needs to be the same position of the biker socket
         Transform bikerSocket = motor.GetComponent<MotorInformation>().BikerSocket;
@@ -83,8 +83,27 @@ public class RaceInitializer : MonoBehaviour
             Debug.LogError("Biker rig group prefab does not have a BikerSitAnimation component.");
         }
 
-       
+
+        // register bones for the biker rig group
+        BikerInformation bikerInformation = biker.GetComponent<BikerInformation>();
+        BikerRigGroup bikerRigGroupScript = bikerRigGroup.GetComponent<BikerRigGroup>();
+        RegisterForRigs(bikerInformation, bikerRigGroupScript);
+
+
     }
+
+    private void RegisterForRigs(BikerInformation bikerInformation, BikerRigGroup bikerRigGroupScript)
+    {
+        if (bikerInformation != null && bikerRigGroupScript != null)
+        {
+            bikerRigGroupScript.SetRigsData(bikerInformation);
+        }
+        else
+        {
+            Debug.LogError("BikerInformation or BikerRigGroup is not instantiated, cannot register biker rig group.");
+        }
+    }
+
 
     private void RegisterForCameraTarget()
     {
