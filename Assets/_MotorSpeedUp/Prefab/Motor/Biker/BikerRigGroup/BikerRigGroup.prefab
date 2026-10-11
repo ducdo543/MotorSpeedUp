@@ -716,6 +716,7 @@ MonoBehaviour:
   headChainIK: {fileID: 7457206098560958748}
   rightFootTwoBoneIK: {fileID: 3819329544421535437}
   leftFootTwoBoneIK: {fileID: 8124751332739075472}
+  rigBuilder: {fileID: 6708409827897225431}
 --- !u!114 &2899870841862805199
 MonoBehaviour:
   m_ObjectHideFlags: 0
