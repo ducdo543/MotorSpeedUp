@@ -49,8 +49,9 @@ public class BikerRigGroup : MonoBehaviour
         rightFootTwoBoneIK.data = rightFootData;
         leftFootTwoBoneIK.data = leftFootData;
 
-        // Clear the previous data and Rebuild the rig after setting the data
-        //rigBuilder.Clear();
+        // Clear the rigbuilder (to free memory properly)
+        // and Rebuild the rig after setting the data
+        rigBuilder.Clear();
         rigBuilder.Build();
 
     }
