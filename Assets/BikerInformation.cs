@@ -23,6 +23,10 @@ public class BikerInformation : MonoBehaviour
     public Transform RootHead => rootHead;
     public Transform TipHead => tipHead;
 
+    [Header("Hips")]
+    [SerializeField] private Transform constrainedHips;
+    public Transform ConstrainedHips => constrainedHips;
+
     [Header("RightFoot")]
     [SerializeField] private Transform rootRightFoot;
     [SerializeField] private Transform midRightFoot;

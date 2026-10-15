@@ -1488,8 +1488,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4373920611641452487}
   - {fileID: 2312041330717027843}
@@ -2297,6 +2297,7 @@ MonoBehaviour:
   tipLeftHand: {fileID: 3378802399925347123}
   rootHead: {fileID: 9062337513866640020}
   tipHead: {fileID: 4674853752506561007}
+  constrainedHips: {fileID: 2541171848429805033}
   rootRightFoot: {fileID: 2671997718395987072}
   midRightFoot: {fileID: 6473791904103704945}
   tipRightFoot: {fileID: 24510452191365242}
