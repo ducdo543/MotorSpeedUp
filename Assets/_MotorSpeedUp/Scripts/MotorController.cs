@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MotorController : MonoBehaviour
 {
-    [SerializeField] private BikerController bikerController;
+    //[SerializeField] private BikerController bikerController;
     [SerializeField] private GameObject map;
 
     [Header("Movement")]
