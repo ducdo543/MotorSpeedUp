@@ -68,9 +68,6 @@ public class RaceInitializer : MonoBehaviour
 
         GameObject biker = Instantiate(bikerPrefab, bikerRigGroup.transform);
 
-        // biker needs to be the same position of the biker socket
-        Transform bikerSocket = motor.GetComponent<MotorInformation>().BikerSocket;
-        biker.transform.position = bikerSocket.position;
 
         // adding animation to the biker
         BikerSitAnimation bikerSitAnimation = bikerRigGroup.GetComponent<BikerSitAnimation>();

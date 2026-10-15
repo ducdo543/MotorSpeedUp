@@ -13,6 +13,9 @@ public class BikerRigGroup : MonoBehaviour
     [SerializeField] private ChainIKConstraint headChainIK;
 
     [Header("Rig3")]
+    [SerializeField] private MultiParentConstraint hipsMultiParentConstraint;
+
+    [Header("Rig4")]
     [SerializeField] private TwoBoneIKConstraint rightFootTwoBoneIK;
     [SerializeField] private TwoBoneIKConstraint leftFootTwoBoneIK;
 
@@ -33,6 +36,9 @@ public class BikerRigGroup : MonoBehaviour
         headData.tip = bikerInformation.TipHead;
         headData.root = bikerInformation.RootHead;
 
+        var hipsData = hipsMultiParentConstraint.data;
+        hipsData.constrainedObject = bikerInformation.ConstrainedHips;
+
         var rightFootData = rightFootTwoBoneIK.data;
         rightFootData.tip = bikerInformation.TipRightFoot;
         rightFootData.mid = bikerInformation.MidRightFoot;
@@ -46,6 +52,7 @@ public class BikerRigGroup : MonoBehaviour
         rightHandChainIK.data = rightHandData;
         leftHandChainIK.data = leftHandData;
         headChainIK.data = headData;
+        hipsMultiParentConstraint.data = hipsData;
         rightFootTwoBoneIK.data = rightFootData;
         leftFootTwoBoneIK.data = leftFootData;
 
