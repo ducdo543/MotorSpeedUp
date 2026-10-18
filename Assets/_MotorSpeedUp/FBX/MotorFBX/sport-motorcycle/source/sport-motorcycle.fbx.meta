@@ -1,0 +1,229 @@
+fileFormatVersion: 2
+guid: 18651fc7dabd1534f907c5e99220ce90
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original amber optical lens
+    second: {fileID: 2100000, guid: 3136e4db6718ab649b0948c619f21c57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original black finished iron
+    second: {fileID: 2100000, guid: b688b3acd707f2a42af371f945831a83, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original black grained saddle leather
+    second: {fileID: 2100000, guid: 2a745d0f637549e40b4fd7bdebf204e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original brass
+    second: {fileID: 2100000, guid: 113fbe62c4c08e7499d8d1382783ca68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original brushed aluminium
+    second: {fileID: 2100000, guid: 47e71263200bc534fb4e453e84f118da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original clear glazing
+    second: {fileID: 2100000, guid: 3f95e4f1ceb4a064caf7406539e1e72e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original clear optical lens
+    second: {fileID: 2100000, guid: 9303b0e191df4314c82b995c103edf39, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original fine-grained tyre rubber
+    second: {fileID: 2100000, guid: 22618004ab0ae3e4a86e69b9d75914f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original polished steel
+    second: {fileID: 2100000, guid: 1ba59e09bea959b45ac390b50179929d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original red optical lens
+    second: {fileID: 2100000, guid: c17a3843370daa34f8c98082fe34b357, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original red outdoor paint
+    second: {fileID: 2100000, guid: d6856c04b6a99b947bc7fa4ed0d7a609, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original warm white outdoor paint
+    second: {fileID: 2100000, guid: addfc82d98330384185b53edf38aa340, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: aluminium_motorcycle_2k
+    second: {fileID: 2800000, guid: d00248f1654052448aa26a1132d2dcea, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: black_iron_motorcycle_2k
+    second: {fileID: 2800000, guid: 5a4edce1d3840e540a55a9696c4d0a81, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: brass_motorcycle_2k
+    second: {fileID: 2800000, guid: d300bd3dd8396a04d8f2ca2d9751472c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: glass_motorcycle_2k
+    second: {fileID: 2800000, guid: 495b8970590c4d746aca5efb1458fd39, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lamp_amber_motorcycle_2k
+    second: {fileID: 2800000, guid: 0b04de3f5246ab84586966456e258407, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lamp_clear_motorcycle_2k
+    second: {fileID: 2800000, guid: 8aa54bb16cf61b640936a2e732c96005, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lamp_red_motorcycle_2k
+    second: {fileID: 2800000, guid: b2a73c18321fc1d4595805d1ab5e95e6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: leather_black_motorcycle_2k
+    second: {fileID: 2800000, guid: b561c47e05ce0f446a8df4d686b551a2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: polished_steel_motorcycle_2k
+    second: {fileID: 2800000, guid: f733b7dd85031c647acc895ebcd5f7f0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: red_paint_motorcycle_2k
+    second: {fileID: 2800000, guid: 4ff07c59b9b14b14dbcf4a8b905da202, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: tyre_rubber_motorcycle_2k
+    second: {fileID: 2800000, guid: ea48ff24dbb9c844e96ad5ba1243ace1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: white_paint_motorcycle_2k
+    second: {fileID: 2800000, guid: 2530cde2e97d51f4f97fd7e7da426e45, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
