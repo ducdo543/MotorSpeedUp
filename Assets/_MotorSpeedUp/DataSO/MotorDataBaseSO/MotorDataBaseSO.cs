@@ -7,12 +7,21 @@ using MotorSpeedUp.Data;
 public class MotorDataBaseSO : ScriptableObject
 {
     [SerializeField] private List<MotorDataSO> motorDataSOs;
-
+    [SerializeField] private BikerDataListSO bikerDataListSO;
     public void GetMotorBiker(MotorType motorType, BikerType bikerType, out GameObject motorPrefab, out GameObject bikerPrefab, out AnimationClip animationClip)
     {
         motorPrefab = null;
         bikerPrefab = null;
         animationClip = null;
+
+        foreach (var bikerDataSO in bikerDataListSO.List)
+        {
+            if (bikerDataSO.BikerType == bikerType)
+            {
+                bikerPrefab = bikerDataSO.BikerPrefab;
+                break;
+            }
+        }
 
         foreach (var motorDataSO in motorDataSOs)
         {
@@ -20,7 +29,9 @@ public class MotorDataBaseSO : ScriptableObject
             {
                 motorPrefab = motorDataSO.MotorPrefab;
                 animationClip = motorDataSO.Clip;
-                foreach (var motorBikerData in motorDataSO.MotorBikerDataList)
+
+                // get specific biker prefab and animation clip if available
+                foreach (var motorBikerData in motorDataSO.SpecificMotorBikerDataList)
                 {
                     if (motorBikerData.BikerDataSO.BikerType == bikerType)
                     {
@@ -28,6 +39,7 @@ public class MotorDataBaseSO : ScriptableObject
                         if (motorBikerData.SpecificClip != null)
                         {
                             animationClip = motorBikerData.SpecificClip;
+                            bikerPrefab = motorBikerData.BikerDataSO.BikerPrefab;
                         }
                         return;
                     }
