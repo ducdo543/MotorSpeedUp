@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   motorDataSOs:
   - {fileID: 11400000, guid: 1b1387aa40cc0e5449cf3a168717432d, type: 2}
+  - {fileID: 11400000, guid: fc47a7d12b777d54282fd64127c2d8ab, type: 2}
+  bikerDataListSO: {fileID: 11400000, guid: 874ff2b6e9b127d40aaf9e3ed6c017e9, type: 2}

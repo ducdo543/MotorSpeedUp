@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8677567cc2d946a40910a20b102cffa9, type: 3}
   m_Name: Motor2DataSO
   m_EditorClassIdentifier: 
-  motorType: 0
-  motorPrefab: {fileID: 0}
-  clip: {fileID: 0}
+  motorType: 2
+  motorPrefab: {fileID: 5153270560849180111, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+    type: 3}
+  clip: {fileID: 7400000, guid: 71ee42580053ffa4cb1ef1211cd635b7, type: 2}
   specificMotorBikerDataList: []

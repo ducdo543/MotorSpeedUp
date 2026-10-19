@@ -448,7 +448,7 @@ PrefabInstance:
     - target: {fileID: 7795190387819765792, guid: 1f2e64f9c3f25d24ca4d1ad2087e6130,
         type: 3}
       propertyPath: m_Name
-      value: MotorController
+      value: MotorGameplay
       objectReference: {fileID: 0}
     - target: {fileID: 7795190387819765792, guid: 1f2e64f9c3f25d24ca4d1ad2087e6130,
         type: 3}
@@ -511,7 +511,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8470755306793611771, guid: 1f2e64f9c3f25d24ca4d1ad2087e6130,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1521262567}
+    - targetCorrespondingSourceObject: {fileID: 8470755306793611771, guid: 1f2e64f9c3f25d24ca4d1ad2087e6130,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2024597890}
+    - targetCorrespondingSourceObject: {fileID: 8470755306793611771, guid: 1f2e64f9c3f25d24ca4d1ad2087e6130,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 898119752}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f2e64f9c3f25d24ca4d1ad2087e6130, type: 3}
 --- !u!4 &870861494 stripped
@@ -634,6 +642,80 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &898119751
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 870861494}
+    m_Modifications:
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153270560849180111, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+        type: 3}
+      propertyPath: m_Name
+      value: Sport_motorcycle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 275ba23a69b60724c8ff1ff2fbdefb7d, type: 3}
+--- !u!4 &898119752 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1908902001974800573, guid: 275ba23a69b60724c8ff1ff2fbdefb7d,
+    type: 3}
+  m_PrefabInstance: {fileID: 898119751}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &966020434
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +836,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2024597890}
+    m_TransformParent: {fileID: 870861494}
     m_Modifications:
     - target: {fileID: 500629083944866484, guid: bb1f77425023bbd4c8b07c90cd768f09,
         type: 3}
@@ -1044,6 +1126,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Biker2
       objectReference: {fileID: 0}
+    - target: {fileID: 8024507438991473830, guid: 2d114a690848b2c4fbe4e8df7fc7bd48,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8679118828307491257, guid: 2d114a690848b2c4fbe4e8df7fc7bd48,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1117,6 +1204,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Motor1
       objectReference: {fileID: 0}
+    - target: {fileID: 1255681261314525605, guid: e2803ea7b8fd7c34d80a16aab59ac379,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4001390583548859668, guid: e2803ea7b8fd7c34d80a16aab59ac379,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1136,11 +1228,7 @@ PrefabInstance:
     - {fileID: -7274712737929712575, guid: e2803ea7b8fd7c34d80a16aab59ac379, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7857253387311146806, guid: e2803ea7b8fd7c34d80a16aab59ac379, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4001390583548859668, guid: e2803ea7b8fd7c34d80a16aab59ac379,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1521262567}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2803ea7b8fd7c34d80a16aab59ac379, type: 3}
 --- !u!4 &2024597890 stripped
@@ -1255,6 +1343,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Biker1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737470094538480318, guid: 2a52bdb884b446c40adc107ecff8b0a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
