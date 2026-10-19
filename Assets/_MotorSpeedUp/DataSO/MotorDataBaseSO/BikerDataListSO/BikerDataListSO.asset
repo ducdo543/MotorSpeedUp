@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c1b57e9cb802f42ae34f198474c95b, type: 3}
   m_Name: BikerDataListSO
   m_EditorClassIdentifier: 
-  bikerDataSOList: []
+  bikerDataSOList:
+  - {fileID: 11400000, guid: f879b26e4218cb44b8ad5d9c38aa7770, type: 2}
+  - {fileID: 11400000, guid: 47286deffd7ad0c4ebf32c71946ff7d9, type: 2}
