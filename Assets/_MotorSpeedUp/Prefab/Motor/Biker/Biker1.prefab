@@ -1088,6 +1088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d860ff994eff7549bcfd4c6e7c4460c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  humanoidAvatar: {fileID: 9000000, guid: eae16ac9998b1934aa7e602df9f60323, type: 3}
   rootRightHand: {fileID: 5162287793707611065}
   tipRightHand: {fileID: 9175687982423468048}
   rootLeftHand: {fileID: 2712550568122743101}
@@ -5272,7 +5273,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6389954787174382781}
-  - component: {fileID: 1252990945128893276}
   m_Layer: 0
   m_Name: MikeAlger
   m_TagString: Untagged
@@ -5303,27 +5303,6 @@ Transform:
   - {fileID: 6199768692855133431}
   m_Father: {fileID: 1277003063195904003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1252990945128893276
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6375332684691579120}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: eae16ac9998b1934aa7e602df9f60323, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6461016664146866486
 GameObject:
   m_ObjectHideFlags: 0
