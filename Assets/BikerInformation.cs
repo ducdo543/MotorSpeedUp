@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BikerInformation : MonoBehaviour
 {
+#if UNITY_EDITOR
+    [Header("UnityEditorOnly")]
+    [SerializeField] private Avatar humanoidAvatar;
+#endif
+
     [Header("RightHand")]
     [SerializeField] private Transform rootRightHand;
     [SerializeField] private Transform tipRightHand;
@@ -43,5 +48,35 @@ public class BikerInformation : MonoBehaviour
     public Transform RootLeftFoot => rootLeftFoot;
     public Transform MidLeftFoot => midLeftFoot;
     public Transform TipLeftFoot => tipLeftFoot;
+
+#if UNITY_EDITOR
+    public void AutomaticallyGetBones()
+    {
+        Animator animator = gameObject.AddComponent<Animator>();
+        animator.avatar = humanoidAvatar;
+
+        rootRightHand = animator.GetBoneTransform(HumanBodyBones.RightUpperArm);
+        tipRightHand = animator.GetBoneTransform(HumanBodyBones.RightHand);
+
+        rootLeftHand = animator.GetBoneTransform(HumanBodyBones.LeftUpperArm);
+        tipLeftHand = animator.GetBoneTransform(HumanBodyBones.LeftHand);
+
+        rootHead = animator.GetBoneTransform(HumanBodyBones.Spine);
+        tipHead = animator.GetBoneTransform(HumanBodyBones.Head);
+
+        constrainedHips = animator.GetBoneTransform(HumanBodyBones.Hips);
+
+        rootRightFoot = animator.GetBoneTransform(HumanBodyBones.RightUpperLeg);
+        midRightFoot = animator.GetBoneTransform(HumanBodyBones.RightLowerLeg);
+        tipRightFoot = animator.GetBoneTransform(HumanBodyBones.RightFoot);
+
+        rootLeftFoot = animator.GetBoneTransform(HumanBodyBones.LeftUpperLeg);
+        midLeftFoot = animator.GetBoneTransform(HumanBodyBones.LeftLowerLeg);
+        tipLeftFoot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
+
+        // remove the animator component after getting the bones
+        DestroyImmediate(animator);
+    }
+#endif
 
 }

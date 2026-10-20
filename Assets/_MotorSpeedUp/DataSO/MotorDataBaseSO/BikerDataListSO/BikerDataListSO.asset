@@ -15,3 +15,4 @@ MonoBehaviour:
   bikerDataSOList:
   - {fileID: 11400000, guid: f879b26e4218cb44b8ad5d9c38aa7770, type: 2}
   - {fileID: 11400000, guid: 47286deffd7ad0c4ebf32c71946ff7d9, type: 2}
+  - {fileID: 11400000, guid: 04f1712836d155e49a9d0c034c92989e, type: 2}
