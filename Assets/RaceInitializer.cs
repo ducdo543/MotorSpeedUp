@@ -69,6 +69,16 @@ public class RaceInitializer : MonoBehaviour
         GameObject biker = Instantiate(bikerPrefab, bikerRigGroup.transform);
 
 
+
+
+        // register bones for the biker rig group
+        BikerInformation bikerInformation = biker.GetComponent<BikerInformation>();
+        BikerRigGroup bikerRigGroupScript = bikerRigGroup.GetComponent<BikerRigGroup>();
+        RegisterForRigs(bikerInformation, bikerRigGroupScript);
+
+        // after register the biker rig group and call rigBuider.Build(),
+        // now we can set the sit animation for the biker
+        // cause in some rigs, we use Maintain Target Offset, so animation should be set after the rig is built
         // adding animation to the biker
         BikerSitAnimation bikerSitAnimation = bikerRigGroup.GetComponent<BikerSitAnimation>();
         if (bikerSitAnimation != null)
@@ -79,13 +89,6 @@ public class RaceInitializer : MonoBehaviour
         {
             Debug.LogError("Biker rig group prefab does not have a BikerSitAnimation component.");
         }
-
-
-        // register bones for the biker rig group
-        BikerInformation bikerInformation = biker.GetComponent<BikerInformation>();
-        BikerRigGroup bikerRigGroupScript = bikerRigGroup.GetComponent<BikerRigGroup>();
-        RegisterForRigs(bikerInformation, bikerRigGroupScript);
-
 
     }
 
