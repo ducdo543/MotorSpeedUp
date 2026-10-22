@@ -75,7 +75,7 @@ public class BikerInformation : MonoBehaviour
         tipLeftFoot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
 
         // remove the animator component after getting the bones
-        DestroyImmediate(animator);
+        DestroyImmediate(animator, true);
     }
 #endif
 
