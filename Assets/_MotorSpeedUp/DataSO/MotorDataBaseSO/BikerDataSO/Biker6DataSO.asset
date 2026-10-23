@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Biker6DataSO
   m_EditorClassIdentifier: 
   bikerType: 6
-  bikerPrefab: {fileID: 4982407594073393194, guid: 51a8070dd2b916a4d928e0568714ae7e,
+  bikerPrefab: {fileID: 8350303156781076542, guid: 51a8070dd2b916a4d928e0568714ae7e,
     type: 3}

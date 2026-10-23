@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8677567cc2d946a40910a20b102cffa9, type: 3}
+  m_Name: Motor3DataSO
+  m_EditorClassIdentifier: 
+  motorType: 3
+  motorPrefab: {fileID: 20311787706490808, guid: 9a6b1579be42fea46b764300db2190bc,
+    type: 3}
+  clip: {fileID: 7400000, guid: 93f9d2c9729ed8942be5e6dcfdb19c3c, type: 2}
+  specificMotorBikerDataList: []
