@@ -1,0 +1,239 @@
+fileFormatVersion: 2
+guid: 564f086a3c7e18d408862bcf6f0b828d
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original amber optical lens
+    second: {fileID: 2100000, guid: e2f54d0ec5027e149bd7920dca6cd2d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original black finished iron
+    second: {fileID: 2100000, guid: 097f036c1a4413b4cb57cef274bf07d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original brass
+    second: {fileID: 2100000, guid: 931c347a2164d79429a7e4341dc6840b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original brown grained saddle leather
+    second: {fileID: 2100000, guid: 3f3d291ce737d7144824063f236172aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original brushed aluminium
+    second: {fileID: 2100000, guid: 9a37278a88165e64180e33939baedde6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original clear glazing
+    second: {fileID: 2100000, guid: 11a57d908f57198408098bc4d0a13cc2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original clear optical lens
+    second: {fileID: 2100000, guid: 184b7bce86abd084f85d2696a0e70be1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original dark rubber
+    second: {fileID: 2100000, guid: 1c9d80c521f3544469a4eaaf1de93ee8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original fine-grained tyre rubber
+    second: {fileID: 2100000, guid: 8106c91eda696714f8d3756da58a3a72, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original polished steel
+    second: {fileID: 2100000, guid: 35065fde2bd7f6a4692b12115c015d9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original red optical lens
+    second: {fileID: 2100000, guid: 08f8c5b5d950fa44ab328744a3e9d072, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original teal enamel paint
+    second: {fileID: 2100000, guid: 07d32dc3cdd2530499ed90f2c3788dc6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Original warm white outdoor paint
+    second: {fileID: 2100000, guid: e3bfc506a4cf7934e94336eef49422b5, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: aluminium_motorcycle_2k
+    second: {fileID: 2800000, guid: 72dd9df29b4e4c5459e4508481af0b94, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: black_iron_motorcycle_2k
+    second: {fileID: 2800000, guid: 0e99881ace8935c418875a2c1e954c33, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: brass_motorcycle_2k
+    second: {fileID: 2800000, guid: 1b01779c80770d3469b46ee5cfa84f79, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: glass_motorcycle_2k
+    second: {fileID: 2800000, guid: d5610716116bb024d976aad8b6c565a6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lamp_amber_motorcycle_2k
+    second: {fileID: 2800000, guid: cb22ee8bfd9a14e42a5d952de9764257, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lamp_clear_motorcycle_2k
+    second: {fileID: 2800000, guid: 3e90f7bd718f5874e9f4488b446b8429, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lamp_red_motorcycle_2k
+    second: {fileID: 2800000, guid: 159b79b9ac350b44fa328ffc0e84f6b2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: leather_brown_motorcycle_2k
+    second: {fileID: 2800000, guid: 09574e42e00bffc4dab3d8b9f2f6d127, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: polished_steel_motorcycle_2k
+    second: {fileID: 2800000, guid: 094d57204a3ffb944b63f6a1f937fc1c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: rubber_motorcycle_2k
+    second: {fileID: 2800000, guid: bbdb84f087eace64fa69ee67aca3819f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: teal_paint_motorcycle_2k
+    second: {fileID: 2800000, guid: 9b0c1093b9ae99d4397778a1757b2b77, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: tyre_rubber_motorcycle_2k
+    second: {fileID: 2800000, guid: 9afd632195b6e464cb5ed5a8e6e6510b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: white_paint_motorcycle_2k
+    second: {fileID: 2800000, guid: 5dcfda0a6c738264d9906068872a305b, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
