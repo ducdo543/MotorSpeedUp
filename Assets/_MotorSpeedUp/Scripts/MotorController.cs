@@ -14,11 +14,16 @@ public class MotorController : MonoBehaviour
     private bool isTicking = false;
     private bool isStopping = false;
     private Rigidbody rb;
+    private WheelCollider[] wheelColliders;
     private Coroutine motorRoutine;
 
     //private bool dead = false;
     public void Initialize(GameObject map)
     {
+        rb = GetComponent<Rigidbody>();
+
+        wheelColliders = GetComponentsInChildren<WheelCollider>();
+
         motorMovement = GetComponent<MotorMovement>();
         vehicleRevive = GetComponent<VehicleRevive>();
 
@@ -27,9 +32,7 @@ public class MotorController : MonoBehaviour
 
         
 
-        RegisterMap(map);
-
-        rb = GetComponent<Rigidbody>();
+        RegisterForChildren(map);
 
         motorRoutine = StartCoroutine(MotorUpdate());
     }
@@ -106,10 +109,10 @@ public class MotorController : MonoBehaviour
         reachedGoal = value;
     }
 
-    private void RegisterMap(GameObject map)
+    private void RegisterForChildren(GameObject map)
     {
         this.map = map;
-        motorMovement.RegisterMapController(map.GetComponent<MapController>());
-        vehicleRevive.RegisterMap(map.transform);
+        motorMovement.Initialize(map.GetComponent<MapController>(), rb, wheelColliders);
+        vehicleRevive.InitializeMap(map.transform);
     }    
 }

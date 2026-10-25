@@ -24,6 +24,7 @@ public class RaceInitializer : MonoBehaviour
         motorGameplay = Instantiate(motorGameplayPrefab, transform);
         motorBikerSpawner.SpawnMotorBiker(motorGameplay.transform);
 
+
         RegisterForCameraTarget();
         RegisterForMotorGameplay();
     }

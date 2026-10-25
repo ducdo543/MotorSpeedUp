@@ -131,11 +131,18 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
 
     // this is called simultaneously with Start(), we haven't had rb,
     // so we have to GetComponent rb again
-    public void RegisterMapController(MapController mapController)
+    public void Initialize(MapController mapController, Rigidbody rb, WheelCollider[] wheelColliders)
     {
         this.mapController = mapController;
-        rb = GetComponent<Rigidbody>();
-        baseMoveOnSpline.SetFields(mapController, rb, transform);
+        this.rb = rb;
+
+        this.wheelColliders = wheelColliders;
+        if (wheelColliders.Length == 0)
+        {
+            Debug.LogWarning("No WheelCollider found!", this);
+        }
+
+        baseMoveOnSpline.SetFields(mapController, this.rb, transform);
     }
 
     private void OnDrawGizmosSelected()
