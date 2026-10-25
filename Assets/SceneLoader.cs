@@ -83,8 +83,8 @@ public class SceneLoader : MonoBehaviour
         {
             case SceneID.PersistentScene:
                 return "PersistentScene";
-            case SceneID.IdleScene:
-                return "IdleScene";
+            case SceneID.LobbyScene:
+                return "LobbyScene";
             case SceneID.RaceScene:
                 return "RaceScene";
         }
@@ -97,6 +97,6 @@ public class SceneLoader : MonoBehaviour
 public enum SceneID
 {
     PersistentScene,
-    IdleScene,
+    LobbyScene,
     RaceScene,
 }
