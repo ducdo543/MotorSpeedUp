@@ -153,7 +153,7 @@ public class VehicleRevive : MonoBehaviour
 
     }
 
-    public void RegisterMap(Transform map)
+    public void InitializeMap(Transform map)
     {
        
         this.map = map;
