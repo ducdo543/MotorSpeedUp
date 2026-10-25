@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TierVisual : MonoBehaviour
+public class TireVisual : MonoBehaviour
 {
     [SerializeField] private WheelCollider[] wheelColliders;
-    [SerializeField] private TierSpinner tierSpinner;
+    [SerializeField] private TireSpinner tireSpinner;
 
     private void Start()
     {
         wheelColliders = GetComponentsInChildren<WheelCollider>();
-        tierSpinner = GetComponentInChildren<TierSpinner>();
+        tireSpinner = GetComponentInChildren<TireSpinner>();
     }
 
     private void Update()
@@ -18,6 +18,6 @@ public class TierVisual : MonoBehaviour
         wheelColliders[0].GetWorldPose(out Vector3 frontPos, out Quaternion frontRot);
         wheelColliders[1].GetWorldPose(out Vector3 backPos, out Quaternion backRot);
 
-        tierSpinner.RotateTiers(frontRot, backRot);
+        tireSpinner.RotateTiers(frontRot, backRot);
     }
 }

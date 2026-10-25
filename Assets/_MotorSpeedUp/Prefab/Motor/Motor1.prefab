@@ -4152,8 +4152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f0c32a60be45d4796c7bf317f69da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontTier: {fileID: 2878349092007916770}
-  backTier: {fileID: 2799584102622079243}
+  frontTire: {fileID: 2878349092007916770}
+  backTire: {fileID: 2799584102622079243}
 --- !u!1 &1075700246249286632
 GameObject:
   m_ObjectHideFlags: 0
@@ -8420,7 +8420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2878349092007916770}
   m_Layer: 0
-  m_Name: FrontTier
+  m_Name: FrontTire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14510,7 +14510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2799584102622079243}
   m_Layer: 0
-  m_Name: BackTier
+  m_Name: BackTire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
