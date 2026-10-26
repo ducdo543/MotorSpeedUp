@@ -7,7 +7,7 @@ public class TireSpinner : MonoBehaviour
     [SerializeField] private Transform frontTire;
     [SerializeField] private Transform backTire;
 
-    public void RotateTiers(Quaternion frontTargetRotation, Quaternion backTargetRotation)
+    public void RotateTires(Quaternion frontTargetRotation, Quaternion backTargetRotation)
     {
         frontTire.rotation = frontTargetRotation;
         backTire.rotation = backTargetRotation;

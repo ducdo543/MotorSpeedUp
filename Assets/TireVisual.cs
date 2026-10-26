@@ -18,6 +18,6 @@ public class TireVisual : MonoBehaviour
         wheelColliders[0].GetWorldPose(out Vector3 frontPos, out Quaternion frontRot);
         wheelColliders[1].GetWorldPose(out Vector3 backPos, out Quaternion backRot);
 
-        tireSpinner.RotateTiers(frontRot, backRot);
+        tireSpinner.RotateTires(frontRot, backRot);
     }
 }
