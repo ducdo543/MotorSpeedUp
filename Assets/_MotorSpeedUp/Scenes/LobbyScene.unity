@@ -309,8 +309,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 143263249}
+  - component: {fileID: 143263250}
   m_Layer: 0
-  m_Name: MotorParentScale
+  m_Name: MotorHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,6 +332,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1471549242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &143263250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143263248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4704abe64ef904fbe1f815f2aa7e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tireSpinner: {fileID: 0}
+  lobbyMapController: {fileID: 977879682}
 --- !u!4 &163210693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1277003063195904003, guid: 2a52bdb884b446c40adc107ecff8b0a0,
@@ -1814,7 +1829,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   motorBikerSpawner: {fileID: 1471549240}
-  motorParentScale: {fileID: 143263248}
+  motorHolder: {fileID: 143263248}
+  lobbyTireRotater: {fileID: 143263250}
 --- !u!4 &1471549242
 Transform:
   m_ObjectHideFlags: 0

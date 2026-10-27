@@ -7,6 +7,8 @@ public class LobbyMapController : MonoBehaviour
     [SerializeField] private List<Transform> roadParts;
     [SerializeField] private Transform resetPoint;
     [SerializeField] private float moveSpeed = 5f;
+
+    public float MoveSpeed => moveSpeed;
     void Start()
     {
         
@@ -39,7 +41,7 @@ public class LobbyMapController : MonoBehaviour
         {
             totalLength += part.GetComponent<Renderer>().bounds.size.z;
         }
-        Debug.Log("Total Length of Road Parts: " + totalLength);
+        //Debug.Log("Total Length of Road Parts: " + totalLength);
 
         return totalLength;
     }

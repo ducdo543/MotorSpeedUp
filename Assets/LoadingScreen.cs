@@ -19,7 +19,7 @@ public class LoadingScreen : MonoBehaviour
         yield return new WaitForSecondsRealtime(3f);
 
 
-        AsyncOperation op = SceneLoader.Instance.LoadFirstSceneCustom(SceneID.RaceScene);
+        AsyncOperation op = SceneLoader.Instance.LoadFirstSceneCustom(SceneID.LobbyScene);
 
         while (!op.isDone)
         {

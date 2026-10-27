@@ -5,14 +5,18 @@ using UnityEngine;
 public class LobbyInitializer : MonoBehaviour
 {
     [SerializeField] private MotorBikerSpawner motorBikerSpawner;
-    [SerializeField] private GameObject motorParentScale;
+    [SerializeField] private GameObject motorHolder;
+
+    [SerializeField] private LobbyTireRotater lobbyTireRotater;
     void Start()
     {
-        motorBikerSpawner.SpawnMotorBiker(motorParentScale.transform);
+        motorBikerSpawner.SpawnMotorBiker(motorHolder.transform);
+
+        lobbyTireRotater.Initialize();
     }
 
     void Update()
     {
-        
+        lobbyTireRotater.UpdateTires();
     }
 }
