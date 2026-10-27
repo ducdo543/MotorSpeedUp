@@ -11,10 +11,13 @@ public class GoalGateCollide : MonoBehaviour
     [Header("Other SerializeFields")]
     [SerializeField] private MotorController motorController;
     private Collider[] motorColliders;
-    [SerializeField] private UIManager uiManager;
+    [SerializeField] private UIRaceManager uiRaceManager;
 
-    private void Awake()
+    public void Initialize(MotorController motorController, UIRaceManager uiRaceManager)
     {
+        this.motorController = motorController;
+        this.uiRaceManager = uiRaceManager;
+
         //// ignore collision between this collider and the colliders in collidersToIgnore
         //thisCollider = GetComponent<Collider>();
         //foreach (Collider collider in collidersToIgnore)
@@ -22,10 +25,14 @@ public class GoalGateCollide : MonoBehaviour
         //    Physics.IgnoreCollision(thisCollider, collider);
         //}
 
+
+
+
         // get the collider of the motorController
-        if (motorController != null)
+        motorColliders = motorController.GetComponentsInChildren<Collider>();
+        if (motorColliders == null || motorColliders.Length == 0)
         {
-            motorColliders = motorController.GetComponentsInChildren<Collider>();
+            Debug.LogError("MotorController has no colliders in its children.");
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -43,6 +50,6 @@ public class GoalGateCollide : MonoBehaviour
         }
 
         // working with the UI
-        uiManager.SetIsWin(true);
+        uiRaceManager.SetIsWin(true);
     }
 }

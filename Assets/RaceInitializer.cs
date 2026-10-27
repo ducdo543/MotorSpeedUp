@@ -10,6 +10,9 @@ public class RaceInitializer : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject motorGameplayPrefab;
 
+    [Header("Fields For Registration")]
+    [SerializeField] private UIRaceManager uiRaceManager;
+
     [Header("Other SerializeFields")]
     [SerializeField] private MotorBikerSpawner motorBikerSpawner;
 
@@ -27,6 +30,7 @@ public class RaceInitializer : MonoBehaviour
 
         RegisterForCameraTarget();
         RegisterForMotorGameplay();
+        RegisterForMapGoalGate();
     }
 
     private void SpawnMap()
@@ -70,4 +74,18 @@ public class RaceInitializer : MonoBehaviour
             Debug.LogError("motorGameplay prefab does not have a MotorController component.");
         }
     }    
+
+    private void RegisterForMapGoalGate()
+    {
+        GoalGateCollide goalGateCollide = map.GetComponentInChildren<GoalGateCollide>();
+        if (goalGateCollide != null)
+        {
+            MotorController motorController = motorGameplay.GetComponent<MotorController>();
+            goalGateCollide.Initialize(motorController, uiRaceManager);
+        }
+        else
+        {
+            Debug.LogError("Map prefab does not have a GoalGateCollide component.");
+        }
+    }
 }
