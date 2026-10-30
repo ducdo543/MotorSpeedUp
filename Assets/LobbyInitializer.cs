@@ -8,7 +8,7 @@ public class LobbyInitializer : MonoBehaviour
     [SerializeField] private GameObject motorHolder;
 
     [SerializeField] private LobbyTireRotater lobbyTireRotater;
-    void Start()
+    public void Start()
     {
         motorBikerSpawner.SpawnMotorBiker(motorHolder.transform);
 
