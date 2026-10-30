@@ -32,5 +32,10 @@ namespace MotorSpeedUp.Data
             string json = JsonUtility.ToJson(motorSpeedUpData);
             File.WriteAllText(savePath, json);
         }
+
+        public void SetDataRuntime(int level = 1, MotorType motorType = MotorType.Motor1, BikerType bikerType = BikerType.Biker1)
+        {
+            motorSpeedUpData.SetNewData(level, motorType, bikerType);
+        }
     }
 }

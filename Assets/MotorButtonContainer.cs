@@ -2,24 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MotorSpeedUp.Data;
 
 public class MotorButtonContainer : MonoBehaviour
 {
-    [SerializeField] Outline outline;
-
-    public void SetMainMotor()
+    [SerializeField] private Outline outline;
+    [SerializeField] private MotorType motorType;
+    public MotorType MotorType => motorType;
+    
+    public void SetOutline(bool flag)
     {
         if (outline == null)
         {
             outline = transform.GetComponent<Outline>();
         }
-
-        SetOutline(true);
-
-    }   
-    
-    public void SetOutline(bool flag)
-    {
         outline.enabled = flag;
     }    
 }
