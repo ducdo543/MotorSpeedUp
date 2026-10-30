@@ -489,6 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 228451315}
+  motorType: 2
 --- !u!114 &228451315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +551,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2064683128}
         m_TargetAssemblyTypeName: MotorScrollViewController, Assembly-CSharp
-        m_MethodName: SetMainMotor
+        m_MethodName: SetMotorOnButtonClick
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 228451314}
@@ -1250,7 +1251,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2064683128}
         m_TargetAssemblyTypeName: MotorScrollViewController, Assembly-CSharp
-        m_MethodName: SetMainMotor
+        m_MethodName: SetMotorOnButtonClick
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 625662049}
@@ -1326,6 +1327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 625662047}
+  motorType: 1
 --- !u!1001 &756556701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1528,6 +1530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 818899281}
+  motorType: 3
 --- !u!114 &818899281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,7 +1592,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2064683128}
         m_TargetAssemblyTypeName: MotorScrollViewController, Assembly-CSharp
-        m_MethodName: SetMainMotor
+        m_MethodName: SetMotorOnButtonClick
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 818899280}
@@ -4334,6 +4337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad2d48dadf3da8498f159f07d81282d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lobbyInitializer: {fileID: 1471549241}
 --- !u!4 &21598781654196181
 Transform:
   m_ObjectHideFlags: 0
