@@ -78,7 +78,7 @@ public class BaseMoveOnSpline
 
         if (!raycastDetect)
         {
-            Debug.Log("Can't find ground");
+            //Debug.Log("Can't find ground");
             return;
         }
 
