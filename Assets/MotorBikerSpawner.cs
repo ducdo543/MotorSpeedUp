@@ -9,6 +9,12 @@ public class MotorBikerSpawner : MonoBehaviour
 
     public void SpawnMotorBiker(Transform parent)
     {
+        StartCoroutine(SpawnMotorBikerAndWait(parent));
+
+    }
+
+    IEnumerator SpawnMotorBikerAndWait(Transform parent)
+    {
         GameObject motorPrefab = new GameObject();
         GameObject bikerPrefab = new GameObject();
         AnimationClip animationClip = new AnimationClip();
@@ -29,7 +35,7 @@ public class MotorBikerSpawner : MonoBehaviour
         Destroy(emptyBiker);
 
 
-        
+
 
         GameObject motor = Instantiate(motorPrefab, parent);
 
@@ -59,7 +65,13 @@ public class MotorBikerSpawner : MonoBehaviour
             Debug.LogError("Biker rig group prefab does not have a BikerSitAnimation component.");
         }
 
-    }
+        // disable biker and turn it back on after 3-4 frames so that by then, rigBuilder has completely calculated root, tip,... of IK constraint
+        biker.SetActive(false);
+        yield return null;
+        yield return null;
+        yield return null;
+        biker.SetActive(true);
+    }    
 
     private void RegisterForRigs(BikerInformation bikerInformation, BikerRigGroup bikerRigGroupScript)
     {

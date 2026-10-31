@@ -113,7 +113,7 @@ public class CameraTargetController : MonoBehaviour
         {
             forward = InterpolatedRotation * Vector3.forward;
             forward.y = forward.y - cameraDownFactorOnGround; // Add a downward component to the forward vector
-
+            Debug.Log($"Find Ground");
         }
         else
         {
