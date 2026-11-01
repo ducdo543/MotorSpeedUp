@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public DataManager DataManager { get; private set; }
 
-    public MotorSpeedUpData MotorSpeedUpData => DataManager.MotorSpeedUpData;
 
     private void Awake()
     {

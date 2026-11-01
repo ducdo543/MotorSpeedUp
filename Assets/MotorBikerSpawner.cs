@@ -24,8 +24,8 @@ public class MotorBikerSpawner : MonoBehaviour
         GameObject emptyBiker = bikerPrefab;
 
 
-        MotorType motorType = GameManager.Instance.MotorSpeedUpData.MotorType;
-        BikerType bikerType = GameManager.Instance.MotorSpeedUpData.BikerType;
+        MotorType motorType = GameManager.Instance.DataManager.MotorSpeedUpData.MotorType;
+        BikerType bikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
 
         // get motor and biker prefabs and animation clip from the data reader
         DataReader.Instance.GetMotorBiker(motorType, bikerType, out motorPrefab, out bikerPrefab, out animationClip);
