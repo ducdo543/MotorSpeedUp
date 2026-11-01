@@ -7,9 +7,23 @@ public class MotorScrollViewController : MonoBehaviour
 {
     [SerializeField] private LobbyInitializer lobbyInitializer;
 
+    [SerializeField] private MotorButtonContainer[] motorButtonContainers;
+
     private MotorButtonContainer previousMotorButtonContainer;
 
-
+    private void Start()
+    {
+        // from data manager, we will get the current motor type and set the outline for that button
+        MotorType currentMotorType = GameManager.Instance.DataManager.MotorSpeedUpData.MotorType;
+        foreach (MotorButtonContainer motorButtonContainer in motorButtonContainers)
+        {
+            if (motorButtonContainer.MotorType == currentMotorType)
+            {
+                SetMotorOnButtonClick(motorButtonContainer);
+                break;
+            }
+        }
+    }
 
 
     // using this method for OnClick in buttons
@@ -38,12 +52,18 @@ public class MotorScrollViewController : MonoBehaviour
 
         previousMotorButtonContainer = motorButtonContainer;
 
-        // set the runtime data for MotorSpeedUpData
-        int currentLevel = GameManager.Instance.DataManager.MotorSpeedUpData.Level;
-        BikerType currentBikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
+        // set the new runtime data (if has) for MotorSpeedUpData
         MotorType newMotorType = motorButtonContainer.MotorType;
+        MotorType currentMotorType = GameManager.Instance.DataManager.MotorSpeedUpData.MotorType;
 
-        GameManager.Instance.DataManager.SetDataRuntime(currentLevel, newMotorType, currentBikerType);
+        if (newMotorType != currentMotorType)
+        {
+            int currentLevel = GameManager.Instance.DataManager.MotorSpeedUpData.Level;
+            BikerType currentBikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
+
+
+            GameManager.Instance.DataManager.SetDataRuntime(currentLevel, newMotorType, currentBikerType);
+        }
 
         // after setting data for MotorSpeedUpData, we will spawn the motor biker again
         lobbyInitializer.Initialize();
