@@ -9,10 +9,6 @@ public class LobbyInitializer : MonoBehaviour
 
     [SerializeField] private LobbyTireRotater lobbyTireRotater;
 
-    private void Start()
-    {
-        Initialize();
-    }
 
     public void Initialize()
     {

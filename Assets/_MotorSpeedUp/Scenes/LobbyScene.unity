@@ -4338,6 +4338,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyInitializer: {fileID: 1471549241}
+  motorButtonContainers:
+  - {fileID: 625662049}
+  - {fileID: 228451314}
+  - {fileID: 818899280}
 --- !u!4 &21598781654196181
 Transform:
   m_ObjectHideFlags: 0
