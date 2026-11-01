@@ -36,7 +36,7 @@ public class RaceInitializer : MonoBehaviour
     private void SpawnMap()
     {
         // note that GameManager need to be initialized first before getting the current level
-        int currentLevel = GameManager.Instance.MotorSpeedUpData.Level;
+        int currentLevel = GameManager.Instance.DataManager.MotorSpeedUpData.Level;
         GameObject mapPrefab = DataReader.Instance.GetMapPrefab(currentLevel);
 
         if (mapPrefab == null)
