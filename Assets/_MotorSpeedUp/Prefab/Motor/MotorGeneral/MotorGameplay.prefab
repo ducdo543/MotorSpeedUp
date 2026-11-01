@@ -76,6 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61582ce6b1e3c0549a7531bf348948ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelColliders: []
+  tireSpinner: {fileID: 0}
 --- !u!114 &7302581468758876575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +131,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 8
     raycastDistance: 6
-  castDistance: 1.15
+  castDistance: 2.76
   halfExtents: {x: 0.1, y: 0.01, z: 1.07}
 --- !u!114 &85540646174644136
 MonoBehaviour:
