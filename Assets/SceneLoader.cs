@@ -1,13 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
+using System;
 
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance;
 
     private Scene currentScene;
+
+    private AsyncOperation loadOp;
+
+    [SerializeField] private Camera mainCamera;
+
+    [Header("Fade settings")]
+    [SerializeField] private Image fadeImage;
+    [SerializeField] private float fadeTime = 0.5f;
+
 
     private void Awake()
     {
@@ -21,7 +33,36 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        // set fadeImage to black and transparent
+        fadeImage.color = new Color(0, 0, 0, 0);
+        // deactivate fadeImage
+        fadeImage.gameObject.SetActive(false);
+    }
+
+
     public void LoadSceneCustom(SceneID newSceneID)
+    {
+        // kill DOTween animations
+        DOTween.KillAll(true);
+
+
+        // fade in
+        fadeImage.gameObject.SetActive(true);
+        fadeImage.DOFade(1f, fadeTime).OnComplete(() =>
+        {
+            LoadNewScene(newSceneID, () =>
+            {
+                // turn fadeImage to black and transparent and deactivate it
+                fadeImage.color = new Color(0, 0, 0, 0);
+                fadeImage.gameObject.SetActive(false);
+            });
+
+        });
+    }
+
+    private void LoadNewScene(SceneID newSceneID, Action onLoadCompleted)
     {
         string newSceneName = IsEqualSceneName(newSceneID);
         // get currentScene if it's not assigned
@@ -32,6 +73,8 @@ public class SceneLoader : MonoBehaviour
 
         // set active scene to PersistentScene temporarily to avoid issues when unloading current scene
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("PersistentScene"));
+        // activate main camera if it's not active
+        mainCamera.gameObject.SetActive(true);
 
         // unload current scene if it's not PersistentScene
         if (currentScene.name != "PersistentScene")
@@ -41,7 +84,7 @@ public class SceneLoader : MonoBehaviour
                 {
                     // load new scene additively
                     SceneManager.LoadSceneAsync(newSceneName, LoadSceneMode.Additive)
-                        .completed += (op) =>
+                    .completed += (op) =>
                         {
                             Scene newScene = SceneManager.GetSceneByName(newSceneName);
                             // set new scene as active scene
@@ -49,10 +92,14 @@ public class SceneLoader : MonoBehaviour
                             //Debugger.LogAllLoadedScenes();
                             // update current scene
                             currentScene = newScene;
+                            // deactivate main camera of persistent scene 
+                            mainCamera.gameObject.SetActive(false);
+
+                            onLoadCompleted?.Invoke();
                         };
                 };
         }
-    }
+    }    
 
     public AsyncOperation LoadFirstSceneCustom(SceneID newSceneID)
     {
@@ -73,6 +120,9 @@ public class SceneLoader : MonoBehaviour
 
             //Debug.Log($"After: {RenderSettings.ambientIntensity}");
             //Debug.Log($"After skybox: {RenderSettings.skybox}");
+
+            // deactivate main camera of persistent scene
+            mainCamera.gameObject.SetActive(false);
         };
         return loadOp;
     }
