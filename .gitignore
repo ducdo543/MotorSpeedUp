@@ -109,3 +109,7 @@ Assets/StreamingAssets/crashlytics-build.properties
 
 Assets/BEDRILL/
 Assets/MotorbikePhysicsTool/
+
+# Third Party Assets
+Assets/msVFX_Free Smoke Effects Pack/
+Assets/msVFX_Free Smoke Effects Pack.meta
