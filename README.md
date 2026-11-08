@@ -8,3 +8,8 @@
 - License: Apache License 2.0
 - Redistribution: Permitted under the original license.
 - Modifications: Modified SplineUser.cs in the source code to fix an issue of "clip range percent".
+
+### Free Stylized Smoke Effects Pack
+- Source: Unity Asset Store
+- Type: Asset Store Asset
+- Version: 1.0.1
