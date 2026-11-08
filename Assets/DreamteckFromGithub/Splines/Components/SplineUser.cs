@@ -797,10 +797,15 @@ namespace Dreamteck.Splines {
             return _sampleCollection.EvaluatePosition(UnclipPercent(percent));
         }
 
+         /*
+         * Modified by ducdo543.
+         * Changes: Fixed "percent into unclipPercent".
+         * Original source: Dreamteck Splines.
+         */
         public void Evaluate(double percent, ref SplineSample result)
         {
             _sampleCollection.Evaluate(UnclipPercent(percent), ref result);
-            result.percent = DMath.Clamp01(percent);
+            result.percent = DMath.Clamp01(UnclipPercent(percent));
             ApplySampleModifiers(ref result);
         }
 
