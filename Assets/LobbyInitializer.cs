@@ -9,7 +9,8 @@ public class LobbyInitializer : MonoBehaviour
 
     [SerializeField] private LobbyTireRotater lobbyTireRotater;
 
-
+    [Header("UI-Related")]
+    [SerializeField] private UILobbyManager uiLobbyManager;
     public void Initialize()
     {
         // clear all the children of the MotorHolder first
@@ -23,6 +24,10 @@ public class LobbyInitializer : MonoBehaviour
         motorBikerSpawner.SpawnMotorBiker(motorHolder.transform);
 
         lobbyTireRotater.Initialize();
+
+        // UI-Related
+        // play smoke effect
+        uiLobbyManager.PlaySmoke();
     }
 
     void Update()

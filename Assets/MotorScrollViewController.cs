@@ -5,8 +5,6 @@ using MotorSpeedUp.Data;
 
 public class MotorScrollViewController : MonoBehaviour
 {
-    [SerializeField] private UILobbyManager uiLobbyManager;
-
     [SerializeField] private LobbyInitializer lobbyInitializer;
 
     [SerializeField] private MotorButtonContainer[] motorButtonContainers;
@@ -71,7 +69,5 @@ public class MotorScrollViewController : MonoBehaviour
         lobbyInitializer.Initialize();
 
 
-        // play smoke effect
-        uiLobbyManager.PlaySmoke();
     }
 }
