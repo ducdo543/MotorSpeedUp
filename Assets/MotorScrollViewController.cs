@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MotorSpeedUp.Data;
 
-public class MotorScrollViewController : MonoBehaviour
+public class MotorScrollViewController : MonoBehaviour, IMotorBikerScrollView
 {
     [SerializeField] private LobbyInitializer lobbyInitializer;
 
