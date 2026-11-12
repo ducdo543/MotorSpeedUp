@@ -42,15 +42,10 @@ public class BikerScrollViewController : MonoBehaviour, IMotorBikerScrollView
         }
 
 
-        if (previousBikerButtonContainer != null)
-        {
-            previousBikerButtonContainer.SetOutline(false);
-        }
-
         bikerButtonContainer.SetOutline(true);
 
 
-        previousBikerButtonContainer = bikerButtonContainer;
+        
 
         // set the new runtime data (if has) for MotorSpeedUpData
         BikerType newBikerType = bikerButtonContainer.BikerType;
@@ -65,9 +60,14 @@ public class BikerScrollViewController : MonoBehaviour, IMotorBikerScrollView
             GameManager.Instance.DataManager.SetDataRuntime(currentLevel, currentMotorType, newBikerType);
         }
 
-        // after setting data for MotorSpeedUpData, we will spawn the motor biker again
-        lobbyInitializer.Initialize();
 
+        if (previousBikerButtonContainer != null)
+        {
+            previousBikerButtonContainer.SetOutline(false);
+            // after setting data for MotorSpeedUpData, we will spawn the biker again
+            lobbyInitializer.Initialize();
+        }
+        previousBikerButtonContainer = bikerButtonContainer;
 
     }
 }
