@@ -77,8 +77,7 @@ public class MotorBikerScrollActivator : MonoBehaviour
             highlightedColor = firstHighlightedColor,
             pressedColor = firstPressedColor,
             disabledColor = firstPressedColor,
-            colorMultiplier = 1f,
-            fadeDuration = 0.1f
+            colorMultiplier = 1f
         };
 
         mainButton.interactable = false;
