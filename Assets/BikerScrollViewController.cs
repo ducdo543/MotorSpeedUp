@@ -66,6 +66,7 @@ public class BikerScrollViewController : MonoBehaviour, IMotorBikerScrollView
             previousBikerButtonContainer.SetOutline(false);
             // after setting data for MotorSpeedUpData, we will spawn the biker again
             lobbyInitializer.Initialize();
+            // for the first time, it only needs to setOutline, lobbyInitializer.Initialize() has already called in its Start()
         }
         previousBikerButtonContainer = bikerButtonContainer;
 

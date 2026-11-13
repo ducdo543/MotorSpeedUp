@@ -11,6 +11,12 @@ public class LobbyInitializer : MonoBehaviour
 
     [Header("UI-Related")]
     [SerializeField] private UILobbyManager uiLobbyManager;
+
+    private void Start()
+    {
+        Initialize();
+    }
+
     public void Initialize()
     {
         // clear all the children of the MotorHolder first

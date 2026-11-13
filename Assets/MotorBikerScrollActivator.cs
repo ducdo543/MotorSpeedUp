@@ -17,9 +17,6 @@ public class MotorBikerScrollActivator : MonoBehaviour
     private Button previousButton;
     private GameObject previousScrollView;
 
-    [Header("Lobby Initializer")]
-    [SerializeField] private LobbyInitializer lobbyInitializer;
-
     [Header("Button Colors")]
     [SerializeField] private Color firstNormalColor;
     [SerializeField] private Color firstHighlightedColor;
@@ -38,16 +35,6 @@ public class MotorBikerScrollActivator : MonoBehaviour
                 colorMultiplier = 1f,
                 fadeDuration = 0.1f
             };
-        }
-
-        // initialize lobbyInitializer
-        if (lobbyInitializer != null)
-        {
-            lobbyInitializer.Initialize();
-        }
-        else
-        {
-            Debug.LogWarning("LobbyInitializer is not assigned.");
         }
 
         // SetMainScroll for the first button
