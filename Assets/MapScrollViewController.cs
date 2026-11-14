@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MapScrollViewController : MonoBehaviour, IMotorBikerScrollView
 {
-    [SerializeField] private LobbyInitializer lobbyInitializer;
+    [SerializeField] private LobbyMapController lobbyMapController;
 
     [SerializeField] private MapButtonContainer[] mapButtonContainers;
 
@@ -62,8 +62,8 @@ public class MapScrollViewController : MonoBehaviour, IMotorBikerScrollView
         {
             previousMapButtonContainer.SetOutline(false);
 
-            // Reinitialize the lobby after changing the map
-            lobbyInitializer.Initialize();
+            // Reinitialize the lobbyMap after changing the map
+            lobbyMapController.Initialize(newLevel);
 
             // On the first call, only set the outline.
             // LobbyInitializer.Initialize() has already been called in its Start().

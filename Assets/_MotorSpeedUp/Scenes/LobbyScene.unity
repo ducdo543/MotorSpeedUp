@@ -743,7 +743,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4735d0b8aa6babb4fb0f58356020eb96, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1494,7 +1494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8b38b8a56467d40b7aecdf12809444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyInitializer: {fileID: 1471549241}
+  lobbyMapController: {fileID: 977879682}
   mapButtonContainers:
   - {fileID: 78804203}
   - {fileID: 39275546}
@@ -6242,7 +6242,7 @@ GameObject:
   - component: {fileID: 1471549241}
   - component: {fileID: 1471549240}
   m_Layer: 0
-  m_Name: LobbyInitializer
+  m_Name: LobbyVehicleInitializer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

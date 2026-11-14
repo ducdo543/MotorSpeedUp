@@ -11,10 +11,17 @@ public class LobbyMapController : MonoBehaviour
     public float MoveSpeed => moveSpeed;
     void Start()
     {
-        
+        int level = GameManager.Instance.DataManager.MotorSpeedUpData.Level;
+        Initialize(level);
     }
 
-    
+    public void Initialize(int level)
+    {
+        Material firstRoadMaterial = DataReader.Instance.GetFirstMaterialOfMap(level);
+        ChangeRoadsMaterial(firstRoadMaterial);
+    }
+
+
     void Update()
     {
         MoveAndReset();
@@ -44,6 +51,19 @@ public class LobbyMapController : MonoBehaviour
         //Debug.Log("Total Length of Road Parts: " + totalLength);
 
         return totalLength;
+    }
+
+    // changing material of road parts
+    public void ChangeRoadsMaterial(Material newMaterial)
+    {
+        foreach (Transform part in roadParts)
+        {
+            Renderer renderer = part.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material = newMaterial;
+            }
+        }
     }
 
 }
