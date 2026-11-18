@@ -7,13 +7,13 @@ public class MotorBikerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject bikerRigGroupPrefab;
 
-    public void SpawnMotorBiker(Transform parent)
+    public void SpawnMotorBiker(Transform parent, MotorType motorType, BikerType bikerType)
     {
-        StartCoroutine(SpawnMotorBikerAndWait(parent));
+        StartCoroutine(SpawnMotorBikerAndWait(parent, motorType, bikerType));
 
     }
 
-    IEnumerator SpawnMotorBikerAndWait(Transform parent)
+    IEnumerator SpawnMotorBikerAndWait(Transform parent, MotorType motorType, BikerType bikerType)
     {
         GameObject motorPrefab = new GameObject();
         GameObject bikerPrefab = new GameObject();
@@ -23,9 +23,6 @@ public class MotorBikerSpawner : MonoBehaviour
         GameObject emptyMotor = motorPrefab;
         GameObject emptyBiker = bikerPrefab;
 
-
-        MotorType motorType = GameManager.Instance.DataManager.MotorSpeedUpData.MotorType;
-        BikerType bikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
 
         // get motor and biker prefabs and animation clip from the data reader
         DataReader.Instance.GetMotorBiker(motorType, bikerType, out motorPrefab, out bikerPrefab, out animationClip);

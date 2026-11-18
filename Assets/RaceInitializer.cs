@@ -23,9 +23,11 @@ public class RaceInitializer : MonoBehaviour
     {
         SpawnMap();
 
-        // spawn motor and biker
+        // spawn the main motor and biker
         motorGameplay = Instantiate(motorGameplayPrefab, transform);
-        motorBikerSpawner.SpawnMotorBiker(motorGameplay.transform);
+        MotorType motorType = GameManager.Instance.DataManager.MotorSpeedUpData.MotorType;
+        BikerType bikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
+        motorBikerSpawner.SpawnMotorBiker(motorGameplay.transform, motorType, bikerType);
 
 
         RegisterForCameraTarget();
