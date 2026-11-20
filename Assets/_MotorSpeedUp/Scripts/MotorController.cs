@@ -60,7 +60,6 @@ public class MotorController : MonoBehaviour
                 motorMovement.WorkingWithInput();
             }
 
-            motorMovement.GetRotation();
             motorMovement.RotatePlayer();
 
 

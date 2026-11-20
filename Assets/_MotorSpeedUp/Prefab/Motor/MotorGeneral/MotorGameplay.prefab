@@ -115,24 +115,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f40842cc10247489d977b2c431b85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapController: {fileID: 0}
-  rotationSpeed: 4
-  leanAngleMultiplier: 22
-  wheelColliders:
-  - {fileID: 0}
-  - {fileID: 0}
-  baseMoveOnSpline:
-    moveSpeed: 50
-    acchieveTargetSpeedInstantly: 0
-    acceleration: 30
-    decelerationForward: 30
-    decelerationRight: 250
-    groundLayer:
-      serializedVersion: 2
-      m_Bits: 8
-    raycastDistance: 6
-  castDistance: 2.76
-  halfExtents: {x: 0.1, y: 0.01, z: 1.07}
+  motorMovementBase:
+    mapController: {fileID: 0}
+    rotationSpeed: 4
+    leanAngleMultiplier: 22
+    wheelColliders: []
+    baseMoveOnSpline:
+      moveSpeed: 50
+      acchieveTargetSpeedInstantly: 0
+      acceleration: 30
+      decelerationForward: 30
+      decelerationRight: 250
+      groundLayer:
+        serializedVersion: 2
+        m_Bits: 8
+      raycastDistance: 6
+    castDistance: 2
+    halfExtents: {x: 0.1, y: 0.1, z: 1.07}
 --- !u!114 &85540646174644136
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,10 +11,8 @@ public interface IVehicleMovement
     public TrackPoint FurthestTrackPoint { get; }
 
     void ResetVehicleFields(TrackPoint trackPoint);
-    void WorkingWithInput();
+    
     void Move();
-
-    void GetRotation();
 
     void RotatePlayer();
 

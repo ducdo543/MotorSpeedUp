@@ -4,44 +4,23 @@ using UnityEngine;
 
 public class MotorMovement : MonoBehaviour, IVehicleMovement
 {
-    [SerializeField] private MapController mapController;
-    private Rigidbody rb;
 
-    [Header("Movement")]
-    [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private float leanAngleMultiplier = 22f;
-    private Quaternion targetRotation;
+    [Header("Specific Fields")]
     private float maxHorizontalInput = 0.7f;
     private float newVerticalInput;
     private float newHorizontalInput;
 
-    [SerializeField] private WheelCollider[] wheelColliders;
-    [SerializeField] private BaseMoveOnSpline baseMoveOnSpline;
     private InputHandleMovement inputHandleMovement;
 
-    public BaseMoveOnSpline BaseMoveOnSpline => baseMoveOnSpline;
-    public Quaternion InterpolatedRotation => baseMoveOnSpline.InterpolatedRotation;
-    public TrackPoint FurthestTrackPoint => baseMoveOnSpline.FurthestTrackPoint;
+
+    [Header("Base Fields")]
+    [SerializeField] private MotorMovementBase motorMovementBase;
+
+    public BaseMoveOnSpline BaseMoveOnSpline => motorMovementBase.BaseMoveOnSpline;
+    public Quaternion InterpolatedRotation => BaseMoveOnSpline.InterpolatedRotation;
+    public TrackPoint FurthestTrackPoint => BaseMoveOnSpline.FurthestTrackPoint;
 
 
-    [Header("Fields for check ground")]
-    [SerializeField] private float castDistance = 0.2f;
-    //[SerializeField] private LayerMask groundLayerMask;
-    [SerializeField] private Vector3 halfExtents = new Vector3(0.1f, 0.1f, 0.5f);
-    private readonly RaycastHit[] hits = new RaycastHit[10];
-
-
-    //private void Start()
-    //{
-    //    inputHandleMovement = GetComponent<InputHandleMovement>();
-
-    //    rb = GetComponent<Rigidbody>();
-
-    //    if (mapController != null)
-    //    {
-    //        baseMoveOnSpline.SetFields(mapController, rb, transform);
-    //    }
-    //}
 
     public void WorkingWithInput()
     {
@@ -55,102 +34,46 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
             newVerticalInput = 0;
         }
 
-        
+        motorMovementBase.SetInput(newVerticalInput, newHorizontalInput);
     }
 
     public void SetNoInput()
     {
         newVerticalInput = 0;
         newHorizontalInput = 0;
+
+        motorMovementBase.SetInput(newVerticalInput, newHorizontalInput);
     }
 
     public void Move()
     {
-        
-        baseMoveOnSpline.Move(newVerticalInput, newHorizontalInput, IsGrounded());
 
-        if (newVerticalInput == 0 && newHorizontalInput == 0)
-        {
-            for (int i = 0; i < wheelColliders.Length; i++)
-            {
-                wheelColliders[i].motorTorque = 0f;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < wheelColliders.Length; i++)
-            {
-                wheelColliders[i].motorTorque = 0.01f;
-                // this is to inform internal physics handle the movement case instead of the static case for wheelCollider
-                // if not set motorTorque a little bit, even we add force by rb.AddForce, the motor can't move
-            }
-        }
+        BaseMoveOnSpline.Move(newVerticalInput, newHorizontalInput, IsGrounded());
+
+        motorMovementBase.SetWheelTorque();
     }
 
-    public void GetRotation()
+    public bool IsGrounded()
     {
-        Quaternion uprightRotation = InterpolatedRotation;
-        //Debug.Log($"interpolatedRotation: {uprightRotation * Vector3.forward}");
-        float leanAngle = -(leanAngleMultiplier * newHorizontalInput);
-        Quaternion leanRotation = Quaternion.AngleAxis(leanAngle, uprightRotation * Vector3.forward);
-        targetRotation = leanRotation * uprightRotation;
-
-        //Debug.Log($"targetRotation: {targetRotation * Vector3.forward}");
-        //    Debug.Log(
-        //Vector3.Angle(
-        //    uprightRotation * Vector3.forward,
-        //    targetRotation * Vector3.forward));
-    }    
+        return motorMovementBase.IsGrounded();
+    }
 
     public void RotatePlayer()
     {
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        motorMovementBase.RotatePlayer();
 
     }
 
 
     public void CalculateInterpolatedPosition()
     {
-        baseMoveOnSpline.CalculateInterpolatedPosition(IsGrounded());
-    }
-
-
-    // check ground method
-    public bool IsGrounded()
-    {
-        int hitCount = Physics.BoxCastNonAlloc(
-            transform.position + transform.up * 1f, 
-            halfExtents, 
-            -transform.up, 
-            hits, 
-            transform.rotation, 
-            castDistance
-        );
-
-        // Ignore self-collisions
-        for (int i = 0; i < hitCount; i++)
-        {
-            Collider hitCollider = hits[i].collider;
-
-            if (hitCollider.transform.IsChildOf(transform))
-            {
-                continue; 
-            }
-
-            return true;
-        }
-
-        return false;
-
-        //bool isGrounded = Physics.BoxCast(transform.position + transform.up * 1f, halfExtents, - transform.up, transform.rotation, castDistance);
-        //// + (0,1,0) to ensure the center of the box is above the ground, so it can detect the ground properly. Now we just need to change the castDistance 
-        //return isGrounded;
+        motorMovementBase.CalculateInterpolatedPosition();
     }
 
     public void ResetVehicleFields(TrackPoint trackPoint)
     {
-        baseMoveOnSpline.ResetVehicleFields(trackPoint);
+        motorMovementBase.ResetVehicleFields(trackPoint);
     }
 
 
@@ -158,23 +81,21 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
     // so we have to GetComponent rb again
     public void Initialize(MapController mapController, Rigidbody rb, WheelCollider[] wheelColliders)
     {
-        this.mapController = mapController;
-        this.rb = rb;
-
-        this.wheelColliders = wheelColliders;
         if (wheelColliders.Length == 0)
         {
             Debug.LogWarning("No WheelCollider found!", this);
         }
 
-        baseMoveOnSpline.SetFields(mapController, this.rb, transform);
+        motorMovementBase.Initialize(transform, mapController, rb, wheelColliders);
+
+
     }
 
     private void OnDrawGizmosSelected()
     {
         
         Vector3 start = transform.position + transform.up * 1f;
-        Vector3 end = start - transform.up * castDistance;
+        Vector3 end = start - transform.up * motorMovementBase.CastDistance;
 
         // draw the boxcast gizmo
         Gizmos.matrix = Matrix4x4.TRS(
@@ -184,7 +105,7 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
 
         Gizmos.DrawWireCube(
             Vector3.zero,
-            halfExtents * 2f);
+            motorMovementBase.HalfExtents * 2f);
 
         // draw castDistance line
         Gizmos.matrix = Matrix4x4.identity;
