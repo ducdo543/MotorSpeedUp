@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IVehicleMovement
+public interface IVehicleMovementRaw
 {
     public Quaternion InterpolatedRotation { get; }
 
@@ -10,6 +10,9 @@ public interface IVehicleMovement
 
     public TrackPoint FurthestTrackPoint { get; }
 
+    void WorkingWithInput();
+
+    void SetNoInput();
     void ResetVehicleFields(TrackPoint trackPoint);
     
     void Move();

@@ -8,14 +8,19 @@ public class GoalGateCollide : MonoBehaviour
     //[SerializeField] private Collider[] collidersToIgnore;
     //private Collider thisCollider;
 
-    [Header("Other SerializeFields")]
-    [SerializeField] private MotorController motorController;
-    private Collider[] motorColliders;
+    [Header("Main Motor")]
+    [SerializeField] private MotorController mainMotorController;
+    private Collider[] mainMotorColliders;
     [SerializeField] private UIRaceManager uiRaceManager;
 
-    public void Initialize(MotorController motorController, UIRaceManager uiRaceManager)
+    [Header("AI Motor")]
+    [SerializeField] private MotorController aiMotorController;
+    private Collider[] aiMotorColliders;
+
+    public void Initialize(MotorController mainMotorController, MotorController aiMotorController, UIRaceManager uiRaceManager)
     {
-        this.motorController = motorController;
+        this.mainMotorController = mainMotorController;
+        this.aiMotorController = aiMotorController;
         this.uiRaceManager = uiRaceManager;
 
         //// ignore collision between this collider and the colliders in collidersToIgnore
@@ -28,9 +33,9 @@ public class GoalGateCollide : MonoBehaviour
 
 
 
-        // get the collider of the motorController
-        motorColliders = motorController.GetComponentsInChildren<Collider>();
-        if (motorColliders == null || motorColliders.Length == 0)
+        // get the collider of the mainMotorController
+        mainMotorColliders = mainMotorController.GetComponentsInChildren<Collider>();
+        if (mainMotorColliders == null || mainMotorColliders.Length == 0)
         {
             Debug.LogError("MotorController has no colliders in its children.");
         }
@@ -38,18 +43,20 @@ public class GoalGateCollide : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // working with the motor
-        foreach (Collider motorCollider in motorColliders)
+        foreach (Collider mainMotorCollider in mainMotorColliders)
         {
-            if (other == motorCollider)
+            if (other == mainMotorCollider)
             {
                 //Debug.Log("MotorController entered the goal gate");
                 // Call a method in MotorController to handle reaching the goal
-                motorController.SetReachedGoal(true);
+                mainMotorController.SetReachedGoal(true);
+
+                // working with the UI
+                uiRaceManager.SetIsWin(true);
+
                 break; // Exit the loop once a match is found
             }
         }
 
-        // working with the UI
-        uiRaceManager.SetIsWin(true);
     }
 }

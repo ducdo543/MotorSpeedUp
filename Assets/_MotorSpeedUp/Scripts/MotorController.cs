@@ -8,7 +8,7 @@ public class MotorController : MonoBehaviour
     [SerializeField] private GameObject map;
 
     [Header("Movement")]
-    private MotorMovement motorMovement;
+    private IMotorMovement targetMotorMovement;
     private VehicleRevive vehicleRevive;
     private bool reachedGoal = false;
     private bool isTicking = false;
@@ -24,11 +24,11 @@ public class MotorController : MonoBehaviour
 
         wheelColliders = GetComponentsInChildren<WheelCollider>();
 
-        motorMovement = GetComponent<MotorMovement>();
+        targetMotorMovement = GetComponent<IMotorMovement>();
         vehicleRevive = GetComponent<VehicleRevive>();
 
 
-        vehicleRevive.Initialize(motorMovement);
+        vehicleRevive.Initialize(targetMotorMovement);
 
         
 
@@ -44,11 +44,11 @@ public class MotorController : MonoBehaviour
 
         while (true)
         {
-            motorMovement.CalculateInterpolatedPosition();
+            targetMotorMovement.CalculateInterpolatedPosition();
 
             if (reachedGoal)
             {
-                motorMovement.SetNoInput();
+                targetMotorMovement.SetNoInput();
                 if (!isTicking )
                 {
                     isTicking = true;
@@ -57,10 +57,10 @@ public class MotorController : MonoBehaviour
             }
             else
             {
-                motorMovement.WorkingWithInput();
+                targetMotorMovement.WorkingWithInput();
             }
 
-            motorMovement.RotatePlayer();
+            targetMotorMovement.RotatePlayer();
 
 
             //if (vehicleRevive.CheckDead())
@@ -100,7 +100,7 @@ public class MotorController : MonoBehaviour
             return;
         }
 
-        motorMovement.Move();
+        targetMotorMovement.Move();
     }
 
     public void SetReachedGoal(bool value)
@@ -111,7 +111,7 @@ public class MotorController : MonoBehaviour
     private void RegisterForChildren(GameObject map)
     {
         this.map = map;
-        motorMovement.Initialize(map.GetComponent<MapController>(), rb, wheelColliders);
+        targetMotorMovement.Initialize(map.GetComponent<MapController>(), rb, wheelColliders);
         vehicleRevive.InitializeMap(map.transform);
     }    
 }

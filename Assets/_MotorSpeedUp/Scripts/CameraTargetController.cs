@@ -6,7 +6,7 @@ using Cinemachine;
 public class CameraTargetController : MonoBehaviour
 {
     [SerializeField] private Transform vehicle;
-    private IVehicleMovement vehicleMovement;
+    private IVehicleMovementRaw vehicleMovement;
     private VehicleRevive vehicleRevive;
     public Quaternion InterpolatedRotation => vehicleMovement.InterpolatedRotation;
 
@@ -51,7 +51,7 @@ public class CameraTargetController : MonoBehaviour
         {
             return;
         }
-        vehicleMovement = vehicle.GetComponent<IVehicleMovement>();
+        vehicleMovement = vehicle.GetComponent<IVehicleMovementRaw>();
         vehicleRevive = vehicle.GetComponent<VehicleRevive>();
         baseMoveOnSpline = vehicleMovement.BaseMoveOnSpline;
     }

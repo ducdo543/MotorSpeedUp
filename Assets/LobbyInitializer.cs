@@ -28,6 +28,7 @@ public class LobbyInitializer : MonoBehaviour
                                        // rendering, so it can affect GetComponent
         }
 
+        // spawn the main motor and biker in the lobby scene
         MotorType motorType = GameManager.Instance.DataManager.MotorSpeedUpData.MotorType;
         BikerType bikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
         motorBikerSpawner.SpawnMotorBiker(motorHolder.transform, motorType, bikerType);

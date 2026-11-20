@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MotorMovement : MonoBehaviour, IVehicleMovement
+public class MotorMovement : MonoBehaviour, IMotorMovement
 {
 
     [Header("Specific Fields")]
@@ -37,20 +37,20 @@ public class MotorMovement : MonoBehaviour, IVehicleMovement
         motorMovementBase.SetInput(newVerticalInput, newHorizontalInput);
     }
 
-    public void SetNoInput()
-    {
-        newVerticalInput = 0;
-        newHorizontalInput = 0;
-
-        motorMovementBase.SetInput(newVerticalInput, newHorizontalInput);
-    }
-
     public void Move()
     {
 
         BaseMoveOnSpline.Move(newVerticalInput, newHorizontalInput, IsGrounded());
 
         motorMovementBase.SetWheelTorque();
+    }
+
+    public void SetNoInput()
+    {
+        newVerticalInput = 0;
+        newHorizontalInput = 0;
+
+        motorMovementBase.SetInput(newVerticalInput, newHorizontalInput);
     }
 
     public bool IsGrounded()

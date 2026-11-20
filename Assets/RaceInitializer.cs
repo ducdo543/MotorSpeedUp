@@ -9,6 +9,7 @@ public class RaceInitializer : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField] private GameObject motorGameplayPrefab;
+    [SerializeField] private GameObject aiMotorGameplayPrefab;
 
     [Header("Fields For Registration")]
     [SerializeField] private UIRaceManager uiRaceManager;
@@ -17,6 +18,7 @@ public class RaceInitializer : MonoBehaviour
     [SerializeField] private MotorBikerSpawner motorBikerSpawner;
 
     private GameObject motorGameplay;
+    private GameObject aiMotorGameplay;
     private GameObject map;
 
     private void Awake()
@@ -29,9 +31,20 @@ public class RaceInitializer : MonoBehaviour
         BikerType bikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
         motorBikerSpawner.SpawnMotorBiker(motorGameplay.transform, motorType, bikerType);
 
+        // spawn the AI motor and biker, test with the same motor as the main motor first
+        aiMotorGameplay = Instantiate(aiMotorGameplayPrefab, transform);
+        MotorType aiMotorType = GameManager.Instance.DataManager.MotorSpeedUpData.MotorType;
+        BikerType aiBikerType = GameManager.Instance.DataManager.MotorSpeedUpData.BikerType;
+        motorBikerSpawner.SpawnMotorBiker(aiMotorGameplay.transform, aiMotorType, aiBikerType);
 
         RegisterForCameraTarget();
-        RegisterForMotorGameplay();
+
+        // register for motor and ai motor
+        MotorController motorController = motorGameplay.GetComponent<MotorController>();
+        MotorController aiMotorController = aiMotorGameplay.GetComponent<MotorController>();
+        RegisterForMotorGameplay(motorController);
+        RegisterForMotorGameplay(aiMotorController);
+
         RegisterForMapGoalGate();
     }
 
@@ -64,16 +77,16 @@ public class RaceInitializer : MonoBehaviour
         }
     }    
 
-    private void RegisterForMotorGameplay()
+    private void RegisterForMotorGameplay(MotorController targetMotorController)
     {
-        MotorController motorController = motorGameplay.GetComponent<MotorController>();
-        if (motorController != null)
+        
+        if (targetMotorController != null)
         {
-            motorController.Initialize(map);
+            targetMotorController.Initialize(map);
         }
         else
         {
-            Debug.LogError("motorGameplay prefab does not have a MotorController component.");
+            Debug.LogError("targetMotorGameplay prefab does not have a MotorController component.");
         }
     }    
 
@@ -82,8 +95,9 @@ public class RaceInitializer : MonoBehaviour
         GoalGateCollide goalGateCollide = map.GetComponentInChildren<GoalGateCollide>();
         if (goalGateCollide != null)
         {
-            MotorController motorController = motorGameplay.GetComponent<MotorController>();
-            goalGateCollide.Initialize(motorController, uiRaceManager);
+            MotorController mainMotorController = motorGameplay.GetComponent<MotorController>();
+            MotorController aiMotorController = aiMotorGameplay.GetComponent<MotorController>();
+            goalGateCollide.Initialize(mainMotorController, aiMotorController, uiRaceManager);
         }
         else
         {

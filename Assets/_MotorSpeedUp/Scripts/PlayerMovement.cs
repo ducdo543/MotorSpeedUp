@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Time;
 
-public class PlayerMovement : MonoBehaviour, IVehicleMovement
+public class PlayerMovement : MonoBehaviour, IVehicleMovementRaw
 {
     private MapController mapController;
     private Rigidbody rb;
@@ -45,6 +45,12 @@ public class PlayerMovement : MonoBehaviour, IVehicleMovement
         {
             newVerticalInput = 0;
         }
+    }
+
+    public void SetNoInput()
+    {
+        newVerticalInput = 0;
+        newHorizontalInput = 0;
     }
 
     public void Move()

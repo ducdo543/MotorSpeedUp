@@ -11,7 +11,7 @@ public class VehicleRevive : MonoBehaviour
     [SerializeField] private Vector3 offSetPosition = new Vector3(0, 2, 0);
     [SerializeField] private float belowYThreshold = -10f;
     //[SerializeField] private MotorController motorController;
-    private IVehicleMovement vehicleMovement;
+    private IVehicleMovementRaw vehicleMovement;
 
     public event Action<Quaternion> OnAfterRevive;
 
@@ -20,7 +20,7 @@ public class VehicleRevive : MonoBehaviour
     // actually we can use binary search,
     // in the first place, i thought we always need to run this method in the Update method, but actually, just when the vehicle dies
 
-    public void Initialize(IVehicleMovement vehicleMovement)
+    public void Initialize(IVehicleMovementRaw vehicleMovement)
     {
         //Debug.Log($"vehicleMovement: {vehicleMovement}");
         this.vehicleMovement = vehicleMovement;
