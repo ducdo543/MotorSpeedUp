@@ -37,12 +37,32 @@ public class GoalGateCollide : MonoBehaviour
         mainMotorColliders = mainMotorController.GetComponentsInChildren<Collider>();
         if (mainMotorColliders == null || mainMotorColliders.Length == 0)
         {
-            Debug.LogError("MotorController has no colliders in its children.");
+            Debug.LogError("MainMotorController has no colliders in its children.");
+        }
+
+        // get the collider of the aiMotorController
+        aiMotorColliders = aiMotorController.GetComponentsInChildren<Collider>();
+        if (aiMotorColliders == null || aiMotorColliders.Length == 0)
+        {
+            Debug.LogError("AIMotorController has no colliders in its children.");
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        // working with the motor
+        // working with the AI motor
+        foreach (Collider aiMotorCollider in aiMotorColliders)
+        {
+            if (other == aiMotorCollider)
+            {
+                //Debug.Log("AIMotorController entered the goal gate");
+                // Call a method in MotorController to handle reaching the goal
+                aiMotorController.SetReachedGoal(true);
+                
+                break; // Exit the loop once a match is found
+            }
+        }
+
+        // working with the main motor
         foreach (Collider mainMotorCollider in mainMotorColliders)
         {
             if (other == mainMotorCollider)
